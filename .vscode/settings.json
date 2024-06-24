@@ -1,0 +1,14 @@
+{
+  //workbench
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 24,
+  "editor.fontFamily": "'Fira Code'",
+  "editor.fontLigatures": true,
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "gutter",
+  "editor.insertSpaces": false,
+  "editor.tabSize": 2,
+  "workbench.colorTheme": "Material Deep Ocean",
+  "window.zoomLevel": 0
+}

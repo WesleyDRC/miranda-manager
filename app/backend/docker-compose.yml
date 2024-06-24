@@ -9,7 +9,45 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - .:/app
+      - miranda-manager-volume:/app
+  mongo:
+    build:
+      context: .
+      dockerfile: mongo.dockerfile
+    container_name: miranda-manager-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - miranda-manager-volume:/data/db
+    networks:
+      - miranda-manager-network
+
+  mongo-express:
+    build:
+      context: .
+      dockerfile: mongo-express.dockerfile
+    container_name: miranda-manager-mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@miranda-manager-mongo:27017/
+    ports:
+      - 8081:8081
+    networks:
+      - miranda-manager-network
+    depends_on:
+      - mongo
+
 volumes:
   miranda-manager-volume:
+networks:
+  miranda-manager-network:
+    driver: bridge
 
