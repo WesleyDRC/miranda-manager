@@ -17,8 +17,8 @@ services:
     container_name: miranda-manager-mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     ports:
       - 27017:27017
     volumes:
@@ -33,18 +33,17 @@ services:
     container_name: miranda-manager-mongo-express
     restart: always
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@miranda-manager-mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_BASIC_AUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_BASIC_AUTH_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongo
     ports:
       - 8081:8081
     networks:
       - miranda-manager-network
     depends_on:
       - mongo
-
 volumes:
   miranda-manager-volume:
 networks:
