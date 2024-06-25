@@ -3,10 +3,9 @@ import { DataSource } from "typeorm"
 const AppDataSource = new DataSource({
     type: "mongodb",
     host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
+    port: 27017,
+    username: "root",
+    password: "example"
 })
 
 AppDataSource.initialize()
