@@ -20,12 +20,19 @@
   },
   "homepage": "https://github.com/WesleyDRC/miranda-manager#readme",
   "dependencies": {
+    "@types/node": "^20.14.8",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "typeorm": "^0.3.20"
+    "mongodb": "^5.9.2",
+    "mongoose": "^8.4.4",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/uuid": "^10.0.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.2"

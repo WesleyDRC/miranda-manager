@@ -1,10 +1,14 @@
-import express from "express"
+import "dotenv/config";
 
-import routes from "./routes/routes"
+import express from "express";
 
-const app = express()
+import routes from "./routes/routes";
 
-app.use(express.json())
-app.use(routes)
+import "../moongose/";
 
-export default app
+const app = express();
+
+app.use(express.json());
+app.use(routes);
+
+export default app;
