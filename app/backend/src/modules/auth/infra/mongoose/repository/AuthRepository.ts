@@ -2,7 +2,6 @@ import { IStoreUserDTO } from "../../../dtos/IStoreUserDTO";
 import { IAuthRepository } from "../../../repositories/IAuthRepository";
 import { IUser } from "../../../entities/IUser";
 import { User } from "../entities/User";
-import { v4 as uuidv4 } from "uuid";
 
 export class AuthRepository implements IAuthRepository {
 	async create({ email, password }: IStoreUserDTO): Promise<string> {
@@ -10,5 +9,11 @@ export class AuthRepository implements IAuthRepository {
 		const newUser = await User.create({ email, password});
 
 		return Promise.resolve(newUser.email);
+	}
+
+	async findByEmail(email: string): Promise<IUser[] | []> {
+		const founduser = await User.findOne({email});
+
+		return Promise.resolve(founduser ? [founduser] : [])
 	}
 }

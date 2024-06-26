@@ -1,23 +1,22 @@
-import {Request, Response} from "express"
+import { Request, Response } from "express";
 
-import { AuthRepository } from "../../mongoose/repository/AuthRepository";
+import { SignUpUseCase } from "../../../useCases/SignUpUseCase";
+import { container } from "tsyringe";
 
 class SignUpController {
-	public async handle(request: Request, response: Response):Promise<Response> {
+  public async handle(request: Request, response: Response): Promise<Response> {
+    const { email, password, confirmPassword } = request.body;
 
-		try {
-			const { email, password } = request.body;
+    const signUpUseCase = container.resolve(SignUpUseCase);
 
-			const repo = new AuthRepository()
+    const userId = await signUpUseCase.execute({
+      email,
+      password,
+      confirmPassword,
+    });
 
-			const newUser = await repo.create({email, password})
-
-			return response.json({ user: newUser });
-		} catch (error) {
-				console.error("Error creating user:", error);
-				return response.status(500).json({ error: "Failed to create user" });
-		}
-	}
+    return response.json({ user: userId });
+  }
 }
 
-export default SignUpController
+export default SignUpController;

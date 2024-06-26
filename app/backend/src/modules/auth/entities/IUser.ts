@@ -1,5 +1,5 @@
 export interface IUser {
-	readonly id: string;
+	readonly _id: string;
 	email: string;
 	password: string;
 }
