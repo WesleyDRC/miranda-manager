@@ -1,3 +1,5 @@
+import "./providers"
+
 import { container } from "tsyringe";
 
 import { AuthRepository } from "../../modules/auth/infra/mongoose/repository/AuthRepository";
