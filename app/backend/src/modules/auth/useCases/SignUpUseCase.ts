@@ -6,12 +6,13 @@ import { IAuthRepository } from "../repositories/IAuthRepository";
 import { IStoreUserDTO } from "../dtos/IStoreUserDTO";
 import { IEncryptManager } from "./ports/IEncryptManager";
 import { ITokenManager } from "./ports/ITokenManager";
+import { IUseCase } from "./ports/IUseCase";
 
 import { userConstants } from "../constants/userConstants";
 import { User } from "../entities/User";
 
 @injectable()
-export class SignUpUseCase {
+export class SignUpUseCase implements IUseCase {
   constructor(
     @inject("AuthRepository")
     private authRepository: IAuthRepository,
