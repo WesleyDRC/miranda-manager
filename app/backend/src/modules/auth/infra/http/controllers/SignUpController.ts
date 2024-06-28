@@ -9,13 +9,13 @@ class SignUpController {
 
     const signUpUseCase = container.resolve(SignUpUseCase);
 
-    const userId = await signUpUseCase.execute({
+    const token = await signUpUseCase.execute({
       email,
       password,
       confirmPassword,
     });
 
-    return response.json({ user: userId });
+    return response.json({ token: token });
   }
 }
 

@@ -5,6 +5,7 @@ import { AppError } from "../../../shared/errors/AppError";
 import { IAuthRepository } from "../repositories/IAuthRepository";
 import { IStoreUserDTO } from "../dtos/IStoreUserDTO";
 import { IEncryptManager } from "./ports/IEncryptManager";
+import { ITokenManager } from "./ports/ITokenManager";
 
 import { userConstants } from "../constants/userConstants";
 import { User } from "../entities/User";
@@ -16,7 +17,10 @@ export class SignUpUseCase {
     private authRepository: IAuthRepository,
 
     @inject("HashProvider")
-    private encryptManager: IEncryptManager
+    private encryptManager: IEncryptManager,
+
+    @inject("TokenProvider")
+    private tokenManager: ITokenManager
   ) {}
 
   async execute({
@@ -41,6 +45,8 @@ export class SignUpUseCase {
       password: encryptedPassword,
     });
 
-    return userId;
+    const token = this.tokenManager.generateToken(userId);
+
+    return token;
   }
 }
