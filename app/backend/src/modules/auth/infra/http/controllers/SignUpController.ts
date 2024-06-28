@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { SignUpUseCase } from "../../../useCases/SignUpUseCase";
 import { container } from "tsyringe";
 
-class SignUpController {
+export class SignUpController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { email, password, confirmPassword } = request.body;
 
@@ -15,8 +15,7 @@ class SignUpController {
       confirmPassword,
     });
 
-    return response.json({ token: token });
+    return response.json({ token });
   }
 }
 
-export default SignUpController;

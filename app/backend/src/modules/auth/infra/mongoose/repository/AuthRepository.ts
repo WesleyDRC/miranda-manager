@@ -8,7 +8,7 @@ export class AuthRepository implements IAuthRepository {
 
 		const newUser = await User.create({ email, password});
 
-		return Promise.resolve(newUser.email);
+		return Promise.resolve(newUser._id);
 	}
 
 	async findByEmail(email: string): Promise<IUser[] | []> {

@@ -1,11 +1,13 @@
-import { Router } from "express"
-import SignUpController from "../controllers/SignUpController"
+import { Router } from "express";
 
-const authRoutes = Router()
-const signUpController = new SignUpController()
+import { SignUpController } from "../controllers/SignUpController";
+import { SignInController } from "../controllers/SignInController";
 
-authRoutes.post("/signUp", 
-	signUpController.handle
-)
+const authRoutes = Router();
+const signUpController = new SignUpController();
+const signInController= new SignInController()
 
-export default authRoutes
+authRoutes.post("/signUp", signUpController.handle);
+authRoutes.post("/signIn", signInController.handle)
+
+export default authRoutes;

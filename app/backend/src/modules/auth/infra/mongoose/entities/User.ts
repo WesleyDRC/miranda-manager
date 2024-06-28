@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
   {
     _id: {
       type: String,
-      default: uuidv4()
+      default: uuidv4
     },
     email: {
       type: String,
@@ -20,6 +20,5 @@ const userSchema = new mongoose.Schema(
     },
   },
 );
-
 
 export const User = mongoose.model("User", userSchema);
