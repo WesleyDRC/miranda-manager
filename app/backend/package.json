@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev --poll src/shared/infra/http/server.ts",
+    "start": "ts-node-dev --poll --watch src src/shared/infra/http/server.ts",
     "build": "tsc"
   },
   "repository": {
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/WesleyDRC/miranda-manager#readme",
   "dependencies": {
     "@types/node": "^20.14.8",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",

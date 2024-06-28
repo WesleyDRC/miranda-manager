@@ -1,16 +1,22 @@
 import { inject, injectable } from "tsyringe";
+
+import { AppError } from "../../../shared/errors/AppError";
+
 import { IAuthRepository } from "../repositories/IAuthRepository";
 import { IStoreUserDTO } from "../dtos/IStoreUserDTO";
+import { IEncryptManager } from "./ports/IEncryptManager";
 
 import { userConstants } from "../constants/userConstants";
-import { User } from "../entities/User"
-import { AppError } from "../../../shared/errors/AppError";
+import { User } from "../entities/User";
 
 @injectable()
 export class SignUpUseCase {
   constructor(
     @inject("AuthRepository")
-    private authRepository: IAuthRepository
+    private authRepository: IAuthRepository,
+
+    @inject("HashProvider")
+    private encryptManager: IEncryptManager
   ) {}
 
   async execute({
@@ -26,9 +32,13 @@ export class SignUpUseCase {
 
     const user = User.create(email, password, confirmPassword);
 
+    const encryptedPassword = await this.encryptManager.generateHash(
+      user.password
+    );
+
     const userId = await this.authRepository.create({
       email: email,
-      password: password,
+      password: encryptedPassword,
     });
 
     return userId;
