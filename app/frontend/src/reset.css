@@ -1,0 +1,16 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: "Noto Sans", sans-serif;
+	list-style: none;
+	border: none;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
