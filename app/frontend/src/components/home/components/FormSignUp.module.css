@@ -1,0 +1,7 @@
+.formAuth {
+	display: flex;
+	flex-direction: column;
+	width: 520px;
+	padding: 40px;
+	gap: 40px;
+}
