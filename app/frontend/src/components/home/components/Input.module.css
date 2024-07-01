@@ -25,7 +25,8 @@
 	transition: all 0.2s ease-in-out;
 }
 
-.formControl:focus + .formLabel{
+.formControl:focus + .formLabel,
+.formControl:not(:placeholder-shown) + .formLabel{
 		top: -20px;
 		font-size: 12px;
 		color: #6a0dad;

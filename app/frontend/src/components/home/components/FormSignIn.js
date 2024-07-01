@@ -5,6 +5,9 @@ import { Input } from "./Input";
 import { InputPassword } from "./InputPassword";
 import { FormButton } from "./FormButton";
 
+import AxiosRepository from "../../../repository/AxiosRepository";
+
+
 export function FormSignIn() {
   return (
     <form className={styles.formAuth}>
@@ -12,15 +15,16 @@ export function FormSignIn() {
         type="email"
         id="email"
         name="email"
-        required
         placeholder=" "
       />
       <InputPassword
         id="password"
-        required
         placeholder=" "
       />
-      <FormButton />
+      <FormButton 
+        type="submit"
+        text="Cadastrar"
+      />
     </form>
   );
 }

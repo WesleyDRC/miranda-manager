@@ -4,12 +4,15 @@ import "../moongose/";
 import "../../container/index";
 import "express-async-errors";
 
+import cors from "cors"
 import express, { Request, Response, NextFunction } from "express";
 import routes from "./routes/routes";
 import { AppError } from "../../errors/AppError";
 
 // APP
 const app = express();
+
+app.use(cors())
 
 app.use(express.json());
 app.use(routes);

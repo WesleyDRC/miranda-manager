@@ -1,9 +1,9 @@
-import styles from "./FormButton.module.css"
+import styles from "./FormButton.module.css";
 
-export function FormButton() {
+export function FormButton(props) {
   return (
-    <button type="submit" className={styles.btn}>
-      Entrar
+    <button {...props} className={styles.btn}>
+      {props.text}
     </button>
   );
 }

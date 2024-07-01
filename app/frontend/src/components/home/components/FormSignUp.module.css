@@ -5,3 +5,13 @@
 	padding: 40px;
 	gap: 40px;
 }
+
+.error {
+  color: red;
+	font-size: 1.3rem;
+	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
