@@ -1,17 +1,10 @@
 import styles from "./Input.module.css";
 
-export function Input() {
+export function Input(props) {
   return (
     <div className={styles.formGroup}>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        className={styles.formControl}
-        required
-        placeholder=" "
-      />
-      <label for="email" className={styles.formLabel}>
+      <input {...props} className={styles.formControl} />
+      <label htmlFor={props.id} className={styles.formLabel}>
         Email
       </label>
     </div>

@@ -2,9 +2,9 @@ import styles from "./InputPassword.module.css";
 
 import { useState } from "react";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-export function InputPassword() {
+export function InputPassword(props) {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -14,13 +14,11 @@ export function InputPassword() {
   return (
     <div className={`${styles.formGroup} ${styles.passwordWrapper}`}>
       <input
+        {...props}
         type={passwordVisible ? "text" : "password"}
-        id="password"
         className={styles.formControl}
-        required
-        placeholder=" "
       />
-      <label htmlFor="password" className={styles.formLabel}>
+      <label htmlFor={props.id} className={styles.formLabel}>
         Senha
       </label>
       <span

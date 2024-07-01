@@ -8,9 +8,23 @@ import { FormButton } from "./FormButton";
 export function FormSignUp() {
   return (
     <form className={styles.formAuth}>
-      <Input />
-      <InputPassword />
-      <InputPassword />
+      <Input
+        type="email"
+        id="email"
+        name="email"
+        required
+        placeholder=" "
+      />
+      <InputPassword
+        id="password"
+        required
+        placeholder=" "
+      />
+      <InputPassword
+        id="confirmPassword"
+        required
+        placeholder=" "
+      />
       <FormButton />
     </form>
   );

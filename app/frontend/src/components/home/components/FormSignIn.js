@@ -8,8 +8,18 @@ import { FormButton } from "./FormButton";
 export function FormSignIn() {
   return (
     <form className={styles.formAuth}>
-      <Input />
-      <InputPassword />
+      <Input
+        type="email"
+        id="email"
+        name="email"
+        required
+        placeholder=" "
+      />
+      <InputPassword
+        id="password"
+        required
+        placeholder=" "
+      />
       <FormButton />
     </form>
   );
