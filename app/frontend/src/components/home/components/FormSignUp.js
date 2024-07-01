@@ -30,8 +30,6 @@ export function FormSignUp() {
 
     if (createUserErrors) {
       setError(createUserErrors);
-      console.log("createUserErrors");
-      console.log(createUserErrors)
       return;
     }
 
@@ -63,11 +61,11 @@ export function FormSignUp() {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
+      {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
       <FormButton 
         type="submit" 
         text="Cadastrar" 
       />
-      {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
     </form>
   );
 }

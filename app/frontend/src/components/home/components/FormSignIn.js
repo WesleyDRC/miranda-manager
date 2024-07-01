@@ -5,25 +5,59 @@ import { Input } from "./Input";
 import { InputPassword } from "./InputPassword";
 import { FormButton } from "./FormButton";
 
-import AxiosRepository from "../../../repository/AxiosRepository";
+import { useAuth } from "../../../hooks/useAuth";
 
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function FormSignIn() {
+
+  const { SignIn } = useAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  let navigate = useNavigate()
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    if(!email || !password) {
+      console.log("VAZIO?")
+      setError("Preencha todos os campos!")
+      return
+    }
+
+    const logonErrors = await SignIn(email, password)
+
+    if(logonErrors) {
+      console.log(logonErrors)
+      setError(logonErrors)
+      return
+    }
+
+    navigate("/")
+  }
+
   return (
-    <form className={styles.formAuth}>
+    <form className={styles.formAuth} onSubmit={(e) => submit(e)}>
       <Input
         type="email"
         id="email"
         name="email"
         placeholder=" "
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputPassword
         id="password"
         placeholder=" "
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
+      {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
       <FormButton 
         type="submit"
-        text="Cadastrar"
+        text="Entrar"
       />
     </form>
   );
