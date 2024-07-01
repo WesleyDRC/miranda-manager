@@ -2,6 +2,8 @@ import styles from "./InputPassword.module.css";
 
 import { useState } from "react";
 
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+
 export function InputPassword() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -25,7 +27,7 @@ export function InputPassword() {
         className={styles.togglePassword}
         onClick={togglePasswordVisibility}
       >
-        {passwordVisible ? "🙈" : "👁️"}
+        {passwordVisible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
       </span>
     </div>
   );
