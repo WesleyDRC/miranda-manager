@@ -16,4 +16,10 @@ export class AuthRepository implements IAuthRepository {
 
 		return Promise.resolve(founduser ? [founduser] : [])
 	}
+
+	async findById(id: string): Promise<IUser[] | []>{
+		const foundUser = await User.findOne({_id: id})
+
+		return Promise.resolve(foundUser ? [foundUser] : [])
+	}
 }
