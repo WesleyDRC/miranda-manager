@@ -1,4 +1,4 @@
-import styles from "./AssetCard.module.css"
+import styles from "./AssetCard.module.css";
 
 export function AssetCard({ name, money }) {
   return (
