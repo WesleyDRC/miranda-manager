@@ -4,13 +4,13 @@ import {
 	RouterProvider
 } from "react-router-dom"
 
-import { Home } from "../pages/Home"
+import { Authentication } from "../pages/Authentication"
 
 export function AppRoutes() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
-			element: <Home />
+			element: <Authentication />
 		}
 	])
 
