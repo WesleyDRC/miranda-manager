@@ -1,0 +1,28 @@
+.assetCard {
+	display: flex;
+	justify-content: space-between;
+	padding: 24px;
+	background-color: black;
+	color: white;
+	border-radius: 16px;
+	max-width: 260px;
+	max-height: 108px;
+	width: 100%;
+	height: 100%;
+}
+.amount {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.name { 
+	color: #A9A9A9;
+	font-size: 1.4rem;
+}
+.money { 
+	font-size: 2.4rem;
+}
+.dollarIcon {
+	font-size: 3.2rem;
+	margin: auto 0;
+}
