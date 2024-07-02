@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import { SignUpUseCase } from "../../../useCases/SignUpUseCase";
+
 import { container } from "tsyringe";
 
 export class SignUpController {

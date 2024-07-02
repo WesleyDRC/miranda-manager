@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
 
 import { CreateCategoryController } from "../controller/CreateCategoryController";
 

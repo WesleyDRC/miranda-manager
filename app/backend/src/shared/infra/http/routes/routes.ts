@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import authRoutes from "../../../../modules/auth/infra/http/routes/auth.routes"
-import categoryRoutes from "../../../../modules/category/infra/routes/category.routes"
+import categoryRoutes from "../../../../modules/category/infra/http/routes/category.routes"
 
 const routes = Router()
 
