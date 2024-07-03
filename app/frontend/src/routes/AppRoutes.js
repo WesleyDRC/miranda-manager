@@ -6,6 +6,7 @@ import {
 
 import { Authentication } from "../pages/Authentication"
 import { Dashboard } from "../pages/Dashboard"
+import { CreateFinance } from "../pages/CreateFinance"
 
 export function AppRoutes() {
 	const router = createBrowserRouter([
@@ -16,6 +17,10 @@ export function AppRoutes() {
 		{
 			path: "/dashboard",
 			element: <Dashboard />
+		},
+		{
+			path: "/finance/create",
+			element: <CreateFinance />
 		}
 	])
 

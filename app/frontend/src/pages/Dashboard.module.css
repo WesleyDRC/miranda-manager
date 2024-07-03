@@ -7,13 +7,9 @@
 	background-color: #E3E3E3;
 }
 
-
 .main {
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
 	padding: 0 24px;
 }
-
-
-

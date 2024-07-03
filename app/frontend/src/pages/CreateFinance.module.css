@@ -1,0 +1,104 @@
+.content{
+	display: flex;
+}
+
+.coreContent {
+	width: 100vw;
+	background-color: #E3E3E3;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 0 24px;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stepNumber {
+  font-size: 2.4rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+	color: #5E17EB;
+}
+
+.subtitleText {
+	font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+	font-size: 2.4rem;
+}
+
+.customSelect {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.select {
+  border-radius: 8px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: none;
+  background-color: #fff;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("../assets/arrow-ios.svg");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+}
+.select:focus {
+  border:  none;
+  outline: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  font-size: 1.2rem;
+  color: white;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s
+}
+.button:hover {
+  background-color: #333;
+}
+
+.button .arrow {
+  position: absolute;
+  right: 10px;
+  transition: transform 0.3s ease
+}
+.button:hover .arrow {
+  transform: translateX(5px);
+}
+
