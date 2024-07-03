@@ -15,6 +15,14 @@ class AxiosRepository {
     });
   }
 
+  async createFinance({ name, categoryId, rentId }) {
+    return await this.#axiosClient.post("/finance", {
+      name,
+      categoryId,
+      rentId
+    })
+  }
+
 }
 
 export default new AxiosRepository();
