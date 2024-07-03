@@ -1,0 +1,26 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  font-size: 1.2rem;
+  color: white;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s
+}
+.button:hover {
+  background-color: #333;
+}
+
+.button .arrow {
+  position: absolute;
+  right: 10px;
+  transition: transform 0.3s ease
+}
+.button:hover .arrow {
+  transform: translateX(5px);
+}

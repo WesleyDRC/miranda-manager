@@ -3,7 +3,7 @@ import styles from "./CreateFinance.module.css";
 import { Sidebar } from "../components/dashboard/Sidebar";
 import { Header } from "../components/dashboard/Header";
 
-import arrowPurple from "../assets/purple-arrow.svg"
+import { ButtonNextStep } from "../components/createFinance/ButtonNextStep";
 
 import { useState } from "react";
 import { Section } from "../components/dashboard/components/Section";
@@ -49,12 +49,9 @@ export function CreateFinance() {
 									</select>
 								</div>
 
-								<button className={styles.button}>
-									Próxima etapa 
-									<span className={styles.arrow}> 
-										<img src={arrowPurple} alt="Purple Arrow" />
-									</span>
-								</button>
+								<ButtonNextStep />
+
+
               </div>
             }
           />
