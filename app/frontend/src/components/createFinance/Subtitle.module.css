@@ -1,0 +1,32 @@
+.subtitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stepNumber {
+  font-size: 2.4rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+	color: #5E17EB;
+}
+.subtitleText {
+	font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+	font-size: 2.4rem;
+}
