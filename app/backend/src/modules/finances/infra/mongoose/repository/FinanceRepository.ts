@@ -22,7 +22,25 @@ export class FinanceRepository implements IFinanceRepository {
 			userId: financeCreated.userId
 		}
 
-		console.log(finance)
+		return finance
+	}
+
+	async findByName(name: string): Promise<IFinance | null>{
+		const financeFound = await Finance.findOne({
+			name
+		})
+
+		if(!financeFound) {
+			return null
+		}
+
+		const finance: IFinance = {
+			id: financeFound._id,
+			name: financeFound.name,
+			categoryId: financeFound.categoryId,
+			rentId: financeFound.rentId,
+			userId: financeFound.userId
+		}
 
 		return finance
 	}

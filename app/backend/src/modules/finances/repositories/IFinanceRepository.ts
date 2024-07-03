@@ -3,4 +3,5 @@ import { IFinance } from "../entities/IFinance";
 
 export interface IFinanceRepository {
 	create(finance: IStoreFinanceDTO): Promise<IFinance>
+	findByName(name: string): Promise<IFinance | null>
 }
