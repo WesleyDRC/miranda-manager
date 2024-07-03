@@ -18,6 +18,6 @@ export class CreateCategoryController {
 			userId
 		})
 
-		return response.json({category})
+		return response.status(201).json({category})
 	}
 }
