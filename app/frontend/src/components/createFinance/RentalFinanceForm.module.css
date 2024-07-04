@@ -1,0 +1,12 @@
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 16px;
+	max-width: 376px;
+}
+.streetAndNumber {
+	display: flex;
+	gap: 16px;
+}
