@@ -1,12 +1,12 @@
 import styles from "./Subtitle.module.css";
 
-export function Subtitle() {
+export function Subtitle({step, text}) {
   return (
     <div className={styles.subtitle}>
       <div className={styles.circle}>
-        <span className={styles.stepNumber}>1</span>
+        <span className={styles.stepNumber}>{step}</span>
       </div>
-      <span className={styles.subtitleText}>Selecione o tipo da finança</span>
+      <h3 className={styles.subtitleText}>{text}</h3>
     </div>
   );
 }
