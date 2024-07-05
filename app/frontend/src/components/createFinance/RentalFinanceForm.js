@@ -49,7 +49,7 @@ export function RentalFinanceForm() {
             value={formData.number}
             onChange={handleChange}
             text="N°"
-            customClass={"streetNumber"}
+            customClass="streetNumber"
           />
         </div>
 

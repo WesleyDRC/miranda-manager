@@ -10,8 +10,7 @@
   cursor: pointer;
   position: relative;
   transition: background-color 0.3s, color 0.3s;
-  width: 100%;
-  max-width: 376px;
+  width: 376px;
 }
 .button:hover {
   background-color: #333;

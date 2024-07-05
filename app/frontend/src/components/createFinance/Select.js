@@ -2,12 +2,13 @@ import styles from "./Select.module.css"
 
 import { useState } from "react";
 
-export function Select() {
+export function Select({ onSelect, options = [] }) {
 
 	const [financeType, setFinanceType] = useState("")
 
 	const handleSelect = (event) => {
     setFinanceType(event.target.value);
+    onSelect(event.target.value)
   };
 
   return (
@@ -19,9 +20,9 @@ export function Select() {
       >
         <option value="" disabled>
         </option>
-        <option value="Aluguel"> Aluguel</option>
-        <option value="CDB"> CDB</option>
-        <option value="Tesouro Direto"> Tesouro Direto </option>
+        {options.map((option) => (
+          <option key={option.id} value={option.type}> {option.type} </option>
+        ))}
       </select>
     </div>
   );

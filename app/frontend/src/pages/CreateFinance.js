@@ -5,8 +5,7 @@ import { Header } from "../components/dashboard/Header";
 
 import { Select } from "../components/createFinance/Select";
 import { ButtonNextStep } from "../components/createFinance/ButtonNextStep";
-import { Section } from "../components/dashboard/components/Section";
-import { Subtitle } from "../components/createFinance/Subtitle";
+import { Step } from "../components/createFinance/Step";
 
 import { RentalFinanceForm } from "../components/createFinance/RentalFinanceForm";
 
@@ -14,6 +13,26 @@ import { useState } from "react";
 
 export function CreateFinance() {
   const [step, setStep] = useState(1);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const options = [
+    {
+      id: 1,
+      type: "Aluguel",
+    },
+    {
+      id: 2,
+      type: "CDB",
+    },
+    {
+      id: 3,
+      type: "Tesouro Direto"
+    }
+  ]
+
+  const onSelect = (value) => {
+    setSelectedOption(value);
+  };
 
   const nextStep = () => {
     setStep(step + 1);
@@ -27,27 +46,33 @@ export function CreateFinance() {
     switch (step) {
       case 1:
         return (
-          <Section title="Criar finança">
+          <Step
+            title="Criar finança"
+            step={step}
+            text={"Selecione o tipo da finança"}
+          >
             <div>
-              <Subtitle step={step} text="Selecione o tipo da finança" />
-              <Select />
+              <Select options={options} onSelect={onSelect} />
               <ButtonNextStep text={"Próxima etapa"} onClick={nextStep} />
             </div>
-          </Section>
+          </Step>
         );
       case 2:
-        return (
-          <Section title="Criar finança">
-            <div>
-              <Subtitle
-                step={step}
-                text="Preencha os campos para a finança aluguel "
-              />
-              <RentalFinanceForm />
-            </div>
-          </Section>
-        );
-
+        if (selectedOption === "Aluguel") {
+          return (
+            <Step
+              title="Criar finança"
+              step={step}
+              text={"Preencha os campos para a finança aluguel"}
+              previousStep={previousStep}
+            >
+              <div>
+                <RentalFinanceForm />
+              </div>
+            </Step>
+          );
+        }
+       /* falls through */
       default:
         return null;
     }
