@@ -1,0 +1,27 @@
+.content{
+	display: flex;
+}
+
+.coreContent {
+	width: 100vw;
+	background-color: #E3E3E3;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 0 24px;
+}
+
+.cards {
+	display: flex;
+	gap: 24px;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: fit-content;
+}
