@@ -4,5 +4,6 @@
 	justify-content: flex-end;
 	padding: 24px;
 	height: 108px;
+	background-color: var(--main-background-color);;
 }
 

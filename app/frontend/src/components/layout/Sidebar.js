@@ -6,7 +6,7 @@ import analyticsIcon from "../../assets/analytics.svg";
 import settingssIcon from "../../assets/settings.svg";
 import helpIcon from "../../assets/help.svg";
 
-import { ItemList } from "./components/ItemList.js";
+import { ItemList } from "../dashboard/components/ItemList.js";
 
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ export function Sidebar() {
           <ItemList
             path={"/settings"}
             icon={settingssIcon}
-            alt="Ícone representando a págian de configurações."
+            alt="Ícone representando a página de configurações."
           />
         </ul>
       </nav>

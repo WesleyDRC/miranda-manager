@@ -1,12 +1,3 @@
-.content{
-	display: flex;
-}
-
-.coreContent {
-	width: 100vw;
-	background-color: #E3E3E3;
-}
-
 .main {
 	display: flex;
 	flex-direction: column;

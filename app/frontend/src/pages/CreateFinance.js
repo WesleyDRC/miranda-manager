@@ -1,8 +1,5 @@
 import styles from "./CreateFinance.module.css";
 
-import { Sidebar } from "../components/dashboard/Sidebar";
-import { Header } from "../components/dashboard/Header";
-
 import { Select } from "../components/createFinance/Select";
 import { ButtonNextStep } from "../components/createFinance/ButtonNextStep";
 import { Step } from "../components/createFinance/Step";
@@ -26,9 +23,9 @@ export function CreateFinance() {
     },
     {
       id: 3,
-      type: "Tesouro Direto"
-    }
-  ]
+      type: "Tesouro Direto",
+    },
+  ];
 
   const onSelect = (value) => {
     setSelectedOption(value);
@@ -72,20 +69,11 @@ export function CreateFinance() {
             </Step>
           );
         }
-       /* falls through */
+      /* falls through */
       default:
         return null;
     }
   };
 
-  return (
-    <div className={styles.content}>
-      <Sidebar />
-
-      <div className={styles.coreContent}>
-        <Header />
-        <main className={styles.main}>{renderStep()}</main>
-      </div>
-    </div>
-  );
+  return <main className={styles.main}>{renderStep()}</main>;
 }

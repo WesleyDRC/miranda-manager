@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 
-import { ProfileCard } from "./components/ProfileCard";
+import { ProfileCard } from "../dashboard/components/ProfileCard";
 
 export function Header() {
   return (
