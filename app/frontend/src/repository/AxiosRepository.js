@@ -23,6 +23,14 @@ class AxiosRepository {
     })
   }
 
+  async createCategory({ name }) {
+    console.log(name)
+
+    return await this.#axiosClient.post("/category", {
+      name
+    })
+  }
+
 }
 
 export default new AxiosRepository();
