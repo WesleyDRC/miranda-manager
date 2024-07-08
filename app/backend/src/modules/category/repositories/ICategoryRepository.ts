@@ -5,4 +5,5 @@ export interface ICategoryRepository {
 	create(category: IStoreCategoryDTO): Promise<ICategory>
 	findByName(name:string): Promise<ICategory | {}>
 	getCategory(userId: string): Promise<ICategory[] | []> 
+	fingById(id: string): Promise<ICategory| []>
 }
