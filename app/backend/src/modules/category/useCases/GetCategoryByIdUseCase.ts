@@ -16,7 +16,7 @@ export class GetCategoryByIdUseCase implements IUseCase {
 
 	async execute(id: string): Promise<ICategory | []> {
 		
-		const category = await this.categoryRepository.fingById(id)
+		const category = await this.categoryRepository.findById(id)
 
 		if(!category) {
 			throw new AppError(categoryConstants.NOT_FOUND, 404)

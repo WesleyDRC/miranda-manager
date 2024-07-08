@@ -47,7 +47,7 @@ export class CategoryRepository implements ICategoryRepository {
     return Promise.resolve(categories);
   }
 
-  async fingById(id: string): Promise<ICategory | []> {
+  async findById(id: string): Promise<ICategory | null> {
     const categoryFound = await Category.findOne({ _id: id });
 		
     if (!categoryFound) {
