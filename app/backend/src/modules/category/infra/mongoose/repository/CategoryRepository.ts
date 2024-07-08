@@ -2,6 +2,9 @@ import { IStoreCategoryDTO } from "../../../dtos/IStoreCategoryDTO";
 import { ICategoryRepository } from "../../../repositories/ICategoryRepository";
 import { Category } from "../entities/Category";
 import { ICategory } from "../../../entities/ICategory";
+import { AppError } from "../../../../../shared/errors/AppError";
+
+import { categoryConstants } from "../../../contants/categoryContants";
 
 export class CategoryRepository implements ICategoryRepository {
 	async create({name, userId}: IStoreCategoryDTO): Promise<ICategory> {
@@ -20,5 +23,27 @@ export class CategoryRepository implements ICategoryRepository {
 		const categoryFound = await Category.findOne({name})
 
 		return Promise.resolve(categoryFound ? categoryFound : null)
+	}
+
+	async getCategory(userId: string): Promise<ICategory[] | []> {
+		const categoriesFound = await Category.find({userId})
+
+		if (categoriesFound.length < 0) {
+			throw new AppError(categoryConstants.NOT_FOUND, 404)
+		}
+
+		let categories = []
+
+		for(let i = 0; i < categoriesFound.length; i++) {
+			const category: ICategory = {
+				id: categoriesFound[i].id,
+				name: categoriesFound[i].name,
+				userId: categoriesFound[i].userId
+			}
+
+			categories.push(category)
+		}
+
+		return Promise.resolve(categories)
 	}
 }
