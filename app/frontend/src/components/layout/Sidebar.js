@@ -5,16 +5,21 @@ import homeIcon from "../../assets/home.svg";
 import analyticsIcon from "../../assets/analytics.svg";
 import settingssIcon from "../../assets/settings.svg";
 import helpIcon from "../../assets/help.svg";
+import arrowSidebar from "../../assets/arrow-sidebar.svg"
 
 import { ItemList } from "../dashboard/components/ItemList.js";
 
 import { Link } from "react-router-dom";
 
-export function Sidebar() {
+export function Sidebar(props) {
+
   return (
-    <aside className={styles.aside}>
+    <aside className={`${styles.aside} ${styles[props.customClass]}`}>
       <div className={styles.logo}>
         <img src={logo} alt="Logo Miranda Manager" />
+        <div className={`${styles.arrowSidebar} ${styles[props.customClass]}`} onClick={props.handleSidebarSize}>
+          <img src={arrowSidebar} alt="Seta da Sidebar" />
+        </div>
       </div>
       <nav>
         <ul className={styles.list}>

@@ -5,3 +5,7 @@
   flex-direction: column;
 	margin-left: 90px;
 }
+
+.stretchedSidebar {
+	margin-left:  180px;
+}
