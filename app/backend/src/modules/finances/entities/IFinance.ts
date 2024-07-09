@@ -3,8 +3,7 @@ export interface IFinance {
 	name: string,
 	category?: {
 		id: string,
-		name: string,
-		userId: string
+		name: string
 	},
 	rent?: {
 		name: string,

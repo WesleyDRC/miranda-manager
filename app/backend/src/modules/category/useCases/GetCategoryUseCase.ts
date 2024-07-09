@@ -12,8 +12,8 @@ export class GetCategoryUseCase implements IUseCase {
 	) {}
 
 
-	async execute(userId: string): Promise<any> {
-		const categories = await this.categoryRepository.getCategory(userId)
+	async execute(): Promise<any> {
+		const categories = await this.categoryRepository.getCategory()
 
 		return categories
 	}

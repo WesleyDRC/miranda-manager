@@ -7,13 +7,12 @@ import { AppError } from "../../../../../shared/errors/AppError";
 import { categoryConstants } from "../../../contants/categoryContants";
 
 export class CategoryRepository implements ICategoryRepository {
-  async create({ name, userId }: IStoreCategoryDTO): Promise<ICategory> {
-    const createCategory = await Category.create({ name, userId });
+  async create({ name }: IStoreCategoryDTO): Promise<ICategory> {
+    const createCategory = await Category.create({ name });
 
     const category: ICategory = {
       id: createCategory.id,
       name: createCategory.name,
-      userId: createCategory.userId,
     };
 
     return Promise.resolve(category);
@@ -25,8 +24,8 @@ export class CategoryRepository implements ICategoryRepository {
     return Promise.resolve(categoryFound ? categoryFound : null);
   }
 
-  async getCategory(userId: string): Promise<ICategory[] | []> {
-    const categoriesFound = await Category.find({ userId });
+  async getCategory(): Promise<ICategory[] | []> {
+    const categoriesFound = await Category.find();
 
     if (categoriesFound.length < 0) {
       throw new AppError(categoryConstants.NOT_FOUND, 404);
@@ -38,7 +37,6 @@ export class CategoryRepository implements ICategoryRepository {
       const category: ICategory = {
         id: categoriesFound[i].id,
         name: categoriesFound[i].name,
-        userId: categoriesFound[i].userId,
       };
 
       categories.push(category);
@@ -57,7 +55,6 @@ export class CategoryRepository implements ICategoryRepository {
     return {
       id: categoryFound._id,
       name: categoryFound.name,
-      userId: categoryFound.userId,
     };
   }
 }

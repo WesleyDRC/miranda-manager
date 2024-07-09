@@ -16,8 +16,7 @@ export class CreateCategoryUseCase implements IUseCase {
 	) {}
 
 	async execute({
-		name,
-		userId
+		name
 	}: IStoreCategoryDTO): Promise<ICategory> {
 		const categoryFound = await this.categoryRepository.findByName(name)
 
@@ -25,7 +24,7 @@ export class CreateCategoryUseCase implements IUseCase {
 			throw new AppError(categoryConstants.ALREADY_EXISTS, 409)
 		}
 		
-		const createCategory = await this.categoryRepository.create({name, userId})
+		const createCategory = await this.categoryRepository.create({name})
 		
 		return createCategory
 	}

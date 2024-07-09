@@ -14,7 +14,6 @@ import { IFinanceRepository } from "../../modules/finances/repositories/IFinance
 import { RentRepository } from "../../modules/rent/infra/mongoose/repository/RentRepository";
 import { IRentRepository } from "../../modules/rent/repositories/IRentRepository";
 
-
 container.registerSingleton<IAuthRepository>("AuthRepository", AuthRepository)
 container.registerSingleton<ICategoryRepository>("CategoryRepository", CategoryRepository)
 container.registerSingleton<IFinanceRepository>("FinanceRepository", FinanceRepository)

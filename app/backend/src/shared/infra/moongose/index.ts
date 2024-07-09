@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+import { initializeData } from "./initializeData";
+
 class Database {
   connection: any;
 
@@ -15,8 +17,9 @@ class Database {
     });
     this.connection = mongoose.connection
 
-    this.connection.on("connected", () => {
+    this.connection.on("connected", async () => {
       console.log("MongoDB connected successfully");
+      await initializeData();
     });
 
     this.connection.on("error", (err) => {

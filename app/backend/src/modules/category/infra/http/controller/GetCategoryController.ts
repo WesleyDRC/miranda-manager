@@ -6,11 +6,10 @@ import { GetCategoryUseCase } from "../../../useCases/GetCategoryUseCase";
 
 export class GetCategoryController {
 	public async handle(request: Request, response: Response): Promise<Response> {
-		const userId = request.user.id
 
 		const getCategoryUseCase = container.resolve(GetCategoryUseCase)
 
-		const categories = await getCategoryUseCase.execute(userId)
+		const categories = await getCategoryUseCase.execute()
 
 		return response.json({categories})
 	}
