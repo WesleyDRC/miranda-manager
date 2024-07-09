@@ -15,22 +15,37 @@ class AxiosRepository {
     });
   }
 
-  async createFinance({ name, categoryId, rentId }) {
+  async createFinance({
+    name,
+    categoryId,
+    rentalName,
+    rentalValue,
+    rentalStreet,
+    rentalStreetNumber,
+    startRental,
+  }) {
     return await this.#axiosClient.post("/finance", {
       name,
       categoryId,
-      rentId
-    })
+      rent: {
+        name: rentalName,
+        value: rentalValue,
+        street: rentalStreet,
+        streetNumber: rentalStreetNumber,
+        startRental: startRental,
+      },
+    });
   }
 
   async createCategory({ name }) {
-    console.log(name)
-
     return await this.#axiosClient.post("/category", {
-      name
-    })
+      name,
+    });
   }
 
+  async getCategories() {
+    return await this.#axiosClient.get("/category");
+  }
 }
 
 export default new AxiosRepository();

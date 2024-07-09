@@ -3,29 +3,26 @@ import styles from "./CreateFinance.module.css";
 import { Select } from "../components/createFinance/Select";
 import { ButtonNextStep } from "../components/createFinance/ButtonNextStep";
 import { Step } from "../components/createFinance/Step";
-
 import { RentalFinanceForm } from "../components/createFinance/RentalFinanceForm";
 
-import { useState } from "react";
+import AxiosRepository from "../repository/AxiosRepository";
+
+import { useState, useEffect } from "react";
 
 export function CreateFinance() {
   const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
+  const [categories, setCategories] = useState([]);
 
-  const options = [
-    {
-      id: 1,
-      type: "Aluguel",
-    },
-    {
-      id: 2,
-      type: "CDB",
-    },
-    {
-      id: 3,
-      type: "Tesouro Direto",
-    },
-  ];
+  useEffect(() => {
+    AxiosRepository.getCategories()
+      .then((response) => {
+        setCategories(response.data.categories);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const onSelect = (value) => {
     setSelectedOption(value);
@@ -49,26 +46,29 @@ export function CreateFinance() {
             text={"Selecione o tipo da finança"}
           >
             <div>
-              <Select options={options} onSelect={onSelect} />
+              <Select options={categories} onSelect={onSelect} />
               <ButtonNextStep text={"Próxima etapa"} onClick={nextStep} />
             </div>
           </Step>
         );
       case 2:
-        if (selectedOption === "Aluguel") {
-          return (
-            <Step
-              title="Criar finança"
-              step={step}
-              text={"Preencha os campos para a finança aluguel"}
-              previousStep={previousStep}
-            >
-              <div>
-                <RentalFinanceForm />
-              </div>
-            </Step>
-          );
-        }
+          const categoryRent = categories.find(category => category.name === "Aluguel")
+
+          if (categoryRent) {
+              return (
+                <Step
+                  title="Criar finança"
+                  step={step}
+                  text={"Preencha os campos para a finança aluguel"}
+                  previousStep={previousStep}
+                >
+                  <div>
+                    <RentalFinanceForm selectedOption={selectedOption} />
+                  </div>
+                </Step>
+              );
+          }
+
       /* falls through */
       default:
         return null;
