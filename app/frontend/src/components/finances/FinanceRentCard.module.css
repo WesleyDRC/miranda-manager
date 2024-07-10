@@ -1,0 +1,41 @@
+.card {
+	background-color: var(--white);
+	border-radius: 8px;
+	width: 250px;
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+	text-align: center;
+	color: var(--gray);
+}
+
+.cardContent p {
+	font-family: "Noto Sans", sans-serif;
+	font-weight: bold;
+	color: var(--gray);
+}
+
+.footer {
+	width: 100%;
+	text-align: center;
+}
+
+.btn {
+	padding: 12px;
+	background-color: var(--purple);
+	font-family: "Noto Sans", sans-serif;
+	font-weight: bold;
+	font-size: 1.6rem;
+	color: var(--white);
+	border-radius: 8px;
+	cursor: pointer;
+	max-width: 160px;
+	width: 100%;
+}

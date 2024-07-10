@@ -9,6 +9,7 @@ import { Authentication } from "../pages/Authentication"
 import { Dashboard } from "../pages/Dashboard"
 import { CreateFinance } from "../pages/CreateFinance"
 import { CreateCategory } from "../pages/CreateCategory"
+import { Finances } from "../pages/Finances"
 
 
 export function AppRoutes() {
@@ -31,6 +32,10 @@ export function AppRoutes() {
 				{
 					path:"category/create",
 					element: <CreateCategory />
+				},
+				{
+					path: "/finances", 
+					element: <Finances />
 				}
 			]
 		}

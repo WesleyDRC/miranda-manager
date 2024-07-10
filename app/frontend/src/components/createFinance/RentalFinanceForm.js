@@ -148,7 +148,6 @@ export function RentalFinanceForm({ selectedOption }) {
       </div>
 
       <ButtonNextStep
-        onClick={() => console.log(errors)}
         type="submit"
         text={"CRIAR FINANÇA!"}
       />

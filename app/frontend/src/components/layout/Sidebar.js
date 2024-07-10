@@ -1,17 +1,27 @@
 import styles from "./Sidebar.module.css";
 
 import logo from "../../assets/logo-w90-h100.png";
-import homeIcon from "../../assets/home.svg";
-import analyticsIcon from "../../assets/analytics.svg";
-import settingssIcon from "../../assets/settings.svg";
+
+import homeIconActivated from "../../assets/home-activated.svg";
+import homeIconDisabled from "../../assets/home-disabled.svg";
+
+import analyticsIconActivated from "../../assets/analytics-activated.svg";
+import analyticsIconDisabled from "../../assets/analytics-disabled.svg";
+
+import settingsIconActivated from "../../assets/settings-activated.svg";
+import settingsIconDisabled from "../../assets/settings-disabled.svg";
+
 import helpIcon from "../../assets/help.svg";
 import arrowSidebar from "../../assets/arrow-sidebar.svg"
 
 import { ItemList } from "../dashboard/components/ItemList.js";
 
 import { Link } from "react-router-dom";
+import { useState } from "react"
 
 export function Sidebar(props) {
+
+  const [currentPage, setCurrentPage] = useState("/dashboard")
 
   return (
     <aside className={`${styles.aside} ${styles[props.customClass]}`}>
@@ -25,18 +35,21 @@ export function Sidebar(props) {
         <ul className={styles.list}>
           <ItemList 
             path={"/dashboard"} 
-            icon={homeIcon} 
+            icon={currentPage === "dashboard" ? homeIconActivated : homeIconDisabled} 
             alt="Ícone representando a página inicial."
+            onClick={() => setCurrentPage("dashboard")}
           />
           <ItemList
-            path={"/dashboard/analytics"}
-            icon={analyticsIcon}
+            path={"/finances"}
+            icon={currentPage === "finances" ? analyticsIconActivated : analyticsIconDisabled}
             alt="Ícone representando a página de análises."
+            onClick={() => setCurrentPage("finances")}
           />
           <ItemList
-            path={"/settings"}
-            icon={settingssIcon}
+            path={"/finances"}
+            icon={currentPage === "settings" ? settingsIconActivated : settingsIconDisabled}
             alt="Ícone representando a página de configurações."
+            onClick={() => setCurrentPage("settings")}
           />
         </ul>
       </nav>
