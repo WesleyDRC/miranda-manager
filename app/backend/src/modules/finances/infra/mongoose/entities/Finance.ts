@@ -20,7 +20,7 @@ const financeSchema = new mongoose.Schema(
 		},
     rentId: {
       type: String,
-			ref: "Rents"
+			ref: "Rent"
     },
     userId: {
       type: String,

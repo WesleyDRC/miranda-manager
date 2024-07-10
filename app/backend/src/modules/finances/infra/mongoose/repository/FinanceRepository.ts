@@ -44,4 +44,23 @@ export class FinanceRepository implements IFinanceRepository {
 
 		return finance
 	}
+
+	async findAll(userId: string): Promise<IFinance[] | []> {
+
+		const financesFound = await Finance.find({ userId }).populate("rentId").populate("categoryId")
+
+		let finances= [];
+
+		financesFound.forEach((financeFound) => {
+			finances.push({
+				id: financeFound._id,
+				name: financeFound.name,
+				category: financeFound.categoryId,
+				rent: financeFound.rentId,
+				userId: financeFound.userId
+			})
+		})
+
+		return finances
+	}
 }
