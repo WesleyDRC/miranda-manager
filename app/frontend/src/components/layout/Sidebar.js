@@ -16,12 +16,18 @@ import arrowSidebar from "../../assets/arrow-sidebar.svg"
 
 import { ItemList } from "../dashboard/components/ItemList.js";
 
-import { Link } from "react-router-dom";
-import { useState } from "react"
+import { Link, useLocation} from "react-router-dom";
+import { useState, useEffect } from "react"
 
 export function Sidebar(props) {
 
   const [currentPage, setCurrentPage] = useState("/dashboard")
+
+  let location = useLocation()
+
+  useEffect(() => {
+    setCurrentPage(location.pathname)
+  }, [])
 
   return (
     <aside className={`${styles.aside} ${styles[props.customClass]}`}>
@@ -35,21 +41,21 @@ export function Sidebar(props) {
         <ul className={styles.list}>
           <ItemList 
             path={"/dashboard"} 
-            icon={currentPage === "dashboard" ? homeIconActivated : homeIconDisabled} 
+            icon={currentPage === "/dashboard" ? homeIconActivated : homeIconDisabled} 
             alt="Ícone representando a página inicial."
-            onClick={() => setCurrentPage("dashboard")}
+            onClick={() => setCurrentPage("/dashboard")}
           />
           <ItemList
             path={"/finances"}
-            icon={currentPage === "finances" ? analyticsIconActivated : analyticsIconDisabled}
+            icon={currentPage === "/finances" ? analyticsIconActivated : analyticsIconDisabled}
             alt="Ícone representando a página de análises."
-            onClick={() => setCurrentPage("finances")}
+            onClick={() => setCurrentPage("/finances")}
           />
           <ItemList
             path={"/finances"}
-            icon={currentPage === "settings" ? settingsIconActivated : settingsIconDisabled}
+            icon={currentPage === "/settings" ? settingsIconActivated : settingsIconDisabled}
             alt="Ícone representando a página de configurações."
-            onClick={() => setCurrentPage("settings")}
+            onClick={() => setCurrentPage("/settings")}
           />
         </ul>
       </nav>
