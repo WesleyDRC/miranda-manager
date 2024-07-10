@@ -1,11 +1,12 @@
 .aside {
+	padding: 48px 0px 10px 0px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	gap: 24px;
 	height: 100vh;
-	max-width: 90px;
+	max-width: 96px;
 	width: 100%;
-	padding: 10px 0px;
 	z-index: 1000;
 	position: fixed;
 	top: 0;
@@ -28,6 +29,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 20px;
+	position: relative;
 }
 
 .help {
@@ -41,12 +43,10 @@
 
 .arrowSidebar {
 	position: absolute;
-	top: 50%;
 	transform: translateY(-50%);
 	right: -10px;
 	cursor: pointer;
 	transition: max-width 0.2s ease;
-
 }
 .arrowSidebar:hover img {
 	width: 25px;

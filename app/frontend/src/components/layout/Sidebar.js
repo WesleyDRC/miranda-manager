@@ -33,12 +33,12 @@ export function Sidebar(props) {
     <aside className={`${styles.aside} ${styles[props.customClass]}`}>
       <div className={styles.logo}>
         <img src={logo} alt="Logo Miranda Manager" />
-        <div className={`${styles.arrowSidebar} ${styles[props.customClass]}`} onClick={props.handleSidebarSize}>
-          <img src={arrowSidebar} alt="Seta da Sidebar" />
-        </div>
       </div>
       <nav>
         <ul className={styles.list}>
+          <div className={`${styles.arrowSidebar} ${styles[props.customClass]}`} onClick={props.handleSidebarSize}>
+            <img src={arrowSidebar} alt="Seta da Sidebar" />
+          </div>
           <ItemList 
             path={"/dashboard"} 
             icon={currentPage === "/dashboard" ? homeIconActivated : homeIconDisabled} 
