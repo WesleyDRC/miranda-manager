@@ -3,118 +3,155 @@ import styles from "./RentalFinanceForm.module.css";
 import { Input } from "./Input";
 import { ButtonNextStep } from "./ButtonNextStep";
 
+import { formatDate } from "../../utils/formatHour";
+
 import AxiosRepository from "../../repository/AxiosRepository";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ErrorMessage } from "@hookform/error-message";
+import { useNavigate } from "react-router-dom"
 
-export function RentalFinanceForm({selectedOption}) {
-	
-  const [formData, setFormData] = useState({
-    financeName: "",
-    street: "",
-    number: "",
-    value: "",
-    rentalDate: "",
-    tenant: ""
+
+import Joi from "joi";
+
+export function RentalFinanceForm({ selectedOption }) {
+
+  const navigate = useNavigate()
+
+  const financeSchema = Joi.object({
+    financeName: Joi.string().min(3).required().messages({
+      "string.empty": "Insira o nome da finança!",
+      "string.min": "Insira pelo menos 3 caracteres!",
+      "any.required": "Insira o nome da finança!",
+    }),
+    street: Joi.string().min(3).required().messages({
+      "string.empty": "Insira o nome da rua!",
+      "string.min": "Insira pelo menos 3 caracteres!",
+      "any.required": "Insira o nome da rua!",
+    }),
+    number: Joi.string().min(1).required().messages({
+      "string.empty": "Insira o número do endereço!",
+      "string.min": "Insira pelo menos 1 caractere!",
+      "any.required": "Insira o número do endereço!",
+    }),
+    value: Joi.string().min(1).required().messages({
+      "string.empty": "Insira o valor do aluguel!",
+      "string.min": "Insira pelo menos 1 caractere!",
+      "any.required": "Insira o valor do aluguel!",
+    }),
+    startRental: Joi.date().required().messages({
+      "any.required": "Insira a data que começou o aluguel!",
+      "date.empty": "Insira a data que começou o aluguel!",
+      "date.base": "Insira a data que começou o aluguel!",
+    }),
+    tenant: Joi.string().min(3).required().messages({
+      "string.empty": "Insira o nome do inquilino!",
+      "string.min": "Insira pelo menos 3 caracteres!",
+      "any.required": "Insira o nome do inquilino!",
+    }),
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  
-  const submit =  async (e) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(financeSchema),
+  });
 
-    e.preventDefault()
+  const onSubmit = async (data) => {
 
-    console.log(selectedOption)
+    const startRental = formatDate(data.startRental)
 
     const response = await AxiosRepository.createFinance({
-      name: formData.financeName,
+      name: data.financeName,
       categoryId: selectedOption,
-      rentalName: formData.tenant,
-      rentalValue: formData.value,
-      rentalStreet: formData.street,
-      rentalStreetNumber: formData.number,
-      startRental: formData.startRental,
+      rentalName: data.tenant,
+      rentalValue: data.value,
+      rentalStreet: data.street,
+      rentalStreetNumber: data.number,
+      startRental: startRental,
     })
 
-    console.log("ENVIOU")
+    navigate("/dashboard")
+  };
 
-    console.log(response)
-
-    console.log(e)
-  }
+  const renderErrorForm = (fieldName) => {
+    return (
+      <ErrorMessage
+        errors={errors}
+        name={fieldName}
+        render={({ message }) => (
+          <p className={styles.errorMessage}>{message}</p>
+        )}
+      />
+    );
+  };
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.fields}>
         <Input
           id="financeName"
           name="financeName"
           placeholder=" "
-          value={formData.financeName}
-          onChange={handleChange}
           text="Nome da finança"
-          required
+          {...register("financeName")}
         />
+
+        {renderErrorForm("financeName")}
+
         <div className={styles.streetAndNumber}>
           <Input
             id="rentalStreet"
             name="street"
             placeholder=" "
-            value={formData.street}
-            onChange={handleChange}
             text="Rua"
-            required
+            {...register("street")}
           />
           <Input
             id="rentalNumber"
             name="number"
             placeholder=" "
-            value={formData.number}
-            onChange={handleChange}
             text="N°"
             customClass="streetNumber"
-            required
+            {...register("number")}
           />
         </div>
-
+        {renderErrorForm("street")}
+        {renderErrorForm("streetNumber")}
         <Input
           id="rentalValue"
           name="value"
           placeholder=" "
-          value={formData.value}
-          onChange={handleChange}
           text="Valor"
-          required
+          {...register("value")}
         />
+        {renderErrorForm("value")}
         <Input
-          type={formData.rentalDate ? "date" : "text"}
-          id="rentalDate"
-          name="rentalDate"
+          type="date"
+          id="startRental"
           placeholder=" "
-          value={formData.rentalDate}
-          onChange={handleChange}
           text="Quando começou o aluguel?"
-          onFocus={(e) => (e.target.type = "date")}
-          required
+          {...register("startRental")}
         />
+        {renderErrorForm("startRental")}
         <Input
           type="text"
           id="tenant"
-          name="tenant"
           placeholder=" "
-          value={formData.tenant}
-          onChange={handleChange}
           text="Nome do inquilino"
-          required
+          {...register("tenant")}
         />
+        {renderErrorForm("tenant")}
       </div>
-      <ButtonNextStep type="submit" text={"CRIAR FINANÇA!"} />
+
+      <ButtonNextStep
+        onClick={() => console.log(errors)}
+        type="submit"
+        text={"CRIAR FINANÇA!"}
+      />
     </form>
   );
 }

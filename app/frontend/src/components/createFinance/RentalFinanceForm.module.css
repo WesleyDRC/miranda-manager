@@ -2,11 +2,19 @@
 .fields {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
 	margin-bottom: 16px;
 	max-width: 376px;
 }
 .streetAndNumber {
 	display: flex;
 	gap: 16px;
+}
+.fields > div {
+	margin: 8px 0;
+}
+.errorMessage {
+	text-align: center;
+	color: var(--error-message);
+	font-size: 1.4rem;
+	padding: 0;
 }
