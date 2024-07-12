@@ -1,0 +1,48 @@
+.finance {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.financeType {
+	display: flex;
+	gap: 4px;
+	color: var(--gray);
+	align-items: center;
+	font-size: 1.6rem;
+	font-weight: bold;
+	font-family: "Noto Sans", sans-serif;
+}
+
+.financeData {
+	padding: 24px;
+	width: 100%;
+	background-color: var(--white);
+	border-radius: 8px;
+}
+
+.tenantData {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	color: var(--gray)
+}
+
+.descriptonList {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.descriptonList dt, dd {
+	flex: 1 1 50%;
+	margin: 0;
+	font-size: 1.4rem;
+}
+dt {
+	font-weight: bold;
+}
+
+.cards {
+	display: flex;
+	gap: 16px;
+}
