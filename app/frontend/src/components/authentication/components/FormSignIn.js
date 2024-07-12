@@ -22,7 +22,6 @@ export function FormSignIn() {
     e.preventDefault();
 
     if(!email || !password) {
-      console.log("VAZIO?")
       setError("Preencha todos os campos!")
       return
     }
@@ -35,7 +34,7 @@ export function FormSignIn() {
       return
     }
 
-    navigate("/")
+    navigate("/dashboard")
   }
 
   return (

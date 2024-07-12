@@ -15,6 +15,10 @@ class AxiosRepository {
     });
   }
 
+  async getFinances() {
+    return await this.#axiosClient.get("/finance");
+  }
+
   async createFinance({
     name,
     categoryId,
@@ -48,4 +52,6 @@ class AxiosRepository {
   }
 }
 
-export default new AxiosRepository();
+const axiosRepositoryInstance = new AxiosRepository()
+
+export default axiosRepositoryInstance;
