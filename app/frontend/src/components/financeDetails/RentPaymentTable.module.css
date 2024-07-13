@@ -1,0 +1,43 @@
+.paymentsTable {
+  width: 100%;
+	border-collapse: collapse;
+	background-color: var(--white);
+}
+
+.paymentsTable th,
+.paymentsTable td {
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+	border: none;
+	font-size: 1.4rem;
+}
+
+.paymentsTable th {
+  background-color: var(--gray);
+	color: var(--white);
+}
+
+.headerContent {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.paymentsTable td {
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.pendingStatus {
+  color: var(--red);
+	font-weight: bold;
+}
+
+.paidStatus {
+  color: var(--green);
+}
+
+.editLink {
+  text-decoration: none;
+  font-size: 1.2em;
+}

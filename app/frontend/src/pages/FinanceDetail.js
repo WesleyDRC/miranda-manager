@@ -1,6 +1,7 @@
 import styles from "./FinanceDetail.module.css"
 
 import { AssetCard } from "../components/dashboard/components/AssetCard"
+import { RentPaymentTable } from "../components/financeDetails/RentPaymentTable"
 
 import rentIcon from "../assets/rent-icon.svg"
 
@@ -9,8 +10,6 @@ import { useParams } from "react-router-dom"
 export function FinanceDetail() {
 
 	const { id } = useParams()
-
-	console.log(`ID: ${id}`)
 
 	return (
 		<main className={styles.finance}>	
@@ -45,6 +44,8 @@ export function FinanceDetail() {
 					</div>
 				</div>
 			</section>
+
+			<RentPaymentTable />
 		</main>
 	)
 }
