@@ -63,4 +63,26 @@ export class FinanceRepository implements IFinanceRepository {
 
 		return finances
 	}
+
+	async findById(id: string, userId: string): Promise<IFinance | null> {
+		const financeFound = await Finance.findOne({
+			_id: id,
+			userId
+		}).populate("rentId").populate("categoryId")
+
+
+		if(!financeFound) {
+			return null
+		}
+
+		const finance: IFinance = {
+			id: financeFound._id,
+			name: financeFound.name,
+			categoryId: financeFound.categoryId,
+			rentId: financeFound.rentId,
+			userId: financeFound.userId
+		}
+
+		return finance
+  }
 }

@@ -5,4 +5,5 @@ export interface IFinanceRepository {
 	create(finance: IStoreFinanceDTO): Promise<IFinance>
 	findByName(name: string): Promise<IFinance | null>
 	findAll(userId: string): Promise<IFinance[] | []>
+	findById(id: string, userId: string): Promise<IFinance | null>
 }
