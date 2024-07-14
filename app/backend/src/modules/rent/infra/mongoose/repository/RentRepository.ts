@@ -15,6 +15,7 @@ export class RentRepository implements IRentRepository {
       street: rent.street,
       streetNumber: rent.streetNumber,
       startRental: rent.startRental,
+      userId: rent.userId
     });
 
     const rental = {
@@ -42,6 +43,29 @@ export class RentRepository implements IRentRepository {
       month: rentMonthCreated.month,
       paid: rentMonthCreated.paid,
       rentId: rentMonthCreated.rentId
+		}
+
+		return rent
+  }
+
+  async findById(id: string, userId: string): Promise<IRent> {
+    const rentFound = await Rent.findOne({
+			_id: id,
+			userId
+		})
+
+		if(!rentFound) {
+			return null
+		}
+
+		const rent: IRent = {
+			id: rentFound._id,
+			name: rentFound.name,
+      value: rentFound.value,
+      street: rentFound.street,
+      streetNumber: rentFound.streetNumber,
+      startRental: rentFound.startRental,
+      userId: rentFound.userId
 		}
 
 		return rent

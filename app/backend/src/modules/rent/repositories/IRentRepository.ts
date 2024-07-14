@@ -7,4 +7,5 @@ import { IRentMonth } from "../entities/IRentMonth"
 export interface IRentRepository {
 	create(rent: IStoreRentDTO): Promise<IRent>
 	createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth>
+	findById(id: string, userId: string): Promise<IRent>
 }
