@@ -1,5 +1,5 @@
 interface IRentMonth {
-  month: string;
+  dateMonth: string;
   paid: boolean;
 }
 

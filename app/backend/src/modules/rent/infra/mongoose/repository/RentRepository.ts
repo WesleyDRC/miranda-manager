@@ -33,14 +33,16 @@ export class RentRepository implements IRentRepository {
 
   async createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth>{
     const rentMonthCreated = await RentMonth.create({
-      month: rentMonth.month,
+      dateMonth: rentMonth.month,
+      amountPaid: rentMonth.amountPaid,
       paid: rentMonth.paid,
       rentId: rentMonth.rentId
 		})
 
 		const rent: IRentMonth = {
 			id: rentMonthCreated._id,
-      month: rentMonthCreated.month,
+      dateMonth: rentMonthCreated.dateMonth,
+      amountPaid: rentMonthCreated.amountPaid,
       paid: rentMonthCreated.paid,
       rentId: rentMonthCreated.rentId
 		}
@@ -57,15 +59,6 @@ export class RentRepository implements IRentRepository {
 		if(!rentFound) {
 			return null
 		}
-
-    const rentMonths = await this.findRentMonthById(id)
-
-    const months = rentMonths.map((month) => {
-      return {
-        month: month.month, 
-        paid: month.paid
-      };
-    });
     
 		const rent: IRent = {
 			id: rentFound._id,
@@ -74,16 +67,25 @@ export class RentRepository implements IRentRepository {
       street: rentFound.street,
       streetNumber: rentFound.streetNumber,
       startRental: rentFound.startRental,
-      months: months,
       userId: rentFound.userId
 		}
 
 		return rent
   }
 
-  async findRentMonthById(rentId: string) {
+  async findAllRentMonthById(rentId: string): Promise<IRentMonth[]> {
     const rentMonthFound = await RentMonth.find({ rentId })
 
-    return rentMonthFound
+    const rentMonths: IRentMonth[] = rentMonthFound.map((rentMonth) => {
+      return {
+        id: rentMonth._id,
+        dateMonth: rentMonth.dateMonth,
+        amountPaid: rentMonth.amountPaid,
+        paid: rentMonth.paid,
+        rentId: rentMonth.rentId
+      }
+    })
+
+    return rentMonths
   }
 }

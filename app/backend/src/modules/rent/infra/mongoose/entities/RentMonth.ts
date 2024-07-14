@@ -8,19 +8,23 @@ const rentMonthSchema = new mongoose.Schema(
 			type: String,
 			default: uuidv4
 		},
-		month: {
-			type: String,
-			require: true,
+		dateMonth: {
+			type: Date,
+			required: true,
+		},
+		amountPaid: {
+			type: Number,
+			default: 0
 		},
 		paid: {
 			type: Boolean,
 			default: false,
-			require: true
+			required: true
 		},
 		rentId: {
 			type: String,
 			ref: "Rent",
-			require: true
+			required: true
 		}
 	}
 )

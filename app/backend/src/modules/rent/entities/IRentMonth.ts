@@ -1,6 +1,7 @@
 export interface IRentMonth {
 	id: string,
-	month: string,
+	dateMonth: Date,
+	amountPaid: number,
 	paid: boolean,
 	rentId: string
 }

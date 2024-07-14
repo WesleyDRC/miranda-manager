@@ -6,6 +6,8 @@ import { IRent } from "../entities/IRent";
 
 import { rentConstants } from "../contants/rentConstants";
 
+import { formatDateToMMDDYY } from "../../../shared/utils/formatDateTOMMDDYY";
+
 import { AppError } from "../../../shared/errors/AppError";
 
 @injectable()
@@ -16,11 +18,23 @@ export class GetRentByIdUseCase implements IUseCase {
   ) {}
 
   async execute({ id, userId }): Promise<IRent> {
-    const rent = await this.rentRepository.findById(id, userId);
+    let rent = await this.rentRepository.findById(id, userId);
 
 		if(!rent) {
 			throw new AppError(rentConstants.NOT_FOUND, 404)
 		}
+
+    const rentMonths = await this.rentRepository.findAllRentMonthById(id)
+
+    const months = rentMonths.map((month) => {
+      return {
+        dateMonth: formatDateToMMDDYY(month.dateMonth), 
+        amountPaid: month.amountPaid,
+        paid: month.paid
+      };
+    });
+
+    rent.months = months
 
     return rent;
   }

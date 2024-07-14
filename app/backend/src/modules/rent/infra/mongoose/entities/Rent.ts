@@ -1,39 +1,39 @@
-import mongoose from "mongoose";
+	import mongoose from "mongoose";
 
-import {v4 as uuidv4} from "uuid"
+	import {v4 as uuidv4} from "uuid"
 
-const rentSchema = new mongoose.Schema(
-	{
-		_id: {
-			type: String,
-			default: uuidv4
-		},
-		name: {
-			type: String,
-			require: true
-		},
-		value: {
-			type: String,
-			require: true
-		},
-		street: {
-			type: String,
-			require: true
-		},
-		streetNumber: {
-			type: String,
-			require: true
-		},
-		startRental: {
-			type: String,
-			require: true
-		},
-		userId: {
-			type: String,
-			require: true,
-			ref: "User"
+	const rentSchema = new mongoose.Schema(
+		{
+			_id: {
+				type: String,
+				default: uuidv4
+			},
+			name: {
+				type: String,
+				required: true
+			},
+			value: {
+				type: String,
+				required: true
+			},
+			street: {
+				type: String,
+				required: true
+			},
+			streetNumber: {
+				type: String,
+				required: true
+			},
+			startRental: {
+				type: String,
+				required: true
+			},
+			userId: {
+				type: String,
+				required: true,
+				ref: "User"
+			}
 		}
-	}
-)
+	)
 
-export const Rent = mongoose.model("Rent", rentSchema)
+	export const Rent = mongoose.model("Rent", rentSchema)
