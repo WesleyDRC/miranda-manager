@@ -17,6 +17,4 @@ export class GetFinanceByIdUseCase implements IUseCase {
 
 		return financeFound
 	}
-
-	
 }

@@ -1,4 +1,4 @@
-import { IStoreRentDTO } from "../dtos/IStoreRent";
+import { IStoreRentDTO } from "../dtos/IStoreRentDTO";
 import { IRent } from "../entities/IRent";
 import { IRentRepository } from "../repositories/IRentRepository";
 import { IUseCase } from "./ports/IUseCase";

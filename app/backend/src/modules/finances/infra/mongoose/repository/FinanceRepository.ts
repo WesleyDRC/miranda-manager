@@ -6,7 +6,6 @@ import { Finance } from "../entities/Finance";
 
 export class FinanceRepository implements IFinanceRepository {
 	async create({name, categoryId, rentId, userId}: IStoreFinanceDTO): Promise<IFinance> {
-
 		const financeCreated = await Finance.create({
 			name,
 			categoryId,
@@ -69,7 +68,6 @@ export class FinanceRepository implements IFinanceRepository {
 			_id: id,
 			userId
 		}).populate("rentId").populate("categoryId")
-
 
 		if(!financeFound) {
 			return null
