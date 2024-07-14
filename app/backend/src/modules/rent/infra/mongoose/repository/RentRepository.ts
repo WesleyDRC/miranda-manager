@@ -58,6 +58,15 @@ export class RentRepository implements IRentRepository {
 			return null
 		}
 
+    const rentMonths = await this.findRentMonthById(id)
+
+    const months = rentMonths.map((month) => {
+      return {
+        month: month.month, 
+        paid: month.paid
+      };
+    });
+    
 		const rent: IRent = {
 			id: rentFound._id,
 			name: rentFound.name,
@@ -65,9 +74,16 @@ export class RentRepository implements IRentRepository {
       street: rentFound.street,
       streetNumber: rentFound.streetNumber,
       startRental: rentFound.startRental,
+      months: months,
       userId: rentFound.userId
 		}
 
 		return rent
+  }
+
+  async findRentMonthById(rentId: string) {
+    const rentMonthFound = await RentMonth.find({ rentId })
+
+    return rentMonthFound
   }
 }

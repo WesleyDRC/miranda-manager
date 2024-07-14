@@ -1,3 +1,8 @@
+interface IRentMonth {
+  month: string;
+  paid: boolean;
+}
+
 export interface IRent {
 	id: string,
 	name: string,
@@ -5,5 +10,6 @@ export interface IRent {
 	street: string,
 	streetNumber: string,
 	startRental: string,
+	months?: IRentMonth[],
 	userId: string
 }
