@@ -9,4 +9,5 @@ export interface IRentRepository {
 	createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth>
 	findById(id: string, userId: string): Promise<IRent>
 	findAllRentMonthById(rentId: string,): Promise<IRentMonth[]>
+	updateRentMonth(rentId, updates): Promise<any>
 }

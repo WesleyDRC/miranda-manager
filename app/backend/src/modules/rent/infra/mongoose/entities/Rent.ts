@@ -28,6 +28,14 @@
 				type: String,
 				required: true
 			},
+			grossIncome: {
+				type: Number,
+				default: 0
+			},
+			netIncome: {
+				type: Number,
+				default: 0
+			},
 			userId: {
 				type: String,
 				required: true,

@@ -15,7 +15,7 @@ export class RentRepository implements IRentRepository {
       street: rent.street,
       streetNumber: rent.streetNumber,
       startRental: rent.startRental,
-      userId: rent.userId
+      userId: rent.userId,
     });
 
     const rental = {
@@ -25,56 +25,60 @@ export class RentRepository implements IRentRepository {
       street: rentalCreated.street,
       streetNumber: rentalCreated.streetNumber,
       startRental: rentalCreated.startRental,
+      grossIncome: rentalCreated.grossIncome,
+      netIncome: rentalCreated.netIncome,
       userId: rentalCreated.userId,
     };
 
     return rental;
   }
 
-  async createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth>{
+  async createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth> {
     const rentMonthCreated = await RentMonth.create({
       dateMonth: rentMonth.month,
       amountPaid: rentMonth.amountPaid,
       paid: rentMonth.paid,
-      rentId: rentMonth.rentId
-		})
+      rentId: rentMonth.rentId,
+    });
 
-		const rent: IRentMonth = {
-			id: rentMonthCreated._id,
+    const rent: IRentMonth = {
+      id: rentMonthCreated._id,
       dateMonth: rentMonthCreated.dateMonth,
       amountPaid: rentMonthCreated.amountPaid,
       paid: rentMonthCreated.paid,
-      rentId: rentMonthCreated.rentId
-		}
+      rentId: rentMonthCreated.rentId,
+    };
 
-		return rent
+    return rent;
   }
 
   async findById(id: string, userId: string): Promise<IRent> {
     const rentFound = await Rent.findOne({
-			_id: id,
-			userId
-		})
+      _id: id,
+      userId,
+    });
 
-		if(!rentFound) {
-			return null
-		}
-    
-		const rent: IRent = {
-			id: rentFound._id,
-			name: rentFound.name,
+    if (!rentFound) {
+      return null;
+    }
+
+    const rent: IRent = {
+      id: rentFound._id,
+      name: rentFound.name,
       value: rentFound.value,
       street: rentFound.street,
       streetNumber: rentFound.streetNumber,
       startRental: rentFound.startRental,
-      userId: rentFound.userId
-		}
+      grossIncome: rentFound.grossIncome,
+      netIncome: rentFound.netIncome,
+      userId: rentFound.userId,
+    };
 
-		return rent
+    return rent;
   }
 
   async findAllRentMonthById(rentId: string): Promise<IRentMonth[]> {
-    const rentMonthFound = await RentMonth.find({ rentId })
+    const rentMonthFound = await RentMonth.find({ rentId });
 
     const rentMonths: IRentMonth[] = rentMonthFound.map((rentMonth) => {
       return {
@@ -82,10 +86,27 @@ export class RentRepository implements IRentRepository {
         dateMonth: rentMonth.dateMonth,
         amountPaid: rentMonth.amountPaid,
         paid: rentMonth.paid,
-        rentId: rentMonth.rentId
-      }
-    })
+        rentId: rentMonth.rentId,
+      };
+    });
 
-    return rentMonths
+    return rentMonths;
+  }
+
+  async updateRent(id, updates) {
+    const updatedRent = await Rent.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+    return updatedRent;
+  }
+
+  async updateRentMonth(rentId, updates) {
+    const updatedRentMonth = await RentMonth.findOneAndUpdate(
+      { rentId },
+      updates,
+      { new: true, runValidators: true }
+    );
+    return updatedRentMonth;
   }
 }

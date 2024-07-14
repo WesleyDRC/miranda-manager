@@ -18,6 +18,9 @@ export class GetRentByIdUseCase implements IUseCase {
   ) {}
 
   async execute({ id, userId }): Promise<IRent> {
+
+    await this.rentRepository.updateRentMonth(id, { amountPaid: 1212313 });
+
     let rent = await this.rentRepository.findById(id, userId);
 
 		if(!rent) {

@@ -11,5 +11,7 @@ export interface IRent {
 	streetNumber: string,
 	startRental: string,
 	months?: IRentMonth[],
+	grossIncome: number,
+	netIncome: number,
 	userId: string
 }
