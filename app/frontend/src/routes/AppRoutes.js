@@ -10,7 +10,7 @@ import { Dashboard } from "../pages/Dashboard"
 import { CreateFinance } from "../pages/CreateFinance"
 import { CreateCategory } from "../pages/CreateCategory"
 import { Finances } from "../pages/Finances"
-import { FinanceDetail } from "../pages/FinanceDetail"
+import { FinanceRentDetail } from "../pages/FinanceRentDetail"
 
 export function AppRoutes() {
 	const router = createBrowserRouter([
@@ -38,8 +38,8 @@ export function AppRoutes() {
 					element: <Finances />
 				},
 				{
-					path: "/finance/:id", 
-					element: <FinanceDetail />
+					path: "/finance/rent/:id", 
+					element: <FinanceRentDetail />
 				}
 			]
 		}

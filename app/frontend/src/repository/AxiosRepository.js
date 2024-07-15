@@ -50,8 +50,12 @@ class AxiosRepository {
   async getCategories() {
     return await this.#axiosClient.get("/category");
   }
+
+  async getRentById({id}) {
+    return await this.#axiosClient.get(`/rent/${id}`)
+  }
 }
 
-const axiosRepositoryInstance = new AxiosRepository()
+export const axiosRepositoryInstance = new AxiosRepository()
 
 export default axiosRepositoryInstance;

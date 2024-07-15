@@ -58,7 +58,7 @@ export function RentPaymentTable() {
             </div>
           </th>
           <th onClick={() => onSort("year")}>
-           <div className={styles.headerContent}>
+            <div className={styles.headerContent}>
               Ano <img src={SortIcon} alt="Sort icon" />
             </div>
           </th>
