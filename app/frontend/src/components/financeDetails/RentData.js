@@ -4,7 +4,7 @@ import { AssetCard } from "../dashboard/components/AssetCard"
 
 import priceBRL from "../../utils/formatPrice"
 
-import { formatDate } from "../../utils/formatDate"
+import {formatDate } from "../../utils/formatDate"
 
 export function RentData({
 	tenant,

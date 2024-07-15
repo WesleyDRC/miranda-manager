@@ -19,9 +19,7 @@ export function FinanceRentDetail() {
 	useEffect(() => {
 		axiosRepositoryInstance.getRentById({id}).then((resp) => {
 			setRentData(resp.data.rent)
-			console.log(resp.data.rent)
 		}).catch((error) => {
-			console.error(error)
 		})
 	}, [id])
 
@@ -45,7 +43,7 @@ export function FinanceRentDetail() {
 				/>
 			</section>
 
-			<RentPaymentTable />
+			<RentPaymentTable months={rentData.months}/>
 		</main>
 	)
 }

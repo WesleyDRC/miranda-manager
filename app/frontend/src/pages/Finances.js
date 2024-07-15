@@ -34,8 +34,6 @@ export function Finances() {
           </span>
         )
       })}
-
-
     </main>
   );
 }

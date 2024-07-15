@@ -3,17 +3,12 @@ import styles from "./RentPaymentTable.module.css";
 import GoToPageicon from "../../assets/go-to-page.svg";
 import SortIcon from "../../assets/sort-icon.svg";
 
+import { getMonthName } from "../../utils/formatDate"
+import { getYear } from "../../utils/formatDate"
+
 import React, { useState } from "react";
 
-export function RentPaymentTable() {
-  const [data, setData] = useState([
-    { monthNumber: 1, month: "Janeiro", year: 2024, status: "PENDENTE" },
-    { monthNumber: 2, month: "Fevereiro", year: 2024, status: "PAGO" },
-    { monthNumber: 3, month: "Março", year: 2024, status: "PAGO" },
-    { monthNumber: 4, month: "Abril", year: 2024, status: "PAGO" },
-    { monthNumber: 5, month: "Maio", year: 2024, status: "PAGO" },
-    { monthNumber: 6, month: "Junho", year: 2024, status: "PAGO" },
-  ]);
+export function RentPaymentTable({ months = [] }) {
 
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -31,7 +26,7 @@ export function RentPaymentTable() {
 
   const sortedData = React.useMemo(() => {
     if (sortConfig.key !== null) {
-      const sorted = [...data].sort((a, b) => {
+      const sorted = [...months].sort((a, b) => {
         if (sortConfig.key === "status") {
           return sortConfig.direction === "ascending" ? 1 : -1;
         }
@@ -45,8 +40,8 @@ export function RentPaymentTable() {
       return sorted;
     }
 
-    return data;
-  }, [data, sortConfig]);
+    return months;
+  }, [months, sortConfig]);
 
   return (
     <table className={styles.paymentsTable}>
@@ -72,24 +67,26 @@ export function RentPaymentTable() {
       </thead>
 
       <tbody>
-        {sortedData.map((row, index) => (
-          <tr key={index}>
-            <td>{row.month}</td>
-            <td>{row.year}</td>
-            <td
-              className={
-                row.status === "PENDENTE"
-                  ? styles.pendingStatus
-                  : styles.paidStatus
-              }
-            >
-              {row.status}
-            </td>
-            <td className={styles.editarLink}>
-              <img src={GoToPageicon} alt="Go to Page icon" />
-            </td>
-          </tr>
-        ))}
+        {sortedData.map((row, index) => {
+          return (
+            <tr key={index}>
+              <td>{getMonthName(row.dateMonth)}</td>
+              <td>{getYear(row.dateMonth)}</td>
+              <td
+                className={
+                  !row.paid
+                    ? styles.pendingStatus
+                    : styles.paidStatus
+                }
+              >
+                {!row.paid ? "PENDENTE" : "PAGO"}
+              </td>
+              <td className={styles.editarLink}>
+                <img src={GoToPageicon} alt="Go to Page icon" />
+              </td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   );

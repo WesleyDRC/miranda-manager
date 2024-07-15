@@ -7,3 +7,19 @@ export function formatDate(date) {
 
 	return `${day}/${month}/${year}`
 }
+
+export function getMonthName(dateString) {
+  const date = new Date(dateString);
+  
+  let monthName = date.toLocaleString('pt-BR', { month: 'long' });
+
+	monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1)
+  
+  return monthName;
+}
+
+export function getYear(dateString) {
+  const date = new Date(dateString);
+  
+  return date.getFullYear();
+}
