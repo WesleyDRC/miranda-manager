@@ -13,4 +13,5 @@ export interface IRentRepository {
 	findAllRentMonthById(rentId: string,): Promise<IRentMonth[]>
 	updateRentMonth(rentId, updates): Promise<any>
 	createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense>
+	findRentExpenses(rentId: string): Promise<IRentExpense[]>
 }

@@ -115,18 +115,33 @@ export class RentRepository implements IRentRepository {
   
   async createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense> {
     const rentExpenseCreated = await RentExpense.create({
-      value: rentExpense.value,
+      amount: rentExpense.amount,
       reason: rentExpense.reason,
       rentId: rentExpense.rentId,
     });
 
     const rent: IRentExpense = {
       id: rentExpenseCreated._id,
-      value: rentExpenseCreated.value,
+      amount: rentExpenseCreated.amount,
       reason: rentExpenseCreated.reason,
       rentId: rentExpenseCreated.rentId,
     };
 
     return rent;
+  }
+
+  async findRentExpenses(rentId: string): Promise<IRentExpense[]> {
+    const rentExpenseFound = await RentExpense.find({ rentId });
+
+    const rentExpenses: IRentExpense[] = rentExpenseFound.map((rentExpense) => {
+      return {
+        id: rentExpense._id,
+        amount: rentExpense.amount,
+        reason: rentExpense.reason,
+        rentId: rentExpense.rentId
+      };
+    });
+
+    return rentExpenses;
   }
 }

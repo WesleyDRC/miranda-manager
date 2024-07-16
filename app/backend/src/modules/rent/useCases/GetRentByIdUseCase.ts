@@ -39,6 +39,10 @@ export class GetRentByIdUseCase implements IUseCase {
 
     rent.months = months
 
+    const rentExpenses = await this.rentRepository.findRentExpenses(id)
+
+    rent.expenses = rentExpenses
+
     return rent;
   }
 }

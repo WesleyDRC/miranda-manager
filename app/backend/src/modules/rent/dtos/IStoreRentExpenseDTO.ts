@@ -1,5 +1,5 @@
 export interface IStoreRentExpenseDTO {
-	value: number,
+	amount: number,
 	reason: string,
 	rentId: string
 	userId?: string

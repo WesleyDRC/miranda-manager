@@ -16,7 +16,7 @@ export class CreateRentExpenseUseCase implements IUseCase {
 		private rentRepository: IRentRepository
 	){}
 	async execute({
-		value,
+		amount,
 		reason,
 		rentId,
 		userId
@@ -29,7 +29,7 @@ export class CreateRentExpenseUseCase implements IUseCase {
 		}
 
 		const rentExpense = await this.rentRepository.createRentExpense({
-			value,
+			amount,
 			reason,
 			rentId,
 		})

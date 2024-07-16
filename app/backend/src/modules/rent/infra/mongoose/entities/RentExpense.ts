@@ -9,7 +9,7 @@ const rentExpenseSchema = new mongoose.Schema(
 			type: String,
 			default: uuidv4
 		},
-		value: {
+		amount: {
 			type: Number,
 			required: true
 		},

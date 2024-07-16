@@ -1,6 +1,6 @@
 export interface IRentExpense {
 	id: string,
-	value: number,
+	amount: number,
 	reason: string,
 	rentId: string
 }
