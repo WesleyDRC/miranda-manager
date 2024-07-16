@@ -1,10 +1,13 @@
 import { IStoreRentDTO } from "../../../dtos/IStoreRentDTO";
+import { IStoreRentExpenseDTO } from "../../../dtos/IStoreRentExpenseDTO";
 import { IStoreRentMonthDTO } from "../../../dtos/IStoreRentMonthDTO";
 import { IRent } from "../../../entities/IRent";
+import { IRentExpense } from "../../../entities/IRentExpense";
 import { IRentMonth } from "../../../entities/IRentMonth";
 import { IRentRepository } from "../../../repositories/IRentRepository";
 
 import { Rent } from "../entities/Rent";
+import { RentExpense } from "../entities/RentExpense";
 import { RentMonth } from "../entities/RentMonth";
 
 export class RentRepository implements IRentRepository {
@@ -52,7 +55,7 @@ export class RentRepository implements IRentRepository {
     return rent;
   }
 
-  async findById(id: string, userId: string): Promise<IRent> {
+  async findById({id, userId}): Promise<IRent> {
     const rentFound = await Rent.findOne({
       _id: id,
       userId,
@@ -108,5 +111,22 @@ export class RentRepository implements IRentRepository {
       { new: true, runValidators: true }
     );
     return updatedRentMonth;
+  }
+  
+  async createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense> {
+    const rentExpenseCreated = await RentExpense.create({
+      value: rentExpense.value,
+      reason: rentExpense.reason,
+      rentId: rentExpense.rentId,
+    });
+
+    const rent: IRentExpense = {
+      id: rentExpenseCreated._id,
+      value: rentExpenseCreated.value,
+      reason: rentExpenseCreated.reason,
+      rentId: rentExpenseCreated.rentId,
+    };
+
+    return rent;
   }
 }

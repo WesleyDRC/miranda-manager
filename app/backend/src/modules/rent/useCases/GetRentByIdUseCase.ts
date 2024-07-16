@@ -21,7 +21,7 @@ export class GetRentByIdUseCase implements IUseCase {
 
     await this.rentRepository.updateRentMonth(id, { amountPaid: 1212313 });
 
-    let rent = await this.rentRepository.findById(id, userId);
+    const rent = await this.rentRepository.findById({id, userId});
 
 		if(!rent) {
 			throw new AppError(rentConstants.NOT_FOUND, 404)

@@ -1,5 +1,7 @@
 import {IStoreRentDTO} from "../dtos/IStoreRentDTO"
 import { IStoreRentMonthDTO } from "../dtos/IStoreRentMonthDTO"
+import { IStoreRentExpenseDTO } from "../dtos/IStoreRentExpenseDTO"
+import { IRentExpense } from "../entities/IRentExpense"
 
 import { IRent } from "../entities/IRent"
 import { IRentMonth } from "../entities/IRentMonth"
@@ -7,7 +9,8 @@ import { IRentMonth } from "../entities/IRentMonth"
 export interface IRentRepository {
 	create(rent: IStoreRentDTO): Promise<IRent>
 	createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth>
-	findById(id: string, userId: string): Promise<IRent>
+	findById({id, userId}): Promise<IRent>
 	findAllRentMonthById(rentId: string,): Promise<IRentMonth[]>
 	updateRentMonth(rentId, updates): Promise<any>
+	createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense>
 }
