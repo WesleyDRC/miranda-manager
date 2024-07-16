@@ -23,6 +23,8 @@ export function FinanceRentDetail() {
 		})
 	}, [id])
 
+	console.log(rentData)
+
 	return (
 		<main className={styles.finance}>	
 			<section className={styles.financeType}>
@@ -43,7 +45,7 @@ export function FinanceRentDetail() {
 				/>
 			</section>
 
-			<RentPaymentTable months={rentData.months}/>
+			<RentPaymentTable months={rentData.months} rentalExpeneses={rentData.expenses} />
 
 		</main>
 	)

@@ -10,7 +10,7 @@ import { getYear } from "../../utils/formatDate"
 
 import React, { useState } from "react";
 
-export function RentPaymentTable({ months = [] }) {
+export function RentPaymentTable({ months = [], rentalExpeneses=[] }) {
 
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -106,7 +106,7 @@ export function RentPaymentTable({ months = [] }) {
       </tbody>
     </table>
 
-    {isModalOpen && <ModalEditMonthRent month={currentMonth} closeModal={closeModal} />}
+    {isModalOpen && <ModalEditMonthRent month={currentMonth} closeModal={closeModal} rentalExpeneses={rentalExpeneses}/>}
     </>
   );
 }

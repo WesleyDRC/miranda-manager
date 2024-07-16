@@ -89,13 +89,37 @@
 .table {
 	width: 100%;
 	border-collapse: collapse;
+	overflow-x: hidden;
+}
+
+.table tr {
+	display: table;   
+	width: calc(100%);
+	table-layout: fixed; 
 }
 .table th, .table td {
 	border: 1px solid var(--light-gray-border);
 	padding: 8px;
 }
-.table th {
-	background-color: var(--light-gray);
+.table tbody tr {
+	width: calc(100% + 10px);
+}
+.table tbody {
+	display: block;   
+	max-height: 100px; 
+	overflow-y: auto; 
+	overflow-x: hidden;
+}
+.table tbody::-webkit-scrollbar {
+	width: 10px; 
+}
+.table tbody::-webkit-scrollbar-thumb {
+	background: var(--purple); 
+	border-radius: 8px; 
+	cursor: pointer
+}
+.table tbody::-webkit-scrollbar-thumb:hover {
+	background: var(--light-purple); 
 }
 
 .modalFooter {

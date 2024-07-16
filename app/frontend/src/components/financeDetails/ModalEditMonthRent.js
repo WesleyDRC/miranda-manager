@@ -5,10 +5,9 @@ import alertIcon from "../../assets/alert-icon.svg"
 import uploadIcon from "../../assets/upload-icon.svg"
 import editIcon from "../../assets/edit-icon.svg"
 
-import { useState } from "react"
+import priceBRL from "../../utils/formatPrice"
 
-export default function ModalEditMonthRent({ month = "Janeiro", paid=false , closeModal}) {
-
+export default function ModalEditMonthRent({ month = "Janeiro", paid=false , closeModal, rentalExpeneses = []}) {
 
 	return (
 		<div className={styles.modal} aria-labelledby="modalTitle">
@@ -56,25 +55,26 @@ export default function ModalEditMonthRent({ month = "Janeiro", paid=false , clo
 								<span> Editar </span>
 							</div>
 						</div>
-						
-						<table className={styles.table}>
-							<thead>
-								<tr>
-									<th>
-										Valor
-									</th>
-									<th>
-										Motivo
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td> R$ 120,00</td>
-									<td> Conta de água </td>
-								</tr>
-							</tbody>
-						</table>
+
+						<div className={styles.tableContainer}>
+							<table className={styles.table}>
+									<thead>
+											<tr>
+												<th>Valor</th>
+												<th>Motivo</th>
+											</tr>
+									</thead>
+									<tbody>
+										{rentalExpeneses.map((expense, index) => (
+												<tr key={index}>
+														<td>{priceBRL(parseFloat(expense.amount))}</td>
+														<td>{expense.reason}</td>
+												</tr>
+										))}
+									</tbody>
+							</table>
+						</div>
+
 					</section>
 				</main>
 				
