@@ -1,5 +1,7 @@
 import styles from "./RentPaymentTable.module.css";
 
+import ModalEditMonthRent from "./ModalEditMonthRent";
+
 import GoToPageicon from "../../assets/go-to-page.svg";
 import SortIcon from "../../assets/sort-icon.svg";
 
@@ -14,6 +16,8 @@ export function RentPaymentTable({ months = [] }) {
     key: null,
     direction: "ascending",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState('');
 
   const onSort = (columnKey) => {
     let direction = "ascending";
@@ -43,7 +47,17 @@ export function RentPaymentTable({ months = [] }) {
     return months;
   }, [months, sortConfig]);
 
+  const handleEditMonth = ({ month }) => {
+    setCurrentMonth(month);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <table className={styles.paymentsTable}>
       <thead>
         <tr>
@@ -81,13 +95,18 @@ export function RentPaymentTable({ months = [] }) {
               >
                 {!row.paid ? "PENDENTE" : "PAGO"}
               </td>
-              <td className={styles.editarLink}>
-                <img src={GoToPageicon} alt="Go to Page icon" />
+              <td className={styles.editLink} onClick={() => handleEditMonth({ month: getMonthName(row.dateMonth)})}>
+                <span>
+                  <img src={GoToPageicon} alt="Go to Page icon" />
+                </span>
               </td>
             </tr>
           )
         })}
       </tbody>
     </table>
+
+    {isModalOpen && <ModalEditMonthRent month={currentMonth} closeModal={closeModal} />}
+    </>
   );
 }

@@ -44,6 +44,7 @@ export function FinanceRentDetail() {
 			</section>
 
 			<RentPaymentTable months={rentData.months}/>
+
 		</main>
 	)
 }

@@ -3,8 +3,10 @@
 	--error-message: red;
 	--white: white;
 	--gray: #5F5F5F;
+	--light-gray-border: #ddd;
+	--light-gray: #f2f2f2;
 	--purple: #5E17EB;
-	--light-purple-: #5e17ebb6;
+	--light-purple: #5e17ebb6;
 	--red: #FF0000;
 	--gren: green;
 }

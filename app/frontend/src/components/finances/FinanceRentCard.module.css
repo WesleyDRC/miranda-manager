@@ -39,7 +39,8 @@
 	max-width: 160px;
 	width: 100%;
 	transition: background 0.2s;
+	text-align: center;
 }
 .btn:hover {
-	background-color: var(--light-purple-);
+	background-color: var(--light-purple);
 }
