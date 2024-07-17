@@ -1,5 +1,5 @@
 export interface IStoreRentMonthDTO {
-	month: string,
+	dateMonth: Date,
 	amountPaid?: number,
 	paid?: boolean,
 	rentId: string

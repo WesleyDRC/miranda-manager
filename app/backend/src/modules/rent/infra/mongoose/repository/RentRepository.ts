@@ -38,7 +38,7 @@ export class RentRepository implements IRentRepository {
 
   async createRentMonth(rentMonth: IStoreRentMonthDTO): Promise<IRentMonth> {
     const rentMonthCreated = await RentMonth.create({
-      dateMonth: rentMonth.month,
+      dateMonth: rentMonth.dateMonth,
       amountPaid: rentMonth.amountPaid,
       paid: rentMonth.paid,
       rentId: rentMonth.rentId,

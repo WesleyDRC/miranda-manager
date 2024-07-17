@@ -30,7 +30,7 @@ class AxiosRepository {
     rentalValue,
     rentalStreet,
     rentalStreetNumber,
-    startRental,
+    startRental
   }) {
     return await this.#axiosClient.post("/finance", {
       name,
@@ -40,7 +40,7 @@ class AxiosRepository {
         value: rentalValue,
         street: rentalStreet,
         streetNumber: rentalStreetNumber,
-        startRental: startRental,
+        startRental: startRental
       },
     });
   }

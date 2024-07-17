@@ -12,7 +12,6 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { ErrorMessage } from "@hookform/error-message";
 import { useNavigate } from "react-router-dom"
 
-
 import Joi from "joi";
 
 export function RentalFinanceForm({ selectedOption }) {
@@ -62,7 +61,7 @@ export function RentalFinanceForm({ selectedOption }) {
 
   const onSubmit = async (data) => {
 
-    const startRental = formatDate(data.startRental)
+    const monthDate = formatDate(data.startRental)
 
     const response = await AxiosRepository.createFinance({
       name: data.financeName,
@@ -71,7 +70,7 @@ export function RentalFinanceForm({ selectedOption }) {
       rentalValue: data.value,
       rentalStreet: data.street,
       rentalStreetNumber: data.number,
-      startRental: startRental,
+      startRental: monthDate
     })
 
     navigate("/dashboard")

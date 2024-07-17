@@ -36,9 +36,14 @@ export class CreateFinanceUseCase implements IUseCase {
 
     const category = await this.getCategory(categoryId);
 
-    const rentCreated = await this.createRentIfNeeded(category.name, rent, userId);
+    const rentCreated = await this.createRentIfNeeded(
+      category.name,
+      rent,
+      userId
+    );
 
     const rentMonth = await this.createRentMonthIfNeeded(
+      category.name,
       rent.startRental,
       rentCreated.id
     );
@@ -97,9 +102,21 @@ export class CreateFinanceUseCase implements IUseCase {
     return rentCreated;
   }
 
-  private async createRentMonthIfNeeded(startRental: string, rentId: string) {
+  private async createRentMonthIfNeeded(
+    categoryName: string,
+    startRental: string,
+    rentId: string
+  ) {
+
+    if (categoryName !== "Aluguel") {
+      return null;
+    }
+
+    const [day, month, year] = startRental.split("/").map(Number);
+    const date = new Date(year, month - 1, day);
+
     const rentMonthCreated = await this.rentRepository.createRentMonth({
-      month: startRental,
+      dateMonth: date,
       rentId: rentId,
     });
 
