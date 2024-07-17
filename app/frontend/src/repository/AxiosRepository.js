@@ -54,6 +54,12 @@ class AxiosRepository {
   async getRentById({id}) {
     return await this.#axiosClient.get(`/rent/${id}`)
   }
+
+  async updateRent() {
+    return this.#axiosClient.patch(`/rent/${id}`, {
+
+    });
+  }
 }
 
 export const axiosRepositoryInstance = new AxiosRepository()

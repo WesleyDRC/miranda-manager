@@ -27,6 +27,12 @@ export default function ModalEditMonthRent({
     setShowEditPaymentStatus(!showEditPaymentStatus);
   };
 
+  const editMonthData = () => {
+    if(!paymentStatus !== paid)  {
+      console.log("Você não editou nenhum campo!")
+    }
+  }
+
   return (
     <div className={styles.modal} aria-labelledby="modalTitle">
       <div className={styles.modalContent}>
@@ -114,7 +120,12 @@ export default function ModalEditMonthRent({
           >
             Cancelar
           </button>
-          <button className={`${styles.btn} ${styles.btnEdit}`}>Editar</button>
+          <button 
+            onClick={editMonthData}
+            className={`${styles.btn} ${styles.btnEdit}`}
+          >
+            Editar
+          </button>
         </footer>
       </div>
     </div>
