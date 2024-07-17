@@ -104,13 +104,22 @@ export class RentRepository implements IRentRepository {
     return updatedRent;
   }
 
-  async updateRentMonth(rentId, updates) {
+  async updateRentMonth(rentMonthid: string, rentId, updates): Promise<IRentMonth> {
     const updatedRentMonth = await RentMonth.findOneAndUpdate(
-      { rentId },
+      { _id: rentMonthid, rentId },
       updates,
       { new: true, runValidators: true }
     );
-    return updatedRentMonth;
+
+    const rentMonth: IRentMonth = {
+      id: updatedRentMonth._id,
+      dateMonth: updatedRentMonth.dateMonth,
+      amountPaid: updatedRentMonth.amountPaid,
+      paid: updatedRentMonth.paid,
+      rentId: updatedRentMonth.rentId,
+    };
+
+    return rentMonth;
   }
   
   async createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense> {
