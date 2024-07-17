@@ -1,0 +1,45 @@
+.editPaymentStatus {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	font-weight: bold;
+}
+.toggleButton {
+	max-width: 80px;
+	width: 100%;
+	border-radius: 16px;
+	height: 30px;
+	padding: 0 5px;
+	cursor: pointer;
+	position: relative;
+	transition: background-color 0.2s;
+}
+.toggleButton.unPaid {
+	background-color: red;
+}
+.toggleButton.paid {
+	background-color: green;
+}
+
+.toggleCircle {
+	width: 25px;
+	height: 25px;
+	background-color: white;
+	border-radius: 25px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 4px;
+	transition: left 0.2s;
+}
+
+.toggleButton.paid .toggleCircle {
+	left: calc(100% - 29px)
+}
+
+.paidTxt {
+	color: var(--green);
+}
+.unPaidTxt {
+	color: var(--red)
+}
