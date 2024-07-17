@@ -16,11 +16,15 @@ export default function ModalEditMonthRent({
   closeModal,
   rentalExpeneses = [],
 }) {
-
   const [paymentStatus, setPaymentStatus] = useState(false);
+  const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
 
   const handleToggle = (status) => {
     setPaymentStatus(status);
+  };
+
+  const handleEditPaymentStatus = () => {
+    setShowEditPaymentStatus(!showEditPaymentStatus);
   };
 
   return (
@@ -43,21 +47,23 @@ export default function ModalEditMonthRent({
           <section aria-labelledby="statusTitle">
             <div className={styles.sectionTitle}>
               <h3 id="statusTitle"> Status do pagamento</h3>
-              <div className={styles.action}>
+              <div onClick={handleEditPaymentStatus} className={styles.action}>
                 <img src={editIcon} alt="Edit Payment Icon" />
                 <span> Editar </span>
               </div>
             </div>
-            <div
-              className={`${styles.status} ${
-                paid ? styles.paid : styles.pending
-              }`}
-            >
-              <img src={alertIcon} alt="Alert icon" />
-              <span> Pendente </span>
-            </div>
-						<EditPaymentStatus onToggle={handleToggle}/>
-
+            {!showEditPaymentStatus ? (
+              <div
+                className={`
+                  ${styles.status} ${ paid ? styles.paid : styles.pending
+                }`}
+              >
+                <img src={alertIcon} alt="Alert icon" />
+                <span> Pendente </span>
+              </div>
+            ) : (
+              <EditPaymentStatus paid={paymentStatus} onToggle={handleToggle} />
+            )}
           </section>
 
           <section aria-labelledby="receiptsTitle">
@@ -108,9 +114,7 @@ export default function ModalEditMonthRent({
           >
             Cancelar
           </button>
-          <button className={`${styles.btn} ${styles.btnEdit}`}>
-            Editar
-          </button>
+          <button className={`${styles.btn} ${styles.btnEdit}`}>Editar</button>
         </footer>
       </div>
     </div>
