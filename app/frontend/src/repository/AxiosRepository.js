@@ -19,6 +19,10 @@ class AxiosRepository {
     return await this.#axiosClient.get("/finance");
   }
 
+  async getFinanceById({id}) {
+    return await this.#axiosClient.get(`/finance/${id}`)
+  }
+
   async createFinance({
     name,
     categoryId,
@@ -55,13 +59,16 @@ class AxiosRepository {
     return await this.#axiosClient.get(`/rent/${id}`)
   }
 
-  async updateRent() {
-    return this.#axiosClient.patch(`/rent/${id}`, {
-
+  async updateRentMonth({rentId, rentMonthId, dateMonth, amountPaid, paid}) {
+    return this.#axiosClient.patch(`/rent/${rentId}/month/${rentMonthId}`, {
+      dateMonth,
+      amountPaid,
+      paid
     });
   }
 }
 
-export const axiosRepositoryInstance = new AxiosRepository()
+const axiosRepositoryInstance = new AxiosRepository()
 
-export default axiosRepositoryInstance;
+export default axiosRepositoryInstance
+

@@ -4,7 +4,7 @@ import rentIcon from "../../assets/rent-icon.svg"
 
 import { Link } from "react-router-dom"
 
-export function FinanceRentCard({rentId, title, description, onButtonClick}) {
+export function FinanceRentCard({financeId, rentId, title, description, onButtonClick}) {
 	return (
 		<article className={styles.card}>
 			<header className={styles.header}>
@@ -17,7 +17,7 @@ export function FinanceRentCard({rentId, title, description, onButtonClick}) {
 			</section>
 
 			<footer className={styles.footer}>
-				<Link to={`/finance/rent/${rentId}`}>
+				<Link to={`/finance/${financeId}/rent/${rentId}`}>
 					<button onClick={onButtonClick} className={styles.btn}> Ver detalhes </button>
 				</Link>
 			</footer>

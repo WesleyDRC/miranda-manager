@@ -22,6 +22,7 @@ export function Finances() {
           return (
             <FinanceRentCard
               key={finance.id}
+              financeId={finance.id}
               rentId={finance.rent._id}
               title={finance.category.name}
               description={finance.name}

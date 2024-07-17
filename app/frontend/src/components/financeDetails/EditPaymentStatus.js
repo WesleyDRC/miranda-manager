@@ -4,7 +4,7 @@ import { useState, useEffect} from "react"
 
 export function EditPaymentStatus({paid, onToggle}) {
 
-	const [isToggle, setIsToggle] = useState(false)
+	const [isToggle, setIsToggle] = useState(paid)
 
 	const handleToggleButton = () => {
 		setIsToggle(!isToggle)

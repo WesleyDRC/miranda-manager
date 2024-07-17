@@ -8,15 +8,22 @@ import editIcon from "../../assets/edit-icon.svg";
 import { EditPaymentStatus } from "./EditPaymentStatus";
 
 import priceBRL from "../../utils/formatPrice";
+
+import axiosRepositoryInstance  from "../../repository/AxiosRepository";
+
 import { useState } from "react";
 
+
 export default function ModalEditMonthRent({
+  rentId = "",
+  rentMonthId = "",
   month = "Janeiro",
   paid = false,
   closeModal,
-  rentalExpeneses = [],
+  rentalExpenses = [],
+  onRefresh
 }) {
-  const [paymentStatus, setPaymentStatus] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(paid);
   const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
 
   const handleToggle = (status) => {
@@ -25,12 +32,26 @@ export default function ModalEditMonthRent({
 
   const handleEditPaymentStatus = () => {
     setShowEditPaymentStatus(!showEditPaymentStatus);
+    setPaymentStatus(paid)
   };
 
-  const editMonthData = () => {
+  const editMonthData = async () => {
     if(!paymentStatus !== paid)  {
       console.log("Você não editou nenhum campo!")
+      return
     }
+
+    const updateRent = await axiosRepositoryInstance.updateRentMonth({
+      rentId: rentId,
+      rentMonthId: rentMonthId,
+      paid: paymentStatus
+    })
+
+
+    onRefresh();
+    closeModal();
+
+
   }
 
   return (
@@ -64,8 +85,8 @@ export default function ModalEditMonthRent({
                   ${styles.status} ${ paid ? styles.paid : styles.pending
                 }`}
               >
-                <img src={alertIcon} alt="Alert icon" />
-                <span> Pendente </span>
+                {!paid && <img src={alertIcon} alt="Alert icon" />} 
+                <span> {paid ? "PAGO" : "PENDENTE"} </span>
               </div>
             ) : (
               <EditPaymentStatus paid={paymentStatus} onToggle={handleToggle} />
@@ -101,7 +122,7 @@ export default function ModalEditMonthRent({
                   </tr>
                 </thead>
                 <tbody>
-                  {rentalExpeneses.map((expense, index) => (
+                  {rentalExpenses.map((expense, index) => (
                     <tr key={index}>
                       <td>{priceBRL(parseFloat(expense.amount))}</td>
                       <td>{expense.reason}</td>

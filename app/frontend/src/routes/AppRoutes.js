@@ -38,7 +38,7 @@ export function AppRoutes() {
 					element: <Finances />
 				},
 				{
-					path: "/finance/rent/:id", 
+					path: "/finance/:financeId/rent/:rentId", 
 					element: <FinanceRentDetail />
 				}
 			]

@@ -74,7 +74,12 @@
 	gap: 4px;
 }
 .status.pending {
-	color: red;
+	color: var(--red);
+	display: flex;
+	align-items: center;
+}
+.status.paid {
+	color: var(--green);
 	display: flex;
 	align-items: center;
 }

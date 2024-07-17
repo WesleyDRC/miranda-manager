@@ -5,19 +5,25 @@ import ModalEditMonthRent from "./ModalEditMonthRent";
 import GoToPageicon from "../../assets/go-to-page.svg";
 import SortIcon from "../../assets/sort-icon.svg";
 
-import { getMonthName } from "../../utils/formatDate"
-import { getYear } from "../../utils/formatDate"
+import { getMonthName } from "../../utils/formatDate";
+import { getYear } from "../../utils/formatDate";
 
 import React, { useState } from "react";
 
-export function RentPaymentTable({ months = [], rentalExpeneses=[] }) {
-
+export function RentPaymentTable({
+  rentId = "",
+  months = [],
+  rentalExpenses = [],
+  onRefresh
+}) {
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentMonth, setCurrentMonth] = useState('');
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [currentMonthID, setCurrentMonthID] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState(false);
 
   const onSort = (columnKey) => {
     let direction = "ascending";
@@ -47,8 +53,10 @@ export function RentPaymentTable({ months = [], rentalExpeneses=[] }) {
     return months;
   }, [months, sortConfig]);
 
-  const handleEditMonth = ({ month }) => {
+  const handleEditMonth = ({ month, paid, rentMonthId }) => {
     setCurrentMonth(month);
+    setPaymentStatus(paid);
+    setCurrentMonthID(rentMonthId);
     setIsModalOpen(true);
   };
 
@@ -58,55 +66,72 @@ export function RentPaymentTable({ months = [], rentalExpeneses=[] }) {
 
   return (
     <>
-    <table className={styles.paymentsTable}>
-      <thead>
-        <tr>
-          <th onClick={() => onSort("monthNumber")}>
-            <div className={styles.headerContent}>
-              Mês <img src={SortIcon} alt="Sort icon" />
-            </div>
-          </th>
-          <th onClick={() => onSort("year")}>
-            <div className={styles.headerContent}>
-              Ano <img src={SortIcon} alt="Sort icon" />
-            </div>
-          </th>
-          <th onClick={() => onSort("status")}>
-            <div className={styles.headerContent}>
-              Status <img src={SortIcon} alt="Sort icon" />
-            </div>
-          </th>
-          <th>Editar</th>
-        </tr>
-      </thead>
+      <table className={styles.paymentsTable}>
+        <thead>
+          <tr>
+            <th onClick={() => onSort("monthNumber")}>
+              <div className={styles.headerContent}>
+                Mês <img src={SortIcon} alt="Sort icon" />
+              </div>
+            </th>
+            <th onClick={() => onSort("year")}>
+              <div className={styles.headerContent}>
+                Ano <img src={SortIcon} alt="Sort icon" />
+              </div>
+            </th>
+            <th onClick={() => onSort("status")}>
+              <div className={styles.headerContent}>
+                Status <img src={SortIcon} alt="Sort icon" />
+              </div>
+            </th>
+            <th>Editar</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {sortedData.map((row, index) => {
-          return (
-            <tr key={index}>
-              <td>{getMonthName(row.dateMonth)}</td>
-              <td>{getYear(row.dateMonth)}</td>
-              <td
-                className={
-                  !row.paid
-                    ? styles.pendingStatus
-                    : styles.paidStatus
-                }
-              >
-                {!row.paid ? "PENDENTE" : "PAGO"}
-              </td>
-              <td className={styles.editLink} onClick={() => handleEditMonth({ month: getMonthName(row.dateMonth)})}>
-                <span>
-                  <img src={GoToPageicon} alt="Go to Page icon" />
-                </span>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+        <tbody>
+          {sortedData.map((row, index) => {
+            return (
+              <tr key={index}>
+                <td>{getMonthName(row.dateMonth)}</td>
+                <td>{getYear(row.dateMonth)}</td>
+                <td
+                  className={
+                    !row.paid ? styles.pendingStatus : styles.paidStatus
+                  }
+                >
+                  {!row.paid ? "PENDENTE" : "PAGO"}
+                </td>
+                <td
+                  className={styles.editLink}
+                  onClick={() =>
+                    handleEditMonth({
+                      month: getMonthName(row.dateMonth),
+                      paid: row.paid,
+                      rentMonthId: row.id,
+                    })
+                  }
+                >
+                  <span>
+                    <img src={GoToPageicon} alt="Go to Page icon" />
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
 
-    {isModalOpen && <ModalEditMonthRent month={currentMonth} closeModal={closeModal} rentalExpeneses={rentalExpeneses}/>}
+      {isModalOpen && (
+        <ModalEditMonthRent
+          rentId={rentId}
+          rentMonthId={currentMonthID}
+          month={currentMonth}
+          paid={paymentStatus}
+          closeModal={closeModal}
+          rentalExpenses={rentalExpenses}
+          onRefresh={onRefresh}
+        />
+      )}
     </>
   );
 }
