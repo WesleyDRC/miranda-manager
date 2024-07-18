@@ -32,7 +32,7 @@ export function RentData({
 				<dd>{streetNumber}</dd>
 
 				<dt>Início do Aluguel</dt>
-				<dd>{formatDate(startRent)}</dd>
+				<dd>{startRent}</dd>
 			</dl>
 
 			<div className={styles.cards}>

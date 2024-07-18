@@ -11,9 +11,10 @@ import { RentData } from "../components/financeDetails/RentData";
 import { useEffect, useState, useCallback } from "react";
 
 export function FinanceRentDetail() {
-  const { financeId, rentId } = useParams();
+  const {financeId, rentId} = useParams();
   const [rentData, setRentData] = useState([]);
   const [financeData, setFinanceData] = useState([]);
+
 
 	const fetchFinanceData = useCallback(() => {
     axiosRepositoryInstance.getFinanceById({ id: financeId }).then((resp) => {
@@ -25,6 +26,7 @@ export function FinanceRentDetail() {
   const fetchRentData = useCallback(() => {
     axiosRepositoryInstance.getRentById({ id:rentId }).then((resp) => {
 				setRentData(resp.data.rent);
+				console.log(resp.data.rent);
       }).catch((error) => {
       });
   }, [rentId]);
@@ -36,6 +38,7 @@ export function FinanceRentDetail() {
 	useEffect(() => {
 		fetchFinanceData();
 	}, [])
+
 
   return (
     <main className={styles.finance}>
