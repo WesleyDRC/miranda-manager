@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
 import { Rent } from "./Rent";
+import { RentExpense } from "./RentExpense";
 
 const rentMonthSchema = new mongoose.Schema({
   _id: {
@@ -16,7 +17,7 @@ const rentMonthSchema = new mongoose.Schema({
   amountPaid: {
     type: Number,
     default: 0,
-		required: true,
+    required: true,
   },
   paid: {
     type: Boolean,
@@ -31,30 +32,36 @@ const rentMonthSchema = new mongoose.Schema({
 });
 
 rentMonthSchema.post("save", async function (doc) {
-	await updateGrossIncome(doc.rentId);
+  if(doc.paid)
+    await updateEarnings(doc.rentId);
 });
 
 rentMonthSchema.post("findOneAndUpdate", async function (doc) {
-	if (doc) {
-			await updateGrossIncome(doc.rentId);
-	}
+  if (doc.paid) {
+    await updateEarnings(doc.rentId);
+  }
 });
 
-rentMonthSchema.pre("save", async function (next) {
-	if (this.isModified("amountPaid")) {
-			await updateGrossIncome(this.rentId);
-	}
-	next();
-});
-
-async function updateGrossIncome(rentId) {
+async function updateEarnings(rentId) {
   const rentMonths = await RentMonth.find({ rentId });
+  const rentExpenses = await RentExpense.find({ rentId });
+
   const totalGrossIncome = rentMonths.reduce(
     (total, rentMonth) => total + rentMonth.amountPaid,
     0
   );
 
-  await Rent.updateOne({ _id: rentId }, { grossIncome: totalGrossIncome });
+  const totalExpenseAmount = rentExpenses.reduce(
+    (total, rentExpenseAmount) => total + rentExpenseAmount.amount,
+    0
+  );
+
+  const totalNetIncome = totalGrossIncome - totalExpenseAmount;
+
+  await Rent.updateOne(
+    { _id: rentId },
+    { grossIncome: totalGrossIncome, netIncome: totalNetIncome }
+  );
 }
 
 export const RentMonth = mongoose.model("RentMonth", rentMonthSchema);

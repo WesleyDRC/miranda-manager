@@ -11,6 +11,8 @@ export interface IFinance {
 		street: string,
 		streetNumber: string,
 		startRental: string,
+		grossIncome: number,
+		netIncome: number,
 		userId: string
 	},
 	categoryId?: string,

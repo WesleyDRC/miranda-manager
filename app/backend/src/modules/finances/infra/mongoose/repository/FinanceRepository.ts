@@ -16,8 +16,8 @@ export class FinanceRepository implements IFinanceRepository {
 		const finance: IFinance = {
 			id: financeCreated._id,
 			name: financeCreated.name,
-			categoryId: financeCreated.categoryId,
-			rentId: financeCreated.rentId,
+			categoryId: financeCreated.categoryId.id,
+			rentId: financeCreated.rentId.id,
 			userId: financeCreated.userId
 		}
 
@@ -36,8 +36,8 @@ export class FinanceRepository implements IFinanceRepository {
 		const finance: IFinance = {
 			id: financeFound._id,
 			name: financeFound.name,
-			categoryId: financeFound.categoryId,
-			rentId: financeFound.rentId,
+			categoryId: financeFound.categoryId.id,
+			rentId: financeFound.rentId.id,
 			userId: financeFound.userId
 		}
 
@@ -54,8 +54,21 @@ export class FinanceRepository implements IFinanceRepository {
 			finances.push({
 				id: financeFound._id,
 				name: financeFound.name,
-				category: financeFound.categoryId,
-				rent: financeFound.rentId,
+				category: {
+					id: financeFound.categoryId.id,
+					name: financeFound.categoryId.name}
+				,
+				rent: {
+					id: financeFound.rentId.id,
+					name: financeFound.rentId.name,
+					value: financeFound.rentId.value,
+					street: financeFound.rentId.street,
+					streetNumber: financeFound.rentId.streetNumber,
+					startRental: financeFound.rentId.startRental,
+					grossIncome: financeFound.rentId.grossIncome,
+					netIncome: financeFound.rentId.netIncome,
+					userId: financeFound.rentId.userId
+				},
 				userId: financeFound.userId
 			})
 		})
@@ -76,8 +89,20 @@ export class FinanceRepository implements IFinanceRepository {
 		const finance: IFinance = {
 			id: financeFound._id,
 			name: financeFound.name,
-			categoryId: financeFound.categoryId,
-			rentId: financeFound.rentId,
+			category: {
+				id: financeFound.categoryId.id,
+				name: financeFound.categoryId.name}
+			,
+			rent: {
+				name: financeFound.rentId.name,
+				value: financeFound.rentId.value,
+				street: financeFound.rentId.street,
+				streetNumber: financeFound.rentId.streetNumber,
+				startRental: financeFound.rentId.startRental,
+				grossIncome: financeFound.rentId.grossIncome,
+				netIncome: financeFound.rentId.netIncome,
+				userId: financeFound.rentId.userId
+			},
 			userId: financeFound.userId
 		}
 

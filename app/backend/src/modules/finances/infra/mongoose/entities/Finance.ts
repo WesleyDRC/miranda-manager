@@ -2,6 +2,17 @@ import mongoose from "mongoose";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { IRent } from "../../../../rent/entities/IRent";
+import { ICategory } from "../../../../category/entities/ICategory";
+
+interface IFinance extends Document {
+  _id: string;
+  name: string;
+  categoryId: ICategory;
+  rentId: IRent;
+  userId: string;
+}
+
 const financeSchema = new mongoose.Schema(
   {
     _id: {
@@ -30,4 +41,4 @@ const financeSchema = new mongoose.Schema(
   },
 );
 
-export const Finance = mongoose.model("Finance", financeSchema);
+export const Finance = mongoose.model<IFinance>("Finance", financeSchema);
