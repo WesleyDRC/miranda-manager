@@ -20,7 +20,7 @@ export function RentPaymentTable({
     key: null,
     direction: "ascending",
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditMonthOpen, setIsModalEditMonthOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentMonthID, setCurrentMonthID] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(false);
@@ -57,11 +57,11 @@ export function RentPaymentTable({
     setCurrentMonth(month);
     setPaymentStatus(paid);
     setCurrentMonthID(rentMonthId);
-    setIsModalOpen(true);
+    setIsModalEditMonthOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeModalEditMonth = () => {
+    setIsModalEditMonthOpen(false);
   };
 
   return (
@@ -121,17 +121,18 @@ export function RentPaymentTable({
         </tbody>
       </table>
 
-      {isModalOpen && (
+      {isModalEditMonthOpen && (
         <ModalEditMonthRent
           rentId={rentId}
           rentMonthId={currentMonthID}
           month={currentMonth}
           paid={paymentStatus}
-          closeModal={closeModal}
+          closeModal={closeModalEditMonth}
           rentalExpenses={rentalExpenses}
           onRefresh={onRefresh}
         />
       )}
+
     </>
   );
 }

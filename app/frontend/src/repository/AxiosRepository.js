@@ -66,6 +66,14 @@ class AxiosRepository {
       paid
     });
   }
+
+  async createExpense({ amount, reason, rentId}) {
+    return this.#axiosClient.post("/rent/expense", {
+      amount,
+      reason,
+      rentId
+    })
+  }
 }
 
 const axiosRepositoryInstance = new AxiosRepository()
