@@ -6,7 +6,7 @@ import { IRent } from "../entities/IRent";
 
 import { rentConstants } from "../contants/rentConstants";
 
-import { formatDateToMMDDYY } from "../../../shared/utils/formatDateTOMMDDYY";
+import { formatDateToDDMMYY } from "../../../shared/utils/formatDateToDDMMYY";
 
 import { AppError } from "../../../shared/errors/AppError";
 
@@ -30,7 +30,7 @@ export class GetRentByIdUseCase implements IUseCase {
     const months = rentMonths.map((month) => {
       return {
         id: month.id,
-        dateMonth: formatDateToMMDDYY(month.dateMonth), 
+        dateMonth: formatDateToDDMMYY(month.dateMonth), 
         amountPaid: month.amountPaid,
         paid: month.paid
       };

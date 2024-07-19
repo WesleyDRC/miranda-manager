@@ -94,6 +94,7 @@ export class FinanceRepository implements IFinanceRepository {
 				name: financeFound.categoryId.name}
 			,
 			rent: {
+				id: financeFound.rentId.id,
 				name: financeFound.rentId.name,
 				value: financeFound.rentId.value,
 				street: financeFound.rentId.street,

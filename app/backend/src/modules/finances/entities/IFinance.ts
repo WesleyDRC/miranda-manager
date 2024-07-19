@@ -1,3 +1,5 @@
+import { IRent } from "../../rent/entities/IRent"
+
 export interface IFinance {
 	id: string,
 	name: string,
@@ -5,16 +7,7 @@ export interface IFinance {
 		id: string,
 		name: string
 	},
-	rent?: {
-		name: string,
-		value: string,
-		street: string,
-		streetNumber: string,
-		startRental: string,
-		grossIncome: number,
-		netIncome: number,
-		userId: string
-	},
+	rent?: IRent,
 	categoryId?: string,
 	rentId?: string,
 	userId: string
