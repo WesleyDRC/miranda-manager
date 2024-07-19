@@ -6,32 +6,49 @@ import { FunctionalityCard } from "../components/dashboard/components/Functional
 import expenseIcon from "../assets/expense.svg";
 import categoryIcon from "../assets/category.svg";
 
-import { useState } from "react";
 import { Section } from "../components/dashboard/components/Section";
 
+import { useFinance } from "../hooks/useFinance";
+
+import { useEffect } from "react";
+
 export function Dashboard() {
-  const [categories, setCategories] = useState([
+
+  const { 
+    totalRentalEarnings, 
+    totalAssets, 
+    fetchFinances 
+  } = useFinance();
+
+  useEffect(() => {
+    fetchFinances()
+    // eslint-disable-next-line
+  }, [])
+
+  console.log(totalRentalEarnings)
+
+  const assets = [
     {
       id: 1,
       name: "Meu patrimônio",
-      money: "10.000",
+      money: totalAssets,
     },
     {
       id: 2,
       name: "Investimentos",
-      money: "10.000",
+      money: "0",
     },
     {
       id: 3,
       name: "Despesas",
-      money: "10.000",
+      money: "0",
     },
     {
       id: 4,
       name: "Aluguel",
-      money: "10.000",
+      money: totalRentalEarnings
     },
-  ]);
+  ];
 
   const functionalities = [
     {
@@ -52,7 +69,7 @@ export function Dashboard() {
     <main className={styles.main}>
       <Section
         title="Dashboard"
-        children={categories.map((asset) => (
+        children={assets.map((asset) => (
           <AssetCard key={asset.id} name={asset.name} money={asset.money} />
         ))}
       />
