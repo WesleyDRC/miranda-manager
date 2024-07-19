@@ -10,13 +10,13 @@ import { getYear } from "../../utils/formatDate";
 
 import React, { useState } from "react";
 
+import { useFinance } from "../../hooks/useFinance";
+
 export function RentPaymentTable({
   rentId = "",
-  months = [],
-  rentalExpenses = [],
-  amount = 0,
-  onRefresh
 }) {
+  const { rentData } = useFinance();
+
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -24,6 +24,7 @@ export function RentPaymentTable({
   const [isModalEditMonthOpen, setIsModalEditMonthOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentMonthID, setCurrentMonthID] = useState("");
+  const [amountPaid, setAmountPaid] = useState(0);
   const [paymentStatus, setPaymentStatus] = useState(false);
 
   const onSort = (columnKey) => {
@@ -36,8 +37,8 @@ export function RentPaymentTable({
   };
 
   const sortedData = React.useMemo(() => {
-    if (sortConfig.key !== null) {
-      const sorted = [...months].sort((a, b) => {
+    if (sortConfig.key !== null && rentData.months !== undefined) {
+      const sorted = [...rentData.months].sort((a, b) => {
         if (sortConfig.key === "status") {
           return sortConfig.direction === "ascending" ? 1 : -1;
         }
@@ -51,13 +52,14 @@ export function RentPaymentTable({
       return sorted;
     }
 
-    return months;
-  }, [months, sortConfig]);
+    return rentData.months;
+  }, [rentData, sortConfig]);
 
-  const handleEditMonth = ({ month, paid, rentMonthId }) => {
+  const handleEditMonth = ({ month, paid, rentMonthId, amountPaid }) => {
     setCurrentMonth(month);
     setPaymentStatus(paid);
     setCurrentMonthID(rentMonthId);
+    setAmountPaid(amountPaid)
     setIsModalEditMonthOpen(true);
   };
 
@@ -90,7 +92,7 @@ export function RentPaymentTable({
         </thead>
 
         <tbody>
-          {sortedData.map((row, index) => {
+          {sortedData && sortedData.map((row, index) => {
             return (
               <tr key={index}>
                 <td>{getMonthName(row.dateMonth)}</td>
@@ -108,7 +110,8 @@ export function RentPaymentTable({
                     handleEditMonth({
                       month: getMonthName(row.dateMonth),
                       paid: row.paid,
-                      rentMonthId: row.id
+                      rentMonthId: row.id,
+                      amountPaid: row.amountPaid
                     })
                   }
                 >
@@ -129,12 +132,9 @@ export function RentPaymentTable({
           month={currentMonth}
           paid={paymentStatus}
           closeModal={closeModalEditMonth}
-          rentalExpenses={rentalExpenses}
-          onRefresh={onRefresh}
-          amount={amount}
+          amount={amountPaid}
         />
       )}
-
     </>
   );
 }

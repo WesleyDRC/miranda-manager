@@ -2,18 +2,17 @@ import styles from "./Finances.module.css";
 
 import { FinanceRentCard } from "../components/finances/FinanceRentCard";
 
-import AxiosRepository from "../repository/AxiosRepository";
+import { useFinance } from "../hooks/useFinance";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export function Finances() {
-  const [finances, setFinances] = useState([]);
+  const { finances, fetchFinances } = useFinance();
 
   useEffect(() => {
-    AxiosRepository.getFinances().then((resp) => {
-      setFinances(resp.data.finances);
-    });
-  }, []);
+    fetchFinances()
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <main className={styles.finances}>
@@ -33,7 +32,7 @@ export function Finances() {
           <span>
             Você ainda não possui nenhuma finança. Clique aqui para cadastrar!
           </span>
-        )
+        );
       })}
     </main>
   );

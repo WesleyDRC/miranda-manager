@@ -13,6 +13,8 @@ import priceBRL from "../../utils/formatPrice";
 
 import axiosRepositoryInstance from "../../repository/AxiosRepository";
 
+import { useFinance } from "../../hooks/useFinance";
+
 import { useState } from "react";
 
 export default function ModalEditMonthRent({
@@ -21,10 +23,14 @@ export default function ModalEditMonthRent({
   month = "Janeiro",
   paid = false,
   closeModal,
-  rentalExpenses = [],
-  onRefresh,
   amount = 0
 }) {
+
+  const {
+    rentData,
+    fetchRentData
+  } = useFinance()
+
   const [paymentStatus, setPaymentStatus] = useState(paid);
   const [amountPaid, setAmountPaid] = useState(amount);
   const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
@@ -36,10 +42,7 @@ export default function ModalEditMonthRent({
     setPaymentStatus(status);
   };
 
-  console.log(amount)
-
   const handleAmountPaid = (amount) => {
-    console.log(amount)
     setAmountPaid(amount);
   };
 
@@ -72,7 +75,7 @@ export default function ModalEditMonthRent({
       amountPaid: amountPaid
     });
 
-    onRefresh();
+    await fetchRentData(rentId);
     closeModal();
   };
 
@@ -165,7 +168,7 @@ export default function ModalEditMonthRent({
                     </tr>
                   </thead>
                   <tbody>
-                    {rentalExpenses.map((expense, index) => (
+                    {rentData.expenses && rentData.expenses.map((expense, index) => (
                       <tr key={index}>
                         <td>{priceBRL(parseFloat(expense.amount))}</td>
                         <td>{expense.reason}</td>
@@ -198,9 +201,8 @@ export default function ModalEditMonthRent({
         <ModalEditExpense
           rentId={rentId}
           month={month}
-          rentalExpenses={rentalExpenses}
+          rentalExpenses={rentData.expenses}
           closeModal={closeModalEditExpense}
-          onRefresh={onRefresh}
           modalEditExpenseClass={modalEditExpenseClass}
         />
       )}

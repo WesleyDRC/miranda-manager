@@ -26,8 +26,11 @@ export function Sidebar(props) {
   let location = useLocation()
 
   useEffect(() => {
-    setCurrentPage(location.pathname)
-  }, [])
+    const regex = /\/([^/]*)/;
+    const match = location.pathname.match(regex);
+
+    setCurrentPage(match && match[1])
+  }, [location.pathname])
 
   return (
     <aside className={`${styles.aside} ${styles[props.customClass]}`}>
@@ -41,21 +44,21 @@ export function Sidebar(props) {
           </div>
           <ItemList 
             path={"/dashboard"} 
-            icon={currentPage === "/dashboard" ? homeIconActivated : homeIconDisabled} 
+            icon={currentPage === "dashboard" ? homeIconActivated : homeIconDisabled} 
             alt="Ícone representando a página inicial."
-            onClick={() => setCurrentPage("/dashboard")}
+            onClick={() => setCurrentPage("dashboard")}
           />
           <ItemList
             path={"/finances"}
-            icon={currentPage === "/finances" ? analyticsIconActivated : analyticsIconDisabled}
+            icon={currentPage === "finances" || currentPage === "finance" ? analyticsIconActivated : analyticsIconDisabled}
             alt="Ícone representando a página de análises."
-            onClick={() => setCurrentPage("/finances")}
+            onClick={() => setCurrentPage("finances")}
           />
           <ItemList
             path={"/finances"}
-            icon={currentPage === "/settings" ? settingsIconActivated : settingsIconDisabled}
+            icon={currentPage === "settings" ? settingsIconActivated : settingsIconDisabled}
             alt="Ícone representando a página de configurações."
-            onClick={() => setCurrentPage("/settings")}
+            onClick={() => setCurrentPage("settings")}
           />
         </ul>
       </nav>

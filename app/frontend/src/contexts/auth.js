@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import { api } from '../services/api'
-import AxiosRepository from '../repository/AxiosRepository'
+import axiosRepositoryInstance from '../repository/AxiosRepository'
 
 export const AuthContext = createContext({})
 
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const SignUp = async (email, password, confirmPassword) => {
     try {
-      const response = await AxiosRepository.createUser({
+      await axiosRepositoryInstance.createUser({
         email,
         password,
         confirmPassword
