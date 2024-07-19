@@ -30,8 +30,9 @@ rentExpenseSchema.post("save", async function () {
 });
 
 async function updateNetIncome(rentId) {
-  const rentMonths = await RentMonth.find({ rentId });
+  const rentMonths = await RentMonth.find({ rentId }).where({paid:true});;
   const rentExpenses = await RentExpense.find({ rentId });
+
 
   const totalGrossIncome = rentMonths.reduce(
     (total, rentMonth) => total + rentMonth.amountPaid,
