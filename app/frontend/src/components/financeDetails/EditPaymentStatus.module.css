@@ -48,3 +48,38 @@
 .unPaidTxt {
 	color: var(--red)
 }
+
+.amountPaid {
+	margin-top: 24px;
+}
+.amountPaidInput {
+	position: relative;
+	width: 100%;
+}
+
+.formControl {
+	width: fit-content;
+	padding: 12px;
+	border: 1px solid var(--gray);
+	outline: none;
+	font-size: 1.6rem;
+	border-radius: 8px;
+}
+
+.formLabel {
+	position: absolute;
+	top: 10px;
+	left: 12px;
+	font-size: 1.6rem;
+	color: var(--gray);
+	transition: all 0.2s ease-in-out;
+}
+
+.formControl:focus + .formLabel,
+.formControl:not(:placeholder-shown) + .formLabel{
+	left: 0;
+	top: -16px;
+	font-size: 12px;
+	color: var(--gray);
+	transition: 0.2s ease;
+}

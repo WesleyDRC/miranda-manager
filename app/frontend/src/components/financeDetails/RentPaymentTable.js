@@ -14,6 +14,7 @@ export function RentPaymentTable({
   rentId = "",
   months = [],
   rentalExpenses = [],
+  amount = 0,
   onRefresh
 }) {
   const [sortConfig, setSortConfig] = useState({
@@ -107,7 +108,7 @@ export function RentPaymentTable({
                     handleEditMonth({
                       month: getMonthName(row.dateMonth),
                       paid: row.paid,
-                      rentMonthId: row.id,
+                      rentMonthId: row.id
                     })
                   }
                 >
@@ -130,6 +131,7 @@ export function RentPaymentTable({
           closeModal={closeModalEditMonth}
           rentalExpenses={rentalExpenses}
           onRefresh={onRefresh}
+          amount={amount}
         />
       )}
 

@@ -32,7 +32,7 @@ export default function ModalEditExpense({
 
   const addExpense = async () => {
 
-    const response = await axiosRepositoryInstance.createExpense({
+    await axiosRepositoryInstance.createExpense({
       amount,
       reason,
       rentId

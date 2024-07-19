@@ -23,8 +23,10 @@ export default function ModalEditMonthRent({
   closeModal,
   rentalExpenses = [],
   onRefresh,
+  amount = 0
 }) {
   const [paymentStatus, setPaymentStatus] = useState(paid);
+  const [amountPaid, setAmountPaid] = useState(amount);
   const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
   const [showModalEditExpense, setShowModalEditExpense] = useState(false);
   const [modalClass, setModalClass] = useState(styles.slideInLeft);
@@ -32,6 +34,13 @@ export default function ModalEditMonthRent({
 
   const handleToggle = (status) => {
     setPaymentStatus(status);
+  };
+
+  console.log(amount)
+
+  const handleAmountPaid = (amount) => {
+    console.log(amount)
+    setAmountPaid(amount);
   };
 
   const handleEditPaymentStatus = () => {
@@ -48,15 +57,19 @@ export default function ModalEditMonthRent({
   };
 
   const editMonthData = async () => {
-    if (!paymentStatus !== paid) {
+    if (
+      !paymentStatus !== paid &&
+      amountPaid === amount
+    ) {
       console.log("Você não editou nenhum campo!");
       return;
     }
 
-    const updateRent = await axiosRepositoryInstance.updateRentMonth({
+    await axiosRepositoryInstance.updateRentMonth({
       rentId: rentId,
       rentMonthId: rentMonthId,
       paid: paymentStatus,
+      amountPaid: amountPaid
     });
 
     onRefresh();
@@ -71,7 +84,6 @@ export default function ModalEditMonthRent({
     }, 300); 
 
     setModalEditExpenseClass(styles.slideOutRight)
-
   }
   
   return (
@@ -118,6 +130,8 @@ export default function ModalEditMonthRent({
                 <EditPaymentStatus
                   paid={paymentStatus}
                   onToggle={handleToggle}
+                  onAmountPaid={handleAmountPaid}
+                  amount={amountPaid}
                 />
               )}
             </section>

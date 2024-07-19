@@ -26,7 +26,6 @@ export function FinanceRentDetail() {
   const fetchRentData = useCallback(() => {
     axiosRepositoryInstance.getRentById({ id:rentId }).then((resp) => {
 				setRentData(resp.data.rent);
-				console.log(resp.data.rent);
       }).catch((error) => {
       });
   }, [rentId]);
@@ -37,8 +36,7 @@ export function FinanceRentDetail() {
 
 	useEffect(() => {
 		fetchFinanceData();
-	}, [])
-
+	}, [fetchFinanceData])
 
   return (
     <main className={styles.finance}>
@@ -65,6 +63,7 @@ export function FinanceRentDetail() {
         months={rentData.months}
         rentalExpenses={rentData.expenses}
         onRefresh={fetchRentData}
+        amount={rentData.value}
       />
     </main>
   );
