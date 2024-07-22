@@ -13,12 +13,12 @@ import { useState } from "react";
 export default function ModalEditExpense({
   rentId = "",
   month = "...",
+  expenses = [],
   closeModal,
   modalEditExpenseClass
 }) {
 
   const {
-    rentData,
     fetchRentData
   } = useFinance()
 
@@ -51,6 +51,7 @@ export default function ModalEditExpense({
     setAmount("")
     setReason("")
   }
+  
 
   return (
     <div         
@@ -123,7 +124,7 @@ export default function ModalEditExpense({
                   </tr>
                 </thead>
                 <tbody>
-                  {rentData.expenses && rentData.expenses.map((expense, index) => (
+                  {expenses && expenses.map((expense, index) => (
                     <tr key={index}>
                       <td>{priceBRL(parseFloat(expense.amount))}</td>
                       <td>{expense.reason}</td>

@@ -18,20 +18,19 @@ export class CreateRentExpenseUseCase implements IUseCase {
 	async execute({
 		amount,
 		reason,
-		rentId,
-		userId
+		rentMonthId
 	}: IStoreRentExpenseDTO ): Promise<IRentExpense> {
 
-    const rent = await this.rentRepository.findById({id: rentId, userId});
+    const rentMonth = await this.rentRepository.findRentMonthById({ id: rentMonthId });
 
-		if(!rent) {
-			throw new AppError(rentConstants.NOT_FOUND, 404)
+		if(!rentMonth) {
+			throw new AppError(rentConstants.RENT_MONTH_NOT_FOUND, 404)
 		}
 
 		const rentExpense = await this.rentRepository.createRentExpense({
 			amount,
 			reason,
-			rentId,
+			rentMonthId: rentMonth.id,
 		})
 
 		return rentExpense

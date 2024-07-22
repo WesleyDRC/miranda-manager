@@ -18,29 +18,31 @@ export class GetRentByIdUseCase implements IUseCase {
   ) {}
 
   async execute({ id, userId }): Promise<IRent> {
+    const rent = await this.rentRepository.findById({ id, userId });
 
-    const rent = await this.rentRepository.findById({id, userId});
+    if (!rent) {
+      throw new AppError(rentConstants.NOT_FOUND, 404);
+    }
 
-		if(!rent) {
-			throw new AppError(rentConstants.NOT_FOUND, 404)
-		}
+    const rentMonths = await this.rentRepository.findAllRentMonthById(id);
 
-    const rentMonths = await this.rentRepository.findAllRentMonthById(id)
+    const months = await Promise.all(
+      rentMonths.map(async (month) => {
+        const rentExpenses = await this.rentRepository.findRentExpenses(
+          month.id
+        );
 
-    const months = rentMonths.map((month) => {
-      return {
-        id: month.id,
-        dateMonth: formatDateToDDMMYY(month.dateMonth), 
-        amountPaid: month.amountPaid,
-        paid: month.paid
-      };
-    });
+        return {
+          id: month.id,
+          dateMonth: formatDateToDDMMYY(month.dateMonth),
+          amountPaid: month.amountPaid,
+          paid: month.paid,
+          expenses: rentExpenses,
+        };
+      })
+    );
 
-    rent.months = months
-
-    const rentExpenses = await this.rentRepository.findRentExpenses(id)
-
-    rent.expenses = rentExpenses
+    rent.months = months;
 
     return rent;
   }

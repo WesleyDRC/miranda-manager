@@ -6,7 +6,7 @@ import { container } from "tsyringe";
 
 export class CreateRentExpenseController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { amount, reason, rentId } = request.body;
+    const { amount, reason, rentMonthId } = request.body;
 
     const userId = request.user.id;
 
@@ -17,8 +17,7 @@ export class CreateRentExpenseController {
     const rent = await createRentExpenseUseCase.execute({
       amount,
       reason,
-      rentId,
-      userId,
+      rentMonthId
     });
 
     return response.json({ rent });

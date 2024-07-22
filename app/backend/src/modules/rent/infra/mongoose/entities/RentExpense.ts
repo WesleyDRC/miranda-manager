@@ -18,7 +18,7 @@ const rentExpenseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rentId: {
+  rentMonthId: {
     type: String,
     required: true,
     ref: "Rent",
@@ -26,13 +26,13 @@ const rentExpenseSchema = new mongoose.Schema({
 });
 
 rentExpenseSchema.post("save", async function () {
-  await updateNetIncome(this.rentId);
+  await updateNetIncome(this.rentMonthId);
 });
 
-async function updateNetIncome(rentId) {
-  const rentMonths = await RentMonth.find({ rentId }).where({paid:true});;
-  const rentExpenses = await RentExpense.find({ rentId });
-
+async function updateNetIncome(rentMonthId) {
+  const rentId = (await RentMonth.findById(rentMonthId)).rentId
+  const rentMonths = await RentMonth.find({ _id: rentMonthId }).where({paid:true});
+  const rentExpenses = await RentExpense.find({ rentMonthId });
 
   const totalGrossIncome = rentMonths.reduce(
     (total, rentMonth) => total + rentMonth.amountPaid,

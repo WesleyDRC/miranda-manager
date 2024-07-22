@@ -79,6 +79,8 @@ export default function ModalEditMonthRent({
     closeModal();
   };
 
+  let expenses = rentData.months.find(month => month.id === rentMonthId).expenses
+
   const closeModalEditExpense = () => {
     setModalClass(styles.slideInLeft)
 
@@ -168,7 +170,7 @@ export default function ModalEditMonthRent({
                     </tr>
                   </thead>
                   <tbody>
-                    {rentData.expenses && rentData.expenses.map((expense, index) => (
+                    {expenses && expenses.map((expense, index) => (
                       <tr key={index}>
                         <td>{priceBRL(parseFloat(expense.amount))}</td>
                         <td>{expense.reason}</td>
@@ -200,6 +202,7 @@ export default function ModalEditMonthRent({
       {showModalEditExpense && (
         <ModalEditExpense
           rentId={rentId}
+          expenses={expenses}
           month={month}
           rentalExpenses={rentData.expenses}
           closeModal={closeModalEditExpense}

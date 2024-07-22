@@ -55,8 +55,8 @@ export function RentPaymentTable({
     return rentData.months;
   }, [rentData, sortConfig]);
 
-  const handleEditMonth = ({ month, paid, rentMonthId, amountPaid }) => {
-    setCurrentMonth(month);
+  const handleEditMonth = ({ nameMonth, paid, rentMonthId, amountPaid }) => {
+    setCurrentMonth(nameMonth);
     setPaymentStatus(paid);
     setCurrentMonthID(rentMonthId);
     setAmountPaid(amountPaid)
@@ -108,7 +108,7 @@ export function RentPaymentTable({
                   className={styles.editLink}
                   onClick={() =>
                     handleEditMonth({
-                      month: getMonthName(row.dateMonth),
+                      nameMonth: getMonthName(row.dateMonth),
                       paid: row.paid,
                       rentMonthId: row.id,
                       amountPaid: row.amountPaid

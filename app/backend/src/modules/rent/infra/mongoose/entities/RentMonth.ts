@@ -32,23 +32,31 @@ const rentMonthSchema = new mongoose.Schema({
 });
 
 rentMonthSchema.post("save", async function (doc) {
-  await updateEarnings(doc.rentId);
+  await updateEarnings(doc.id, doc.rentId);
 });
 
 rentMonthSchema.post("findOneAndUpdate", async function (doc) {
-  await updateEarnings(doc.rentId);
+  await updateEarnings(doc.id, doc.rentId);
 });
 
-async function updateEarnings(rentId) {
-  const rentMonths = await RentMonth.find({ rentId }).where({paid:true});
-  const rentExpenses = await RentExpense.find({ rentId });
+async function updateEarnings(rentMonthId, rentId) {
+  const rentMonths = await RentMonth.find({ rentId })
 
-  const totalGrossIncome = rentMonths.reduce(
-    (total, rentMonth) => total + rentMonth.amountPaid,
-    0
-  );
+  const rentExpenses = await Promise.all(rentMonths.map(async (month)=> {
+    const expense = await RentExpense.find({ rentMonthId: month._id });
 
-  const totalExpenseAmount = rentExpenses.reduce(
+    return expense
+  }))
+
+  const totalGrossIncome = rentMonths.reduce((total, rentMonth) => {
+    if(rentMonth.paid) {
+      total += rentMonth.amountPaid
+    }
+
+    return total
+  },0);
+
+  const totalExpenseAmount = rentExpenses[0].reduce(
     (total, rentExpenseAmount) => total + rentExpenseAmount.amount,
     0
   );
