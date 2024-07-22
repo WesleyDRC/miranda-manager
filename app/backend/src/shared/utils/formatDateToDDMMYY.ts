@@ -3,5 +3,5 @@ export function formatDateToDDMMYY(date: Date) {
 	const day = String(date.getDate()).padStart(2, '0');
 	const year = String(date.getFullYear());
 	
-	return `${day}-${month}-${year}`;
+	return `${day}/${month}/${year}`;
 }

@@ -7,6 +7,13 @@ class AxiosRepository {
     this.#axiosClient = api;
   }
 
+  async signIn({ email, password }) {
+    return await this.#axiosClient.post("/auth/signIn", {
+      email,
+      password
+    })
+  }
+
   async createUser({ email, password, confirmPassword }) {
     return await this.#axiosClient.post("/auth/signUp", {
       email,

@@ -22,14 +22,16 @@ export const AuthProvider = ({ children }) => {
 
   const SignIn = async (email, password) => {
     try {
-      const response = await api.post('/auth/signIn', { email, password })
+      const response = await axiosRepositoryInstance.signIn({ email, password })
 
       localStorage.setItem('user_token', JSON.stringify(response.data.token))
 
       api.defaults.headers.Authorization = `Bearer ${response.data.token}`
       setUser(response.data.token)
     } catch (error) {
+      console.log(error)
       if (error.response.status !== error.response.status.ok) {
+        console.log(error)
         return error.response.data.message
       }
     }

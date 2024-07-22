@@ -25,8 +25,6 @@ export function Dashboard() {
     // eslint-disable-next-line
   }, [])
 
-  console.log(totalRentalEarnings)
-
   const assets = [
     {
       id: 1,

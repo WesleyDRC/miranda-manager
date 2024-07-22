@@ -10,7 +10,7 @@ export function formatDate(dateString = "") {
 }
 
 export function getMonthName(dateString = "") {
-	const [day, month, year] = dateString.split('-').map(Number)
+	const [day, month, year] = dateString.split('/').map(Number)
 	const dateReceived = new Date(year, month - 1, day)
 
   let monthName = dateReceived.toLocaleString('pt-BR', { month: 'long' });
@@ -21,7 +21,9 @@ export function getMonthName(dateString = "") {
 }
 
 export function getYear(dateString) {
-  const date = new Date(dateString);
-  
+	const [day, month, year] = dateString.split('/').map(Number)
+
+  const date = new Date(year, month - 1, day);
+
   return date.getFullYear();
 }
