@@ -12,6 +12,7 @@ import { useState } from "react";
 
 export default function ModalEditExpense({
   rentId = "",
+  rentMonthId = "",
   month = "...",
   expenses = [],
   closeModal,
@@ -40,7 +41,7 @@ export default function ModalEditExpense({
     await axiosRepositoryInstance.createExpense({
       amount,
       reason,
-      rentId
+      rentMonthId
     })
 
     await fetchRentData(rentId)

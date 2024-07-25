@@ -202,6 +202,7 @@ export default function ModalEditMonthRent({
       {showModalEditExpense && (
         <ModalEditExpense
           rentId={rentId}
+          rentMonthId={rentMonthId}
           expenses={expenses}
           month={month}
           rentalExpenses={rentData.expenses}

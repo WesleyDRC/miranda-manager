@@ -16,8 +16,6 @@ export function FormSignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(" ");
 
-  let navigate = useNavigate();
-
   const submit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +31,7 @@ export function FormSignUp() {
       return;
     }
 
-    navigate("/");
+    window.location.reload()
   };
 
   return (

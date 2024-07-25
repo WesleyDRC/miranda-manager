@@ -74,11 +74,11 @@ class AxiosRepository {
     });
   }
 
-  async createExpense({ amount, reason, rentId}) {
+  async createExpense({ amount, reason, rentMonthId}) {
     return this.#axiosClient.post("/rent/expense", {
       amount,
       reason,
-      rentId
+      rentMonthId
     })
   }
 }
