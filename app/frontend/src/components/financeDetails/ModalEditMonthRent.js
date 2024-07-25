@@ -93,6 +93,17 @@ export default function ModalEditMonthRent({
     setModalEditExpenseClass(styles.slideOutRight)
   }
   
+  const handleEditExpense = async({id}) => {
+    // await axiosRepositoryInstance.updateExpense({
+    //   id: id,
+    //   amount: amount,
+    //   reason: reason
+    // });
+  }
+  const handleDeleteExpense = async (id) => {
+    await axiosRepositoryInstance.delete(id)
+  }
+
   return (
     <>
       <div
@@ -178,11 +189,11 @@ export default function ModalEditMonthRent({
                         <td>{priceBRL(parseFloat(expense.amount))}</td>
                         <td colSpan={2}>{expense.reason}</td>
                         <td className={styles.expenseButtons}> 
-                          <button className={`${styles.btnExpense} ${styles.edit}`}>
+                          <button onClick={() => handleEditExpense(expense.id)} className={`${styles.btnExpense} ${styles.edit}`}>
                             <img src={editIconWhite} alt="Edit Icon White" />
                           </button>
 
-                          <button className={`${styles.btnExpense} ${styles.delete}`}> 
+                          <button onClick={() => handleDeleteExpense(expense.id)} className={`${styles.btnExpense} ${styles.delete}`}> 
                             <img src={trashIcon} alt="Trash Icon" />
                           </button>
                         </td>

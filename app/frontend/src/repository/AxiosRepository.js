@@ -81,6 +81,16 @@ class AxiosRepository {
       rentMonthId
     })
   }
+  
+  async updateExpense({ id, amount, reason}) {
+    return this.#axiosClient.patch(`/rent/expense/${id}`, {
+      amount,
+      reason
+    })
+  }
+  async deleteExpense({ id }) {
+    return this.#axiosClient.delete(`/rent/expense/${id}`)
+  }
 }
 
 const axiosRepositoryInstance = new AxiosRepository()
