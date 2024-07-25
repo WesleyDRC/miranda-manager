@@ -6,6 +6,8 @@ import CloseIcon from "../../assets/close-icon.svg";
 import alertIcon from "../../assets/alert-icon.svg";
 import uploadIcon from "../../assets/upload-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
+import editIconWhite from "../../assets/edit-icon-white.svg";
+import trashIcon from "../../assets/trash-icon.svg"
 
 import { EditPaymentStatus } from "./EditPaymentStatus";
 
@@ -166,14 +168,24 @@ export default function ModalEditMonthRent({
                   <thead>
                     <tr>
                       <th>Valor</th>
-                      <th>Motivo</th>
+                      <th colSpan={2}>Motivo</th>
+                      <th>Ação</th>
                     </tr>
                   </thead>
                   <tbody>
                     {expenses && expenses.map((expense, index) => (
                       <tr key={index}>
                         <td>{priceBRL(parseFloat(expense.amount))}</td>
-                        <td>{expense.reason}</td>
+                        <td colSpan={2}>{expense.reason}</td>
+                        <td className={styles.expenseButtons}> 
+                          <button className={`${styles.btnExpense} ${styles.edit}`}>
+                            <img src={editIconWhite} alt="Edit Icon White" />
+                          </button>
+
+                          <button className={`${styles.btnExpense} ${styles.delete}`}> 
+                            <img src={trashIcon} alt="Trash Icon" />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

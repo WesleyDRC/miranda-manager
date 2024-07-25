@@ -8,6 +8,9 @@
 	--purple: #5E17EB;
 	--light-purple: #5e17ebb6;
 	--red: #FF0000;
+	--red-light: #ff00006e;
 	--green: green;
-	--overlay: rgba(0, 0, 0, 0.60)
+	--overlay: rgba(0, 0, 0, 0.60);
+	--blue: rgb(6, 6, 50);
+	--blue-light: rgba(6, 6, 50, 0.60);
 }
