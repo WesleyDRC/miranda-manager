@@ -29,7 +29,6 @@ export function FormSignIn() {
     const logonErrors = await SignIn(email, password)
 
     if(logonErrors) {
-      console.log(logonErrors)
       setError(logonErrors)
       return
     }

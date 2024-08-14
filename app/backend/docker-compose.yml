@@ -17,6 +17,7 @@ services:
       DB_HOST: database
     networks:
       - miranda-manager-network
+
   database:
     build:
       context: .
@@ -33,6 +34,7 @@ services:
       - miranda-manager-volume:/data/db
     networks:
       - miranda-manager-network
+
   mongo-express:
     build:
       context: .
@@ -51,8 +53,10 @@ services:
       - miranda-manager-network
     depends_on:
       - database
+
 volumes:
   miranda-manager-volume:
+
 networks:
   miranda-manager-network:
     driver: bridge
