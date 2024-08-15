@@ -2,3 +2,21 @@
 	display: flex;
 	gap: 24px;
 }
+
+.btn {
+	margin-top: 8px;
+	display: block;
+	text-align: center;
+  background-color: var(--purple);
+  font-size: 1.2rem;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+	text-decoration: none;
+	width: fit-content;
+}
+.btn:hover {
+  background-color: var(--light-purple);
+}

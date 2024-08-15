@@ -1,14 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import "./reset.css"
-import "./variables.css"
-import { App } from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { App } from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+import "./reset.css";
+import "./variables.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
+    <ToastContainer
+      theme="dark"
+      closeOnClick
+      style={{
+        fontSize: "12px",
+      }}
+      pauseOnHover
+    />
   </React.StrictMode>
 );
 

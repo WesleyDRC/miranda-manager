@@ -10,13 +10,16 @@ import AxiosRepository from "../../repository/AxiosRepository";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { ErrorMessage } from "@hookform/error-message";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 import Joi from "joi";
 
 export function RentalFinanceForm({ selectedOption }) {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
 
   const financeSchema = Joi.object({
     financeName: Joi.string().min(3).required().messages({
@@ -60,20 +63,29 @@ export function RentalFinanceForm({ selectedOption }) {
   });
 
   const onSubmit = async (data) => {
+    try {
+      const monthDate = formatDate(data.startRental);
 
-    const monthDate = formatDate(data.startRental)
+      const response = await AxiosRepository.createFinance({
+        name: data.financeName,
+        categoryId: selectedOption,
+        rentalName: data.tenant,
+        rentalValue: data.value,
+        rentalStreet: data.street,
+        rentalStreetNumber: data.number,
+        startRental: monthDate,
+      });
 
-    const response = await AxiosRepository.createFinance({
-      name: data.financeName,
-      categoryId: selectedOption,
-      rentalName: data.tenant,
-      rentalValue: data.value,
-      rentalStreet: data.street,
-      rentalStreetNumber: data.number,
-      startRental: monthDate
-    })
-
-    navigate("/dashboard")
+      navigate("/dashboard");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+        toast.error(error.response.data.message);
+      } else {
+        setError("Ocorreu um erro ao criar a finança.");
+        toast.error("Ocorreu um erro ao criar a finança.")
+      }
+    }
   };
 
   const renderErrorForm = (fieldName) => {
@@ -81,15 +93,15 @@ export function RentalFinanceForm({ selectedOption }) {
       <ErrorMessage
         errors={errors}
         name={fieldName}
-        render={({ message }) => (
-          <p className={styles.errorMessage}>{message}</p>
-        )}
+        render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
       />
     );
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {error && <p className={styles.apiError}>{error}</p>}
+
       <div className={styles.fields}>
         <Input
           id="financeName"
@@ -120,13 +132,7 @@ export function RentalFinanceForm({ selectedOption }) {
         </div>
         {renderErrorForm("street")}
         {renderErrorForm("streetNumber")}
-        <Input
-          id="rentalValue"
-          name="value"
-          placeholder=" "
-          text="Valor"
-          {...register("value")}
-        />
+        <Input id="rentalValue" name="value" placeholder=" " text="Valor" {...register("value")} />
         {renderErrorForm("value")}
         <Input
           type="date"
@@ -146,10 +152,7 @@ export function RentalFinanceForm({ selectedOption }) {
         {renderErrorForm("tenant")}
       </div>
 
-      <ButtonNextStep
-        type="submit"
-        text={"CRIAR FINANÇA!"}
-      />
+      <ButtonNextStep type="submit" text={"CRIAR FINANÇA!"} />
     </form>
   );
 }

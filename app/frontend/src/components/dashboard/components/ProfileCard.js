@@ -2,12 +2,11 @@ import styles from "./ProfileCard.module.css";
 
 import userIcon from "../../../assets/user.svg";
 import settinsIcon from "../../../assets/settings-disabled.svg";
-import arrowIos from "../../../assets/arrow-ios.svg";
 import leaveIcon from "../../../assets/leave-icon.svg";
 
 import { useAuth } from "../../../hooks/useAuth";
 
-import { useState } from "react";
+import { useState, useEffect, useRef} from "react";
 
 export function ProfileCard({ userPhoto, username }) {
   const [showDropDown, setShowDropDown] = useState(false);
@@ -18,10 +17,23 @@ export function ProfileCard({ userPhoto, username }) {
     setShowDropDown(!showDropDown);
   };
 
+  const profileCardRef = useRef(null)
+
+  const handleClickOutside = (event) => {
+    if (profileCardRef.current && !profileCardRef.current.contains(event.target)) {
+      setShowDropDown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+  }, [])
+
   return (
     <div
       className={`${styles.user} ${showDropDown ? styles.clicked : ""}`}
       onClick={showProfileDropdown}
+      ref={profileCardRef}
     >
       <span className={styles.username}> {username} </span>
       <div className={styles.photo}>
