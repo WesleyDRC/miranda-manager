@@ -7,34 +7,33 @@ import { FormButton } from "./FormButton";
 
 import { useAuth } from "../../../hooks/useAuth";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function FormSignIn() {
-
-  const { SignIn } = useAuth()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  let navigate = useNavigate()
+  const { SignIn } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  let navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
 
-    if(!email || !password) {
-      setError("Preencha todos os campos!")
-      return
+    if (!email || !password) {
+      setError("Preencha todos os campos!");
+      return;
     }
 
-    const logonErrors = await SignIn(email, password)
+    const logonErrors = await SignIn(email, password);
 
-    if(logonErrors) {
-      setError(logonErrors)
-      return
+    if (logonErrors) {
+      setError(logonErrors);
+      return;
     }
 
-    navigate("/dashboard")
-  }
+    navigate("/dashboard");
+  };
 
   return (
     <form className={styles.formAuth} onSubmit={(e) => submit(e)}>
@@ -53,10 +52,7 @@ export function FormSignIn() {
         onChange={(e) => setPassword(e.target.value)}
       />
       {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
-      <FormButton 
-        type="submit"
-        text="Entrar"
-      />
+      <FormButton type="submit" text="Entrar" />
     </form>
   );
 }

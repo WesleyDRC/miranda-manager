@@ -7,7 +7,6 @@ import { FormButton } from "./FormButton";
 import { useAuth } from "../../../hooks/useAuth";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export function FormSignUp() {
   const { SignUp } = useAuth();

@@ -7,8 +7,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -16,8 +16,12 @@ function createWindow() {
     },
   });
 
+  win.maximize()
+
   win.loadURL(
-    `${path.join(__dirname, "build", "index.html")}`
+    isDev
+      ? "http://localhost:3000"
+      : `file://${path.join(__dirname, "build", "index.html")}`
   );
 
   if (isDev) {
