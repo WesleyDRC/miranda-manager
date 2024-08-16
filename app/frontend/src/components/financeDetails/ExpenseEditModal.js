@@ -7,41 +7,51 @@ import axiosRepositoryInstance from "../../repository/AxiosRepository";
 import { useFinance } from "../../hooks/useFinance";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
-export function ExpenseEditModal({ id, month, closeModal, rentId, expenseEditModalClass}) {
-	const {
-    fetchRentData
-  } = useFinance()
+export function ExpenseEditModal({
+  expenseId,
+  rentId,
+  month,
+  currentAmount,
+  currentReason,
+  closeModal,
+  expenseEditModalClass
+}) {
+  const { fetchRentData } = useFinance();
 
-	const [amount, setAmount] = useState('');
-	const [reason, setReason] = useState('');
+  const [amount, setAmount] = useState(currentAmount);
+  const [reason, setReason] = useState(currentReason);
 
-	const handleInput = (event) => {
+  const handleInput = (event) => {
     const { value } = event.target;
 
-    const regex = /^\d*$/; 
+    const regex = /^\d*$/;
 
     if (regex.test(value)) {
       setAmount(value);
     }
   };
 
-	const editExpense = async () => {
-
+  const editExpense = async () => {
     await axiosRepositoryInstance.updateExpense({
-      id: id,
+      id: expenseId,
       amount: amount,
-      reason: reason
+      reason: reason,
     });
 
+    clearFields();
+    closeModal()
+
     await fetchRentData(rentId)
-    clearFields()
-  }
-	
+    toast.success("Despesa atualizada com sucesso!")
+
+  };
+
   const clearFields = () => {
-    setAmount("")
-    setReason("")
-  }
+    setAmount("");
+    setReason("");
+  };
 
   return (
     <div className={styles.modal} aria-labelledby="modalTitle">
@@ -80,7 +90,8 @@ export function ExpenseEditModal({ id, month, closeModal, rentId, expenseEditMod
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Motivo"
                 className={styles.reason}
-              ></textarea>
+              >
+              </textarea>
 
               <div className={styles.expenseButtons}>
                 <button onClick={closeModal} className={`${styles.btn} ${styles.btnCancel}`}>

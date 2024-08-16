@@ -20,6 +20,8 @@ import { useFinance } from "../../hooks/useFinance";
 
 import { useState } from "react";
 
+import { toast } from "react-toastify"
+
 export default function ModalEditMonthRent({
   rentId = "",
   rentMonthId = "",
@@ -38,6 +40,12 @@ export default function ModalEditMonthRent({
   const [modalEditMonthClass, setModalEditMonthClass] = useState(styles.slideInLeft);
   const [modalAddExpenseClass, setModalAddExpenseClass] = useState(styles.slideInLeft);
   const [expenseEditModalClass, setExpenseEditModalClass] = useState(styles.slideInLeft);
+
+  const [expenseData, setExpenseData] = useState({
+    id: "",
+    amount: 0,
+    reason: "aaaaaaaaaaaa",
+  });
 
   const handleToggle = (status) => {
     setPaymentStatus(status);
@@ -62,7 +70,7 @@ export default function ModalEditMonthRent({
 
   const editMonthData = async () => {
     if (!paymentStatus !== paid && amountPaid === amount) {
-      console.log("Você não editou nenhum campo!");
+      toast.error("Você não editou nenhum campo!");
       return;
     }
 
@@ -89,13 +97,19 @@ export default function ModalEditMonthRent({
     setModalAddExpenseClass(styles.slideOutRight);
   };
 
-  const handleEditExpense = async ({ id }) => {
+  const handleExpenseEdit = async ({ id, expenseReason, expenseAmount }) => {
+    setExpenseData({
+      id: id,
+      amount: expenseAmount,
+      reason: expenseReason,
+    });
+
     setModalEditMonthClass(styles.slideOutLeft);
     setShowExpenseEditModal(true);
-    setExpenseEditModalClass(styles.slideInRight)
+    setExpenseEditModalClass(styles.slideInRight);
   };
 
-  const closeExpenseEditModal = () => {
+  const closeExpenseEditModal = async () => {
     setModalEditMonthClass(styles.slideInLeft);
 
     setTimeout(() => {
@@ -186,7 +200,13 @@ export default function ModalEditMonthRent({
                           <td colSpan={2}>{expense.reason}</td>
                           <td className={styles.expenseButtons}>
                             <button
-                              onClick={() => handleEditExpense(expense.id)}
+                              onClick={() =>
+                                handleExpenseEdit({
+                                  id: expense.id,
+                                  expenseAmount: expense.amount,
+                                  expenseReason: expense.reason,
+                                })
+                              }
                               className={`${styles.btnExpense} ${styles.edit}`}
                             >
                               <img src={editIconWhite} alt="Edit Icon White" />
@@ -232,9 +252,13 @@ export default function ModalEditMonthRent({
 
       {showExpenseEditModal && (
         <ExpenseEditModal
+          expenseId={expenseData.id}
+          rentId={rentId}
           month={month}
           expenseEditModalClass={expenseEditModalClass}
           closeModal={closeExpenseEditModal}
+          currentAmount={expenseData.amount}
+          currentReason={expenseData.reason}
         />
       )}
     </>
