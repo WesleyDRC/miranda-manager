@@ -4,7 +4,8 @@
   "description": "Mentoring platform",
   "author": "Wesley Luis",
   "private": true,
-  "main": "electron/main.mjs",
+  "main": "public/main.mjs",
+  "homepage": "./",
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.9.0",
@@ -21,14 +22,15 @@
     "react-router-dom": "^6.24.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "electron-is-dev": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron electron/main.mjs",
+    "electron": "electron public/main.mjs",
     "electron-dev": "concurrently \"npm start\" \"npm run electron\"",
     "start-electron-forge": "electron-forge start",
     "package": "electron-forge package",
@@ -69,7 +71,6 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "concurrently": "^8.2.2",
-    "electron": "^31.3.1",
-    "electron-is-dev": "^3.0.1"
+    "electron": "^31.3.1"
   }
 }

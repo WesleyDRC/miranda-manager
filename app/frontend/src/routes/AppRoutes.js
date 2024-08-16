@@ -1,6 +1,6 @@
 
 import {
-	createBrowserRouter,
+	createHashRouter,
 	RouterProvider, 
 	Navigate
 } from "react-router-dom"
@@ -36,7 +36,7 @@ export function AppRoutes() {
 		return children
 	}
 
-	const router = createBrowserRouter([
+	const router = createHashRouter([
 		{
 			path: "/",
 			element: <IsAuthenticated> <Authentication /> </IsAuthenticated>
