@@ -1,13 +1,14 @@
 import styles from "./ModalEditMonthRent.module.css";
 
-import ModalEditExpense from "./ModalEditExpense";
+import ModalAddExpense from "./ModalAddExpense";
+import { ExpenseEditModal } from "./ExpenseEditModal";
 
 import CloseIcon from "../../assets/close-icon.svg";
 import alertIcon from "../../assets/alert-icon.svg";
 import uploadIcon from "../../assets/upload-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import editIconWhite from "../../assets/edit-icon-white.svg";
-import trashIcon from "../../assets/trash-icon.svg"
+import trashIcon from "../../assets/trash-icon.svg";
 
 import { EditPaymentStatus } from "./EditPaymentStatus";
 
@@ -25,20 +26,18 @@ export default function ModalEditMonthRent({
   month = "Janeiro",
   paid = false,
   closeModal,
-  amount = 0
+  amount = 0,
 }) {
-
-  const {
-    rentData,
-    fetchRentData
-  } = useFinance()
+  const { rentData, fetchRentData } = useFinance();
 
   const [paymentStatus, setPaymentStatus] = useState(paid);
   const [amountPaid, setAmountPaid] = useState(amount);
   const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
-  const [showModalEditExpense, setShowModalEditExpense] = useState(false);
-  const [modalClass, setModalClass] = useState(styles.slideInLeft);
-  const [modalEditExpenseClass, setModalEditExpenseClass] = useState(styles.slideInLeft);
+  const [showModalAddExpense, setShowModalAddExpense] = useState(false);
+  const [showExpenseEditModal, setShowExpenseEditModal] = useState(false);
+  const [modalEditMonthClass, setModalEditMonthClass] = useState(styles.slideInLeft);
+  const [modalAddExpenseClass, setModalAddExpenseClass] = useState(styles.slideInLeft);
+  const [expenseEditModalClass, setExpenseEditModalClass] = useState(styles.slideInLeft);
 
   const handleToggle = (status) => {
     setPaymentStatus(status);
@@ -53,19 +52,16 @@ export default function ModalEditMonthRent({
     setPaymentStatus(paid);
   };
 
-  const handleShowModalEditExpense = () => {
-    setModalClass(styles.slideOutLeft);
+  const handleShowModalAddExpense = () => {
+    setModalEditMonthClass(styles.slideOutLeft);
 
-    setShowModalEditExpense(true);
+    setShowModalAddExpense(true);
 
-    setModalEditExpenseClass(styles.slideInRight)
+    setModalAddExpenseClass(styles.slideInRight);
   };
 
   const editMonthData = async () => {
-    if (
-      !paymentStatus !== paid &&
-      amountPaid === amount
-    ) {
+    if (!paymentStatus !== paid && amountPaid === amount) {
       console.log("Você não editou nenhum campo!");
       return;
     }
@@ -74,53 +70,55 @@ export default function ModalEditMonthRent({
       rentId: rentId,
       rentMonthId: rentMonthId,
       paid: paymentStatus,
-      amountPaid: amountPaid
+      amountPaid: amountPaid,
     });
 
     await fetchRentData(rentId);
     closeModal();
   };
 
-  let expenses = rentData.months.find(month => month.id === rentMonthId).expenses
+  let expenses = rentData.months.find((month) => month.id === rentMonthId).expenses;
 
-  const closeModalEditExpense = () => {
-    setModalClass(styles.slideInLeft)
+  const closeModalAddExpense = () => {
+    setModalEditMonthClass(styles.slideInLeft);
 
     setTimeout(() => {
-      setShowModalEditExpense(false);
-    }, 300); 
+      setShowModalAddExpense(false);
+    }, 300);
 
-    setModalEditExpenseClass(styles.slideOutRight)
-  }
-  
-  const handleEditExpense = async({id}) => {
-    // await axiosRepositoryInstance.updateExpense({
-    //   id: id,
-    //   amount: amount,
-    //   reason: reason
-    // });
-  }
+    setModalAddExpenseClass(styles.slideOutRight);
+  };
+
+  const handleEditExpense = async ({ id }) => {
+    setModalEditMonthClass(styles.slideOutLeft);
+    setShowExpenseEditModal(true);
+    setExpenseEditModalClass(styles.slideInRight)
+  };
+
+  const closeExpenseEditModal = () => {
+    setModalEditMonthClass(styles.slideInLeft);
+
+    setTimeout(() => {
+      setShowExpenseEditModal(false);
+    }, 300);
+
+    setExpenseEditModalClass(styles.slideOutRight);
+  };
+
   const handleDeleteExpense = async (id) => {
-    await axiosRepositoryInstance.delete(id)
-  }
+    await axiosRepositoryInstance.delete(id);
+  };
 
   return (
     <>
-      <div
-        className={styles.modal}
-        aria-labelledby="modalTitle"
-      >
-        <div className={`${styles.modalContent} ${modalClass}`}>
+      <div className={styles.modal} aria-labelledby="modalTitle">
+        <div className={`${styles.modalContent} ${modalEditMonthClass}`}>
           <header className={styles.modalHeader}>
             <h2 className={styles.title} id="modalTitle">
               {month}
             </h2>
             <button onClick={closeModal}>
-              <img
-                className={styles.icon}
-                src={CloseIcon}
-                alt="Close Modal Icon"
-              />
+              <img className={styles.icon} src={CloseIcon} alt="Close Modal Icon" />
             </button>
           </header>
 
@@ -128,10 +126,7 @@ export default function ModalEditMonthRent({
             <section aria-labelledby="statusTitle">
               <div className={styles.sectionTitle}>
                 <h3 id="statusTitle"> Status do pagamento</h3>
-                <div
-                  onClick={handleEditPaymentStatus}
-                  className={styles.action}
-                >
+                <div onClick={handleEditPaymentStatus} className={styles.action}>
                   <img src={editIcon} alt="Edit Payment Icon" />
                   <span> Editar </span>
                 </div>
@@ -168,7 +163,7 @@ export default function ModalEditMonthRent({
             <section aria-labelledby="spendingTitle">
               <div className={styles.sectionTitle}>
                 <h3 id="spendingTitle"> Gastos do mês </h3>
-                <div onClick={handleShowModalEditExpense} className={styles.action}>
+                <div onClick={handleShowModalAddExpense} className={styles.action}>
                   <img src={editIcon} alt="Edit Expense Icon" />
                   <span> Gastos </span>
                 </div>
@@ -184,21 +179,28 @@ export default function ModalEditMonthRent({
                     </tr>
                   </thead>
                   <tbody>
-                    {expenses && expenses.map((expense, index) => (
-                      <tr key={index}>
-                        <td>{priceBRL(parseFloat(expense.amount))}</td>
-                        <td colSpan={2}>{expense.reason}</td>
-                        <td className={styles.expenseButtons}> 
-                          <button onClick={() => handleEditExpense(expense.id)} className={`${styles.btnExpense} ${styles.edit}`}>
-                            <img src={editIconWhite} alt="Edit Icon White" />
-                          </button>
+                    {expenses &&
+                      expenses.map((expense, index) => (
+                        <tr key={index}>
+                          <td>{priceBRL(parseFloat(expense.amount))}</td>
+                          <td colSpan={2}>{expense.reason}</td>
+                          <td className={styles.expenseButtons}>
+                            <button
+                              onClick={() => handleEditExpense(expense.id)}
+                              className={`${styles.btnExpense} ${styles.edit}`}
+                            >
+                              <img src={editIconWhite} alt="Edit Icon White" />
+                            </button>
 
-                          <button onClick={() => handleDeleteExpense(expense.id)} className={`${styles.btnExpense} ${styles.delete}`}> 
-                            <img src={trashIcon} alt="Trash Icon" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                            <button
+                              onClick={() => handleDeleteExpense(expense.id)}
+                              className={`${styles.btnExpense} ${styles.delete}`}
+                            >
+                              <img src={trashIcon} alt="Trash Icon" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -206,31 +208,33 @@ export default function ModalEditMonthRent({
           </main>
 
           <footer className={styles.modalFooter}>
-            <button
-              onClick={closeModal}
-              className={`${styles.btn} ${styles.btnCancel}`}
-            >
+            <button onClick={closeModal} className={`${styles.btn} ${styles.btnCancel}`}>
               Cancelar
             </button>
-            <button
-              onClick={editMonthData}
-              className={`${styles.btn} ${styles.btnEdit}`}
-            >
+            <button onClick={editMonthData} className={`${styles.btn} ${styles.btnEdit}`}>
               Editar
             </button>
           </footer>
         </div>
       </div>
 
-      {showModalEditExpense && (
-        <ModalEditExpense
+      {showModalAddExpense && (
+        <ModalAddExpense
           rentId={rentId}
           rentMonthId={rentMonthId}
           expenses={expenses}
           month={month}
           rentalExpenses={rentData.expenses}
-          closeModal={closeModalEditExpense}
-          modalEditExpenseClass={modalEditExpenseClass}
+          closeModal={closeModalAddExpense}
+          modalAddExpenseClass={modalAddExpenseClass}
+        />
+      )}
+
+      {showExpenseEditModal && (
+        <ExpenseEditModal
+          month={month}
+          expenseEditModalClass={expenseEditModalClass}
+          closeModal={closeExpenseEditModal}
         />
       )}
     </>

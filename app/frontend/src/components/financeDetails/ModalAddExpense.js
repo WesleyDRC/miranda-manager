@@ -1,4 +1,4 @@
-import styles from "./ModalEditExpense.module.css";
+import styles from "./ModalAddExpense.module.css";
 
 import CloseIcon from "../../assets/close-icon.svg";
 
@@ -10,13 +10,13 @@ import { useFinance } from "../../hooks/useFinance";
 
 import { useState } from "react";
 
-export default function ModalEditExpense({
+export default function ModalAddExpense({
   rentId = "",
   rentMonthId = "",
   month = "...",
   expenses = [],
   closeModal,
-  modalEditExpenseClass
+  modalAddExpenseClass
 }) {
 
   const {
@@ -59,7 +59,7 @@ export default function ModalEditExpense({
       className={styles.modal}
       aria-labelledby="modalTitle"
     >
-      <div className={`${styles.modalContent} ${modalEditExpenseClass}`}>
+      <div className={`${styles.modalContent} ${modalAddExpenseClass}`}>
         <header className={styles.modalHeader}>
           <h2 className={styles.title} id="modalTitle">
             {month}
