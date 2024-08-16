@@ -18,7 +18,8 @@ export class CreateRentExpenseUseCase implements IUseCase {
 	async execute({
 		amount,
 		reason,
-		rentMonthId
+		rentMonthId,
+		userId
 	}: IStoreRentExpenseDTO ): Promise<IRentExpense> {
 
     const rentMonth = await this.rentRepository.findRentMonthById({ id: rentMonthId });
@@ -31,6 +32,7 @@ export class CreateRentExpenseUseCase implements IUseCase {
 			amount,
 			reason,
 			rentMonthId: rentMonth.id,
+			userId
 		})
 
 		return rentExpense

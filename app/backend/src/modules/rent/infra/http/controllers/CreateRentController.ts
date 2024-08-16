@@ -9,7 +9,7 @@ export class CreateRentController {
 		const userId = request.user.id
 
 		const {
-			name,
+			tenant,
 			value,
 			street,
 			streetNumber,
@@ -19,7 +19,7 @@ export class CreateRentController {
 		const createRentUseCase = container.resolve(CreateRentUseCase)
 
 		const rent = await createRentUseCase.execute({
-			name,
+			tenant,
 			value,
 			street,
 			streetNumber,

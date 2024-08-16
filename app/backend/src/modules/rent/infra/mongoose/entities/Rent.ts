@@ -8,7 +8,7 @@
 				type: String,
 				default: uuidv4
 			},
-			name: {
+			tenant: {
 				type: String,
 				required: true
 			},

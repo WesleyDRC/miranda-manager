@@ -12,7 +12,9 @@ export interface IRentRepository {
 	findById({id, userId}): Promise<IRent>
 	findRentMonthById({id}): Promise<IRentMonth>
 	findAllRentMonthById(rentId: string,): Promise<IRentMonth[]>
-	updateRentMonth(rentMonthid: string, rentId: string, updates): Promise<IRentMonth>
+	updateRentMonth(rentMonthId: string, rentId: string, updates): Promise<IRentMonth>
 	createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense>
 	findRentExpenses(rentMonthId: string): Promise<IRentExpense[]>
+	findRentExpenseById(rentExpenseId: string, userId: string): Promise<IRentExpense | null>
+	updateRentExpense(rentExpenseId: string, userId: string, updates: any): Promise<IRentExpense>
 }

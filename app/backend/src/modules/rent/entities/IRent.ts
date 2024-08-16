@@ -8,7 +8,7 @@ interface IRentMonth {
 
 export interface IRent {
 	id: string,
-	name: string,
+	tenant: string,
 	value: string,
 	street: string,
 	streetNumber: string,

@@ -17,7 +17,8 @@ export class CreateRentExpenseController {
     const rent = await createRentExpenseUseCase.execute({
       amount,
       reason,
-      rentMonthId
+      rentMonthId,
+      userId
     });
 
     return response.json({ rent });

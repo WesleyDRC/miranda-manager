@@ -1,5 +1,5 @@
 export interface IStoreRentDTO {
-	name: string,
+	tenant: string,
 	value: string,
 	street: string,
 	streetNumber: string,

@@ -8,7 +8,8 @@ export interface IStoreFinanceDTO {
 		startRental: string,
 		userId: string
 	},
+	category?: string,
 	rentId?: string,
-	categoryId: string,
+	categoryId?: string,
 	userId: string
 }

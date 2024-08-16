@@ -13,7 +13,7 @@ import { RentMonth } from "../entities/RentMonth";
 export class RentRepository implements IRentRepository {
   async create(rent: IStoreRentDTO): Promise<IRent> {
     const rentalCreated = await Rent.create({
-      name: rent.name,
+      tenant: rent.tenant,
       value: rent.value,
       street: rent.street,
       streetNumber: rent.streetNumber,
@@ -23,7 +23,7 @@ export class RentRepository implements IRentRepository {
 
     const rental = {
       id: rentalCreated._id,
-      name: rentalCreated.name,
+      tenant: rentalCreated.tenant,
       value: rentalCreated.value,
       street: rentalCreated.street,
       streetNumber: rentalCreated.streetNumber,
@@ -67,7 +67,7 @@ export class RentRepository implements IRentRepository {
 
     const rent: IRent = {
       id: rentFound._id,
-      name: rentFound.name,
+      tenant: rentFound.tenant,
       value: rentFound.value,
       street: rentFound.street,
       streetNumber: rentFound.streetNumber,
@@ -124,9 +124,9 @@ export class RentRepository implements IRentRepository {
     return updatedRent;
   }
 
-  async updateRentMonth(rentMonthid: string, rentId, updates): Promise<IRentMonth> {
+  async updateRentMonth(rentMonthId: string, rentId, updates): Promise<IRentMonth> {
     const updatedRentMonth = await RentMonth.findOneAndUpdate(
-      { _id: rentMonthid, rentId },
+      { _id: rentMonthId, rentId },
       updates,
       { new: true, runValidators: true }
     );
@@ -147,6 +147,7 @@ export class RentRepository implements IRentRepository {
       amount: rentExpense.amount,
       reason: rentExpense.reason,
       rentMonthId: rentExpense.rentMonthId,
+      userId: rentExpense.userId
     });
 
     const rent: IRentExpense = {
@@ -154,6 +155,7 @@ export class RentRepository implements IRentRepository {
       amount: rentExpenseCreated.amount,
       reason: rentExpenseCreated.reason,
       rentMonthId: rentExpenseCreated.rentMonthId,
+      userId: rentExpense.userId
     };
 
     return rent;
@@ -167,10 +169,43 @@ export class RentRepository implements IRentRepository {
         id: rentExpense._id,
         amount: rentExpense.amount,
         reason: rentExpense.reason,
-        rentMonthId: rentExpense.rentMonthId
+        rentMonthId: rentExpense.rentMonthId,
+        userId: rentExpense.userId
       };
     });
 
     return rentExpenses;
+  }
+
+  async findRentExpenseById(rentExpenseId: string, userId: string): Promise<IRentExpense> {
+    const rentExpense = await RentExpense.findOne({ _id: rentExpenseId, userId });
+
+    if(!rentExpense) {
+      return null
+    }
+
+    return {
+      id: rentExpense._id,
+      amount: rentExpense.amount,
+      reason: rentExpense.reason,
+      rentMonthId: rentExpense.rentMonthId,
+      userId: rentExpense.userId
+    };
+  }
+
+  async updateRentExpense(rentExpenseId: string, userId: string, updates: any): Promise<IRentExpense> {
+    const updatedRentExpense = await RentExpense.findOneAndUpdate(
+      { _id: rentExpenseId, userId },
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    return {
+      id: updatedRentExpense._id,
+      amount: updatedRentExpense.amount,
+      reason: updatedRentExpense.reason,
+      rentMonthId: updatedRentExpense.rentMonthId,
+      userId: updatedRentExpense.userId
+    };
   }
 }

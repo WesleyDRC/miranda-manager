@@ -29,30 +29,30 @@ export class CreateFinanceUseCase implements IUseCase {
   async execute({
     name,
     rent,
-    categoryId,
+    category,
     userId,
   }: IStoreFinanceDTO): Promise<IFinance> {
     await this.ensureFinanceDoesNotExist(name);
 
-    const category = await this.getCategory(categoryId);
+    const categoryFound = await this.getCategory(category);
 
     const rentCreated = await this.createRentIfNeeded(
-      category.name,
+      categoryFound.name,
       rent,
       userId
     );
 
     const rentMonths = await this.createRentMonthIfNeeded(
-      category.name,
+      categoryFound.name,
       rent.startRental,
       rentCreated.id
     );
 
-    rentCreated.months = rentMonths
+    rentCreated.months = rentMonths;
 
     const financeCreated = await this.financeRepository.create({
       name,
-      categoryId,
+      categoryId: categoryFound.id,
       rentId: rentCreated.id,
       userId,
     });
@@ -60,7 +60,7 @@ export class CreateFinanceUseCase implements IUseCase {
     const finance: IFinance = {
       id: financeCreated.id,
       name: financeCreated.name,
-      category: category,
+      category: categoryFound,
       rent: rentCreated,
       userId: financeCreated.userId,
     };
@@ -68,11 +68,13 @@ export class CreateFinanceUseCase implements IUseCase {
     return finance;
   }
 
-  private async getCategory(categoryId: string): Promise<ICategory> {
-    const category = await this.categoryRepository.findById(categoryId);
+  private async getCategory(categoryName: string): Promise<ICategory> {
+    const category = await this.categoryRepository.findByName(categoryName);
+
     if (!category) {
       throw new AppError(categoryConstants.NOT_FOUND, 404);
     }
+    
     return category;
   }
 
@@ -93,7 +95,7 @@ export class CreateFinanceUseCase implements IUseCase {
     }
 
     const rentCreated = await this.rentRepository.create({
-      name: rent.name,
+      tenant: rent.tenant,
       value: rent.value,
       street: rent.street,
       streetNumber: rent.streetNumber,
@@ -109,20 +111,18 @@ export class CreateFinanceUseCase implements IUseCase {
     startRental: string,
     rentId: string
   ) {
-
     if (categoryName !== "Aluguel") {
       return null;
     }
 
     const [day, month, year] = startRental.split("/").map(Number);
 
-    const currentMonth = new Date().getMonth() + 1
+    const currentMonth = new Date().getMonth() + 1;
 
     const months = [];
 
     for (let i = month; i <= currentMonth; i++) {
-
-      const monthCreated = i - 1
+      const monthCreated = i - 1;
 
       const date = new Date(year, monthCreated, day);
 
@@ -131,9 +131,9 @@ export class CreateFinanceUseCase implements IUseCase {
           dateMonth: date,
           rentId: rentId,
         })
-      )
+      );
     }
 
-    return months
+    return months;
   }
 }

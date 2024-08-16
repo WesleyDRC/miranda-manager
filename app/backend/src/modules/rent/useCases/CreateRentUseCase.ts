@@ -12,7 +12,7 @@ export class CreateRentUseCase implements IUseCase {
 		private rentRepository: IRentRepository
 	){}
 	async execute({
-		name,
+		tenant,
 		startRental,
 		street,
 		streetNumber,
@@ -21,7 +21,7 @@ export class CreateRentUseCase implements IUseCase {
 	}: IStoreRentDTO): Promise<IRent> {
 
 		const rent = await this.rentRepository.create({
-			name,
+			tenant,
 			startRental,
 			street,
 			streetNumber,

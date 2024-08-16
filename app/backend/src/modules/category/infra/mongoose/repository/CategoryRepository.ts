@@ -18,10 +18,17 @@ export class CategoryRepository implements ICategoryRepository {
     return Promise.resolve(category);
   }
 
-  async findByName(name: string): Promise<ICategory | {}> {
+  async findByName(name: string): Promise<ICategory | null> {
     const categoryFound = await Category.findOne({ name });
 
-    return Promise.resolve(categoryFound ? categoryFound : null);
+    if (!categoryFound) {
+      return null;
+    }
+
+    return {
+      id: categoryFound._id,
+      name: categoryFound.name,
+    };
   }
 
   async getCategory(): Promise<ICategory[] | []> {
@@ -47,7 +54,7 @@ export class CategoryRepository implements ICategoryRepository {
 
   async findById(id: string): Promise<ICategory | null> {
     const categoryFound = await Category.findOne({ _id: id });
-		
+
     if (!categoryFound) {
       return null;
     }
