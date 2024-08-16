@@ -62,12 +62,12 @@ export function ExpenseEditModal({ id, month, closeModal, rentId, expenseEditMod
             </div>
           </section>
 
-          <section aria-labelledby="addExpense">
+          <section aria-labelledby="editExpense">
             <div className={styles.sectionSubTitle}>
-              <h3 id="addExpense"> Adicionar gasto </h3>
+              <h3 id="editExpense"> Editar gasto </h3>
             </div>
 
-            <div className={styles.addExpense}>
+            <div className={styles.editExpense}>
               <input
                 value={amount}
                 onChange={handleInput}
@@ -82,8 +82,11 @@ export function ExpenseEditModal({ id, month, closeModal, rentId, expenseEditMod
                 className={styles.reason}
               ></textarea>
 
-              <div className={styles.addExpenseButton}>
-                <button onClick={editExpense} className={styles.btn}>
+              <div className={styles.expenseButtons}>
+                <button onClick={closeModal} className={`${styles.btn} ${styles.btnCancel}`}>
+                  Cancelar
+                </button>
+                <button onClick={editExpense} className={`${styles.btn} ${styles.btnEdit}`}>
                   Salvar
                 </button>
               </div>
