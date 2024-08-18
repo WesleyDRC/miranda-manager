@@ -14,13 +14,13 @@ export class CreateRentExpenseController {
       CreateRentExpenseUseCase
     );
 
-    const rent = await createRentExpenseUseCase.execute({
+    const expense = await createRentExpenseUseCase.execute({
       amount,
       reason,
       rentMonthId,
       userId
     });
 
-    return response.json({ rent });
+    return response.json({ expense });
   }
 }

@@ -34,7 +34,15 @@ rentExpenseSchema.post("save", async function () {
   await updateNetIncome(this.rentMonthId);
 });
 
-async function updateNetIncome(rentMonthId) {
+rentExpenseSchema.post("findOneAndUpdate", async function (doc) {
+  await updateNetIncome(doc.rentMonthId);
+});
+
+rentExpenseSchema.post("findOneAndDelete", async function (doc) {
+  await updateNetIncome(doc.rentMonthId);
+});
+
+async function updateNetIncome(rentMonthId: string) {
   const rentId = (await RentMonth.findById(rentMonthId)).rentId;
   const rentMonths = await RentMonth.find({ _id: rentMonthId }).where({
     paid: true,

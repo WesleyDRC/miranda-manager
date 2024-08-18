@@ -229,11 +229,11 @@ export class RentRepository implements IRentRepository {
     rentExpenseId: string,
     userId: string
   ): Promise<boolean> {
-    const { deletedCount } = await RentExpense.deleteOne({
+    const wasDeleted = await RentExpense.findOneAndDelete({
       _id: rentExpenseId,
       userId,
     });
 
-    return deletedCount > 0;
+    return wasDeleted ? true : false;
   }
 }
