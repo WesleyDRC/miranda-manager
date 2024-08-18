@@ -88,6 +88,7 @@ class AxiosRepository {
       reason
     })
   }
+  
   async deleteExpense({ id }) {
     return this.#axiosClient.delete(`/rent/expense/${id}`)
   }

@@ -20,7 +20,7 @@ import { useFinance } from "../../hooks/useFinance";
 
 import { useState } from "react";
 
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 export default function ModalEditMonthRent({
   rentId = "",
@@ -44,7 +44,7 @@ export default function ModalEditMonthRent({
   const [expenseData, setExpenseData] = useState({
     id: "",
     amount: 0,
-    reason: "aaaaaaaaaaaa",
+    reason: "",
   });
 
   const handleToggle = (status) => {
@@ -120,7 +120,23 @@ export default function ModalEditMonthRent({
   };
 
   const handleDeleteExpense = async (id) => {
-    await axiosRepositoryInstance.delete(id);
+
+    if(!window.confirm("Você tem certeza que deseja apagar a despesa?")){
+      return
+    }
+
+    const response = await axiosRepositoryInstance.deleteExpense({id});
+
+    if (response.status !== 200) {
+      toast.error(response.data.message)
+      return
+    }
+
+    if (response.status === 200) {
+      toast.success("Despesa deletada com sucesso!");
+    }
+
+    await fetchRentData(rentId);
   };
 
   return (
