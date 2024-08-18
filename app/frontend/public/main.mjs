@@ -18,8 +18,6 @@ function createWindow() {
 
   win.maximize()
 
-  console.log(`file://${path.join(__dirname, "../build", "index.html")}`)
-
   win.loadURL(
     isDev ? 
     "http://localhost:3000" : 

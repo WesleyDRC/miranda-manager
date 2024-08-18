@@ -55,7 +55,7 @@ export class RentRepository implements IRentRepository {
     return rent;
   }
 
-  async findById({id, userId}): Promise<IRent> {
+  async findById({ id, userId }): Promise<IRent> {
     const rentFound = await Rent.findOne({
       _id: id,
       userId,
@@ -80,7 +80,7 @@ export class RentRepository implements IRentRepository {
     return rent;
   }
 
-  async findRentMonthById({id}): Promise<IRentMonth> {
+  async findRentMonthById({ id }): Promise<IRentMonth> {
     const rentMonthFound = await RentMonth.findOne({
       _id: id,
     });
@@ -124,7 +124,11 @@ export class RentRepository implements IRentRepository {
     return updatedRent;
   }
 
-  async updateRentMonth(rentMonthId: string, rentId, updates): Promise<IRentMonth> {
+  async updateRentMonth(
+    rentMonthId: string,
+    rentId,
+    updates
+  ): Promise<IRentMonth> {
     const updatedRentMonth = await RentMonth.findOneAndUpdate(
       { _id: rentMonthId, rentId },
       updates,
@@ -141,13 +145,15 @@ export class RentRepository implements IRentRepository {
 
     return rentMonth;
   }
-  
-  async createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense> {
+
+  async createRentExpense(
+    rentExpense: IStoreRentExpenseDTO
+  ): Promise<IRentExpense> {
     const rentExpenseCreated = await RentExpense.create({
       amount: rentExpense.amount,
       reason: rentExpense.reason,
       rentMonthId: rentExpense.rentMonthId,
-      userId: rentExpense.userId
+      userId: rentExpense.userId,
     });
 
     const rent: IRentExpense = {
@@ -155,7 +161,7 @@ export class RentRepository implements IRentRepository {
       amount: rentExpenseCreated.amount,
       reason: rentExpenseCreated.reason,
       rentMonthId: rentExpenseCreated.rentMonthId,
-      userId: rentExpense.userId
+      userId: rentExpense.userId,
     };
 
     return rent;
@@ -170,18 +176,24 @@ export class RentRepository implements IRentRepository {
         amount: rentExpense.amount,
         reason: rentExpense.reason,
         rentMonthId: rentExpense.rentMonthId,
-        userId: rentExpense.userId
+        userId: rentExpense.userId,
       };
     });
 
     return rentExpenses;
   }
 
-  async findRentExpenseById(rentExpenseId: string, userId: string): Promise<IRentExpense> {
-    const rentExpense = await RentExpense.findOne({ _id: rentExpenseId, userId });
+  async findRentExpenseById(
+    rentExpenseId: string,
+    userId: string
+  ): Promise<IRentExpense> {
+    const rentExpense = await RentExpense.findOne({
+      _id: rentExpenseId,
+      userId,
+    });
 
-    if(!rentExpense) {
-      return null
+    if (!rentExpense) {
+      return null;
     }
 
     return {
@@ -189,11 +201,15 @@ export class RentRepository implements IRentRepository {
       amount: rentExpense.amount,
       reason: rentExpense.reason,
       rentMonthId: rentExpense.rentMonthId,
-      userId: rentExpense.userId
+      userId: rentExpense.userId,
     };
   }
 
-  async updateRentExpense(rentExpenseId: string, userId: string, updates: any): Promise<IRentExpense> {
+  async updateRentExpense(
+    rentExpenseId: string,
+    userId: string,
+    updates: any
+  ): Promise<IRentExpense> {
     const updatedRentExpense = await RentExpense.findOneAndUpdate(
       { _id: rentExpenseId, userId },
       updates,
@@ -205,7 +221,19 @@ export class RentRepository implements IRentRepository {
       amount: updatedRentExpense.amount,
       reason: updatedRentExpense.reason,
       rentMonthId: updatedRentExpense.rentMonthId,
-      userId: updatedRentExpense.userId
+      userId: updatedRentExpense.userId,
     };
+  }
+
+  async deleteRentExpense(
+    rentExpenseId: string,
+    userId: string
+  ): Promise<boolean> {
+    const { deletedCount } = await RentExpense.deleteOne({
+      _id: rentExpenseId,
+      userId,
+    });
+
+    return deletedCount > 0;
   }
 }

@@ -60,7 +60,7 @@ export class FinanceRepository implements IFinanceRepository {
 				,
 				rent: {
 					id: financeFound.rentId.id,
-					name: financeFound.rentId.name,
+					tenant: financeFound.rentId.tenant,
 					value: financeFound.rentId.value,
 					street: financeFound.rentId.street,
 					streetNumber: financeFound.rentId.streetNumber,
@@ -95,7 +95,7 @@ export class FinanceRepository implements IFinanceRepository {
 			,
 			rent: {
 				id: financeFound.rentId.id,
-				name: financeFound.rentId.name,
+				tenant: financeFound.rentId.tenant,
 				value: financeFound.rentId.value,
 				street: financeFound.rentId.street,
 				streetNumber: financeFound.rentId.streetNumber,
