@@ -10,10 +10,20 @@ import "react-toastify/dist/ReactToastify.css";
 import "./reset.css";
 import "./variables.css";
 
+const isDevelopment = process.env.NODE_ENVIROMENT === "development";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <React.StrictMode>
-    <App />
+  <>
+    {isDevelopment ? (
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    ) : (
+      <App />
+    )}
+    
     <ToastContainer
       theme="dark"
       closeOnClick
@@ -22,7 +32,7 @@ root.render(
       }}
       pauseOnHover
     />
-  </React.StrictMode>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function

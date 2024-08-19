@@ -44,12 +44,14 @@ export function FormSignIn() {
         placeholder=" "
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        autoComplete="email"
       />
       <InputPassword
         id="password"
         placeholder=" "
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        autoComplete="current-password"
       />
       {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
       <FormButton type="submit" text="Entrar" />

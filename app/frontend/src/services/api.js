@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const baseURL = process.env.REACT_APP_BASE_URL;
 
 const api = axios.create({
@@ -31,14 +33,18 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      if ( 
-        (error.response.status === 401 && error.response.data.message === 'Token not found' ) ||
-        (error.response.status === 401 && error.response.data.message === 'Invalid token' ) ||
-        (error.response.status === 401 && error.response.data.message === 'Token malformed') 
+      if (
+        (error.response.status === 401 && error.response.data.message === "Token not found") ||
+        (error.response.status === 401 && error.response.data.message === "Invalid token") ||
+        (error.response.status === 401 && error.response.data.message === "Token malformed")
       ) {
-        localStorage.removeItem("user_token")
-        window.location.href = "/"
+        localStorage.removeItem("user_token");
+        window.location.href = "/";
       }
+    }
+
+    if(error.code === "ERR_NETWORK") {
+      toast.error("Erro interno no servidor. Tente novamente mais tarde!");
     }
 
     return Promise.reject(error);

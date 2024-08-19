@@ -1,9 +1,8 @@
 import { Header } from "../components/authentication/Header";
 import styles from "./ErrorPage.module.css";
-import { useRouteError, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
-  const error = useRouteError();
 
   return (
     <>

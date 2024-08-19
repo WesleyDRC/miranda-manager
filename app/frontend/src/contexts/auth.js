@@ -1,62 +1,61 @@
-import { createContext, useState, useEffect } from 'react'
-import { api } from '../services/api'
-import axiosRepositoryInstance from '../repository/AxiosRepository'
+import { createContext, useState, useEffect } from "react";
+import { api } from "../services/api";
+import axiosRepositoryInstance from "../repository/AxiosRepository";
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userToken = localStorage.getItem('user_token')
+    const userToken = localStorage.getItem("user_token");
 
     if (userToken) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(userToken)}`
-      setUser(JSON.parse(userToken))
+      api.defaults.headers.Authorization = `Bearer ${JSON.parse(userToken)}`;
+      setUser(JSON.parse(userToken));
     }
     setTimeout(() => {
-      setLoading(false)
-    }, 1000)
-  }, [])
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const SignIn = async (email, password) => {
     try {
-      const response = await axiosRepositoryInstance.signIn({ email, password })
+      const response = await axiosRepositoryInstance.signIn({ email, password });
 
-      localStorage.setItem('user_token', JSON.stringify(response.data.token))
+      localStorage.setItem("user_token", JSON.stringify(response.data.token));
 
-      api.defaults.headers.Authorization = `Bearer ${response.data.token}`
-      setUser(response.data.token)
+      api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+      setUser(response.data.token);
     } catch (error) {
-      console.log(error)
-      if (error.response.status !== error.response.status.ok) {
-        console.log(error)
-        return error.response.data.message
+      if (error.response && error.response.status !== error.response.status.ok) {
+        console.log(error);
+        return error.response.data.message;
       }
     }
-  }
+  };
 
   const SignUp = async (email, password, confirmPassword) => {
     try {
       await axiosRepositoryInstance.createUser({
         email,
         password,
-        confirmPassword
-      })
+        confirmPassword,
+      });
     } catch (error) {
-      if (error.response.status !== error.response.status.ok) {
-        return error.response.data.message
+      if (error.response && error.response.status !== error.response.status.ok) {
+        return error.response.data.message;
       }
     }
-  }
+  };
 
   const SignOut = () => {
-    setUser(null)
-    api.defaults.headers.Authorization = null
-    localStorage.removeItem('user_token')
-    window.location.href = "/"
-  }
+    setUser(null);
+    api.defaults.headers.Authorization = null;
+    localStorage.removeItem("user_token");
+    window.location.href = "/";
+  };
 
   return (
     <AuthContext.Provider
@@ -66,10 +65,10 @@ export const AuthProvider = ({ children }) => {
         authenticated: !!user,
         loading,
         SignUp,
-        SignOut
+        SignOut,
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

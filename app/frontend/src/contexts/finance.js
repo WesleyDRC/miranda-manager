@@ -1,7 +1,6 @@
 import axiosRepositoryInstance from "../repository/AxiosRepository";
 
 import { createContext, useState } from "react";
-import { toast } from "react-toastify";
 
 export const FinanceContext = createContext({});
 
@@ -22,7 +21,6 @@ export const FinanceProvider = ({ children }) => {
 
       calculateTotalAssets(response.data.finances);
     } catch (error) {
-      toast.error("Erro interno no servidor. Tente novamente mais tarde!");
       return;
     }
   };
@@ -35,8 +33,6 @@ export const FinanceProvider = ({ children }) => {
 
       setFinanceData(response.data.finance);
     } catch (error) {
-      console.log("error");
-      toast.error("Erro interno no servidor. Tente novamente mais tarde!");
       return;
     }
   };
