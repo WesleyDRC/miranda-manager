@@ -32,14 +32,14 @@ const rentMonthSchema = new mongoose.Schema({
 });
 
 rentMonthSchema.post("save", async function (doc) {
-  await updateEarnings(doc.id, doc.rentId);
+  await updateEarnings(doc.rentId);
 });
 
 rentMonthSchema.post("findOneAndUpdate", async function (doc) {
-  await updateEarnings(doc.id, doc.rentId);
+  await updateEarnings(doc.rentId);
 });
 
-async function updateEarnings(rentMonthId, rentId) {
+async function updateEarnings(rentId: string) {
   const rentMonths = await RentMonth.find({ rentId })
 
   const rentExpenses = await Promise.all(rentMonths.map(async (month)=> {

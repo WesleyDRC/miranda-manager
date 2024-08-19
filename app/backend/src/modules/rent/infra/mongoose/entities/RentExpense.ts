@@ -44,9 +44,11 @@ rentExpenseSchema.post("findOneAndDelete", async function (doc) {
 
 async function updateNetIncome(rentMonthId: string) {
   const rentId = (await RentMonth.findById(rentMonthId)).rentId;
-  const rentMonths = await RentMonth.find({ _id: rentMonthId }).where({
+
+  const rentMonths = await RentMonth.find({ rentId: rentId }).where({
     paid: true,
   });
+
   const rentExpenses = await RentExpense.find({ rentMonthId });
 
   const totalGrossIncome = rentMonths.reduce(
