@@ -1,0 +1,87 @@
+.modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--overlay) ;
+	z-index: 1000;
+	font-family: "Inter", sans-serif;
+	animation: toAppear 0.3s 0.3s backwards;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modalContent {
+	background-color: var(--white);
+	padding: 20px;
+	border-radius: 8px;
+	width: 100%;
+	max-width: 400px;
+	opacity: 1;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+	animation: toAppear 0.3s 0.3s backwards;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.header h2 {
+	font-size: 2.0rem;
+}
+
+.main p {
+	font-size: 1.3rem;
+	font-weight: bold;
+	color: var(--gray)
+}
+
+.footer {
+	margin-top: 24px;
+	display: flex;
+	width: fit-content;
+	gap: 12px;
+}
+.btn {
+	width: 110px;
+	height: 40px;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	text-align: center;
+	transition: all 0.4s;
+}
+.btnCancel {
+	background-color:var(--white);
+	border: 1px solid var(--red);
+	color: var(--red);
+}
+.btnConfirm {
+	background-color: var(--purple);
+	color: #fff;
+}
+
+.btnCancel:hover {
+	background-color: var(--red);
+	color: var(--white)
+}
+.btnConfirm:hover {
+	background-color: var(--light-purple)
+}
+
+.hide {
+	opacity: 0;
+}
+
+@keyframes toAppear{
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
