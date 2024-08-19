@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
-
 import axiosRepositoryInstance from "../repository/AxiosRepository";
+
+import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export const FinanceContext = createContext({});
 
@@ -11,6 +12,9 @@ export const FinanceProvider = ({ children }) => {
   const [totalRentalEarnings, setTotalRentalEarnings] = useState(0);
   const [totalAssets, setTotalAssets] = useState(0);
 
+  // Loading
+  const [loadingRentData, setLoadingRentData] = useState(true);
+
   const fetchFinances = async () => {
     try {
       const response = await axiosRepositoryInstance.getFinances();
@@ -18,6 +22,7 @@ export const FinanceProvider = ({ children }) => {
 
       calculateTotalAssets(response.data.finances);
     } catch (error) {
+      toast.error("Erro interno no servidor. Tente novamente mais tarde!");
       return;
     }
   };
@@ -30,17 +35,22 @@ export const FinanceProvider = ({ children }) => {
 
       setFinanceData(response.data.finance);
     } catch (error) {
+      console.log("error");
+      toast.error("Erro interno no servidor. Tente novamente mais tarde!");
       return;
     }
   };
 
   const fetchRentData = async (rentId) => {
     try {
+      setLoadingRentData(true);
       const response = await axiosRepositoryInstance.getRentById({
         id: rentId,
       });
       setRentData(response.data.rent);
+      setLoadingRentData(false);
     } catch (error) {
+      setLoadingRentData(false);
       return;
     }
   };
@@ -79,6 +89,7 @@ export const FinanceProvider = ({ children }) => {
         finances,
         financeData,
         rentData,
+        loadingRentData,
         fetchFinances,
         fetchFinanceData,
         fetchRentData,

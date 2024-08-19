@@ -1,14 +1,15 @@
 import styles from "./FinanceRentDetail.module.css";
 
 import { RentPaymentTable } from "../components/financeDetails/RentPaymentTable";
+import { NotFound } from "./NotFound";
 
 import rentIcon from "../assets/rent-icon.svg";
 
-import { useParams } from "react-router-dom";
 import { RentData } from "../components/financeDetails/RentData";
+import { isEmpty } from "../utils/isEmpty";
 
+import { useParams } from "react-router-dom";
 import { useFinance } from "../hooks/useFinance";
-
 import { useEffect } from "react";
 
 export function FinanceRentDetail() {
@@ -16,7 +17,8 @@ export function FinanceRentDetail() {
     financeData, 
     rentData, 
     fetchRentData, 
-    fetchFinanceData 
+    fetchFinanceData,
+    loadingRentData
   } = useFinance()
 
   const {financeId, rentId} = useParams();
@@ -30,6 +32,18 @@ export function FinanceRentDetail() {
     fetchRentData(rentId);
     // eslint-disable-next-line
   }, []);
+
+  if(loadingRentData) {
+    return (
+      <h1> Carregando</h1>
+    )
+  }
+
+  if(!loadingRentData && isEmpty(rentData)) {
+    return (
+      <NotFound />
+    )
+  }
 
   return (
     <main className={styles.finance}>

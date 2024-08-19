@@ -21,7 +21,7 @@ export function AppRoutes() {
 	const Private = ({ children }) => {
 
     if (loading) {
-      return <div className="loading"> Carregando..... </div>;
+      return 
     }
     if (!authenticated) {
       return <Navigate to="/" />;
