@@ -13,6 +13,7 @@ import { CreateCategory } from "../pages/CreateCategory"
 import { Finances } from "../pages/Finances"
 import { FinanceRentDetail } from "../pages/FinanceRentDetail"
 import { useAuth } from "../hooks/useAuth"
+import ErrorPage from "../pages/ErrorPage"
 
 export function AppRoutes() {
 	const { authenticated, loading } = useAuth();
@@ -39,14 +40,16 @@ export function AppRoutes() {
 	const router = createHashRouter([
 		{
 			path: "/",
-			element: <IsAuthenticated> <Authentication /> </IsAuthenticated>
+			element: <IsAuthenticated> <Authentication /> </IsAuthenticated>,
+			errorElement: <ErrorPage />
 		},
 		{
 			element: <MainLayout />,
 			children: [
 				{
 					path: '/dashboard',
-					element: <Private> <Dashboard /> </Private>
+					element: <Private> <Dashboard /> </Private>,
+					errorElement: <ErrorPage />
 				},
 				{
 					path: "/finance/create",
@@ -54,15 +57,18 @@ export function AppRoutes() {
 				},
 				{
 					path:"/category/create",
-					element: <Private> <CreateCategory /> </Private>
+					element: <Private> <CreateCategory /> </Private>,
+					errorElement: <ErrorPage />
 				},
 				{
 					path: "/finances", 
-					element: <Private> <Finances /> </Private>
+					element: <Private> <Finances /> </Private>,
+					errorElement: <ErrorPage />
 				},
 				{
 					path: "/finance/:financeId/rent/:rentId", 
-					element: <Private> <FinanceRentDetail /> </Private>
+					element: <Private> <FinanceRentDetail /> </Private>,
+					errorElement: <ErrorPage />
 				}
 			]
 		}
