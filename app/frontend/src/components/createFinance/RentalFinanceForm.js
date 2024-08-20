@@ -66,10 +66,11 @@ export function RentalFinanceForm({ selectedOption }) {
     try {
       const monthDate = formatDate(data.startRental);
 
+
       const response = await AxiosRepository.createFinance({
         name: data.financeName,
-        categoryId: selectedOption,
-        rentalName: data.tenant,
+        category: selectedOption,
+        tenant: data.tenant,
         rentalValue: data.value,
         rentalStreet: data.street,
         rentalStreetNumber: data.number,

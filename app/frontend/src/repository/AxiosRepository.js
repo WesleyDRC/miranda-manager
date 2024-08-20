@@ -32,8 +32,8 @@ class AxiosRepository {
 
   async createFinance({
     name,
-    categoryId,
-    rentalName,
+    category,
+    tenant,
     rentalValue,
     rentalStreet,
     rentalStreetNumber,
@@ -41,9 +41,9 @@ class AxiosRepository {
   }) {
     return await this.#axiosClient.post("/finance", {
       name,
-      categoryId,
+      category,
       rent: {
-        name: rentalName,
+        tenant: tenant,
         value: rentalValue,
         street: rentalStreet,
         streetNumber: rentalStreetNumber,

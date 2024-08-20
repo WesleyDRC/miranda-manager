@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data.token);
     } catch (error) {
       if (error.response && error.response.status !== error.response.status.ok) {
-        console.log(error);
         return error.response.data.message;
       }
     }
