@@ -10,7 +10,10 @@ class Database {
   }
 
   private async connect() {
-    mongoose.connect(process.env.MONGO_URI, {
+
+    const host = process.env.BACKEND_ENVIROMENT === "production" ? process.env.DB_HOST : process.env.MONGO_HOST
+
+    mongoose.connect(`mongodb://${host}:${process.env.MONGO_PORT}`, {
       user:process.env.MONGO_USERNAME,
       pass: process.env.MONGO_PASSWORD,
       dbName: process.env.MONGO_DATABASE_NAME
