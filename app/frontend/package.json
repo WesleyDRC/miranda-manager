@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "description": "Mentoring platform",
+  "description": "Gerencie seus gastos com Miranda Manager!",
   "author": "Wesley Luis",
   "private": true,
   "main": "public/main.mjs",
@@ -35,13 +35,6 @@
     "start-electron-forge": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
-  },
-  "build": {
-    "appId": "com.example.myapp",
-    "productName": "Meu aplicativo Electron",
-    "directories": {
-      "output": "dist"
-    }
   },
   "eslintConfig": {
     "extends": [
