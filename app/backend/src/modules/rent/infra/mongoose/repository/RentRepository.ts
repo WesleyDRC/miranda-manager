@@ -41,6 +41,7 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonth.dateMonth,
       amountPaid: rentMonth.amountPaid,
       paid: rentMonth.paid,
+      receipt: rentMonth.receipt,
       rentId: rentMonth.rentId,
     });
 
@@ -49,6 +50,7 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonthCreated.dateMonth,
       amountPaid: rentMonthCreated.amountPaid,
       paid: rentMonthCreated.paid,
+      receipt: rentMonthCreated.receipt,
       rentId: rentMonthCreated.rentId,
     };
 
@@ -94,13 +96,14 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonthFound.dateMonth,
       amountPaid: rentMonthFound.amountPaid,
       paid: rentMonthFound.paid,
+      receipt: rentMonthFound.receipt,
       rentId: rentMonthFound.rentId,
     };
 
     return rentMonth;
   }
 
-  async findAllRentMonthById(rentId: string): Promise<IRentMonth[]> {
+  async findAllRentMonthByRentId(rentId: string): Promise<IRentMonth[]> {
     const rentMonthFound = await RentMonth.find({ rentId });
 
     const rentMonths: IRentMonth[] = rentMonthFound.map((rentMonth) => {
@@ -109,6 +112,7 @@ export class RentRepository implements IRentRepository {
         dateMonth: rentMonth.dateMonth,
         amountPaid: rentMonth.amountPaid,
         paid: rentMonth.paid,
+        receipt: rentMonth.receipt,
         rentId: rentMonth.rentId,
       };
     });
@@ -140,6 +144,7 @@ export class RentRepository implements IRentRepository {
       dateMonth: updatedRentMonth.dateMonth,
       amountPaid: updatedRentMonth.amountPaid,
       paid: updatedRentMonth.paid,
+      receipt: updatedRentMonth.receipt,
       rentId: updatedRentMonth.rentId,
     };
 

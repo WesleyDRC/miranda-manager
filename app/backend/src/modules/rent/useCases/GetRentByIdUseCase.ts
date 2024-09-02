@@ -24,7 +24,7 @@ export class GetRentByIdUseCase implements IUseCase {
       throw new AppError(rentConstants.NOT_FOUND, 404);
     }
 
-    const rentMonths = await this.rentRepository.findAllRentMonthById(id);
+    const rentMonths = await this.rentRepository.findAllRentMonthByRentId(id);
 
     const months = await Promise.all(
       rentMonths.map(async (month) => {
@@ -37,6 +37,7 @@ export class GetRentByIdUseCase implements IUseCase {
           dateMonth: formatDateToDDMMYY(month.dateMonth),
           amountPaid: month.amountPaid,
           paid: month.paid,
+          receipt: month.receipt,
           expenses: rentExpenses,
         };
       })
