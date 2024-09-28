@@ -130,8 +130,8 @@ export class RentRepository implements IRentRepository {
 
   async updateRentMonth(
     rentMonthId: string,
-    rentId,
-    updates
+    rentId: string,
+    updates: any
   ): Promise<IRentMonth> {
     const updatedRentMonth = await RentMonth.findOneAndUpdate(
       { _id: rentMonthId, rentId },

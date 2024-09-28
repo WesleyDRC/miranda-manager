@@ -1,12 +1,9 @@
 import path from "path";
 import fs from "fs"
 
-import { getAppDataPath } from "./getAppDataFolder";
+export function saveImage(pathToSave: string, imageBuffer: Buffer, imageName: string) {
 
-export function saveImage(imageBuffer: Buffer, imageName: string) {
-  const appDataPath = getAppDataPath();
-
-  const imagePath = path.join(appDataPath, imageName);
+  const imagePath = path.join(pathToSave, imageName);
 
   fs.writeFileSync(imagePath, imageBuffer); 
 

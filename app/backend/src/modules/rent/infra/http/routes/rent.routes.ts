@@ -6,24 +6,43 @@ import { CreateRentController } from "../controllers/CreateRentController";
 import { GetRentByIdController } from "../controllers/GetRentByIdController";
 import { CreateRentExpenseController } from "../controllers/CreateRentExpenseController";
 import { UpdateRentMonthController } from "../controllers/UpdateRentMonthController";
-import { UpdateRentExpenseController } from "../controllers/UpdateRentExpenseController"
+import { UpdateRentExpenseController } from "../controllers/UpdateRentExpenseController";
 import { DeleteRentExpenseController } from "../controllers/DeleteRentExpenseController";
 
-const rentRoutes = Router()
+import { upload } from "../middlewares/uploadImagesMulter";
 
-const createRentController = new CreateRentController()
-const getRentByIdController = new GetRentByIdController()
-const createRentExpenseController = new CreateRentExpenseController()
-const updateRentMonthController = new UpdateRentMonthController()
-const updateRentExpenseController = new UpdateRentExpenseController()
-const deleteRentExpenseController = new DeleteRentExpenseController()
+const rentRoutes = Router();
 
-rentRoutes.post("/", ensureAuthenticated, createRentController.handle)
-rentRoutes.get("/:id", ensureAuthenticated, getRentByIdController.handle)
-rentRoutes.patch("/:rentId/month/:rentMonthid", ensureAuthenticated, updateRentMonthController.handle)
+const createRentController = new CreateRentController();
+const getRentByIdController = new GetRentByIdController();
+const createRentExpenseController = new CreateRentExpenseController();
+const updateRentMonthController = new UpdateRentMonthController();
+const updateRentExpenseController = new UpdateRentExpenseController();
+const deleteRentExpenseController = new DeleteRentExpenseController();
 
-rentRoutes.post("/expense", ensureAuthenticated, createRentExpenseController.handle)
-rentRoutes.patch("/expense/:rentExpenseId", ensureAuthenticated, updateRentExpenseController.handle)
-rentRoutes.delete("/expense/:rentExpenseId", ensureAuthenticated, deleteRentExpenseController.handle)
+rentRoutes.post("/", ensureAuthenticated, createRentController.handle);
+rentRoutes.get("/:id", ensureAuthenticated, getRentByIdController.handle);
+rentRoutes.patch(
+  "/:rentId/month/:rentMonthId",
+  ensureAuthenticated,
+	upload.single("receipt"),
+  updateRentMonthController.handle
+);
 
-export default rentRoutes
+rentRoutes.post(
+  "/expense",
+  ensureAuthenticated,
+  createRentExpenseController.handle
+);
+rentRoutes.patch(
+  "/expense/:rentExpenseId",
+  ensureAuthenticated,
+  updateRentExpenseController.handle
+);
+rentRoutes.delete(
+  "/expense/:rentExpenseId",
+  ensureAuthenticated,
+  deleteRentExpenseController.handle
+);
+
+export default rentRoutes;

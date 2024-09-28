@@ -20,7 +20,7 @@ export interface IRentRepository {
   updateRentMonth(
     rentMonthId: string,
     rentId: string,
-    updates
+    updates: any
   ): Promise<IRentMonth>;
 
   createRentExpense(rentExpense: IStoreRentExpenseDTO): Promise<IRentExpense>;

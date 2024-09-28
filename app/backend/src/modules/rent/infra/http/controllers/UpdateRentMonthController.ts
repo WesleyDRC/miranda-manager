@@ -10,20 +10,23 @@ export class UpdateRentMonthController {
       paid,
     } = request.body;
 
-    const userId = request.user.id;
+    const receipt = request.file
 
-    const { rentId, rentMonthid } = request.params
+    const userId = request.user.id
+
+    const { rentId, rentMonthId } = request.params
 
     const updateRentMonthUseCase = container.resolve(UpdateRentMonthUseCase);
 
     const rentMonth = await updateRentMonthUseCase.execute({
-			rentMonthid,
+			rentMonthId,
 			userId,
 			rentId,
 			updates: { 
 				dateMonth,
 				amountPaid,
-				paid
+				paid,
+        receipt
 			}
     });
 
