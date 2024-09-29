@@ -36,6 +36,10 @@ export class UpdateRentMonthUseCase implements IUseCase {
       throw new AppError(rentConstants.RENT_MONTH_NOT_FOUND, 404);
     }
 
+    if(updates.dateMonth) {
+      throw new AppError(rentConstants.CANNOT_CHANGE_RENT_MONTH, 403)
+    }
+
     if (updates.receipt) {
       const tempFilePath = updates.receipt.path;
       const newFilePath = `${getAppDataPath()}/rent/receipts/${path.basename(
