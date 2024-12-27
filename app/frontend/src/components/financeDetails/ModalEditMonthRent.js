@@ -2,6 +2,7 @@ import styles from "./ModalEditMonthRent.module.css";
 
 import ModalAddExpense from "./ModalAddExpense";
 import { ExpenseEditModal } from "./ExpenseEditModal";
+import { ModalUpdateReceipts } from "./ModalUpdateReceipts";
 import { ConfirmModal } from "../modals/ConfirmModal";
 
 import CloseIcon from "../../assets/close-icon.svg";
@@ -31,7 +32,7 @@ export default function ModalEditMonthRent({
   closeModal,
   amount = 0,
 }) {
-  const { rentData, fetchRentData } = useFinance();
+  const { rentData, fetchRentData, receipts } = useFinance();
 
   const [expenseId, setExpenseId] = useState("");
   const [paymentStatus, setPaymentStatus] = useState(paid);
@@ -39,10 +40,12 @@ export default function ModalEditMonthRent({
   const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
   const [showModalAddExpense, setShowModalAddExpense] = useState(false);
   const [showExpenseEditModal, setShowExpenseEditModal] = useState(false);
+  const [showModalUpdateReceipts, setShowModalUpdateReceipts] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalEditMonthClass, setModalEditMonthClass] = useState(styles.slideInLeft);
   const [modalAddExpenseClass, setModalAddExpenseClass] = useState(styles.slideInLeft);
   const [expenseEditModalClass, setExpenseEditModalClass] = useState(styles.slideInLeft);
+  const [modalUpdateReceiptsClass, setModalUpdateReceiptsClass] = useState(styles.slideInLeft);
   const [confirmModalClass, setConfirmModalClass] = useState("");
 
   const [expenseData, setExpenseData] = useState({
@@ -158,6 +161,24 @@ export default function ModalEditMonthRent({
     }, 300);
   };
 
+  const handleShowModalUpdateReceipts = () => {
+    setModalEditMonthClass(styles.slideOutLeft);
+
+    setShowModalUpdateReceipts(true);
+
+    setModalUpdateReceiptsClass(styles.slideInRight);
+  };
+
+  const closeModalUpdateReceipts = async () => {
+    setModalEditMonthClass(styles.slideInLeft);
+
+    setTimeout(() => {
+      setShowModalUpdateReceipts(false);
+    }, 300);
+
+    setModalUpdateReceiptsClass(styles.slideOutRight);
+  };
+
   return (
     <>
       <div className={styles.modal} aria-labelledby="modalTitle">
@@ -201,12 +222,23 @@ export default function ModalEditMonthRent({
             <section aria-labelledby="receiptsTitle">
               <div className={styles.sectionTitle}>
                 <h3 id="receiptsTitle"> Comprovantes </h3>
-                <div className={styles.action}>
+                <div onClick={handleShowModalUpdateReceipts} className={styles.action}>
                   <img src={uploadIcon} alt="Upload Receipts Icon" />
-                  <span> Adicionar comprovantes </span>
+                  <span> Enviar Comprovantes </span>
                 </div>
               </div>
-              <div className={styles.boxReceipts}></div>
+              <div className={styles.boxReceipts}>
+                {receipts &&
+                  receipts.map((receipt) => (
+                    <div key={receipt.id}>
+                      <img
+                        src={`data:image/jpeg;base64,${receipt.receipt}`}
+                        alt={`Recibo ${receipt.id}`}
+                        className={styles.receiptImage}
+                      />
+                    </div>
+                  ))}
+              </div>
             </section>
 
             <section aria-labelledby="spendingTitle">
@@ -304,6 +336,15 @@ export default function ModalEditMonthRent({
           onConfirm={confirmDeleteExpense}
           onCancel={cancelDeleteExpense}
           confirmModalClass={confirmModalClass}
+        />
+      )}
+
+      {showModalUpdateReceipts && (
+        <ModalUpdateReceipts
+          rentMonthId={rentMonthId}
+          rentId={rentId}
+          closeModal={closeModalUpdateReceipts}
+          modalUpdateReceiptsClass={modalUpdateReceiptsClass}
         />
       )}
     </>

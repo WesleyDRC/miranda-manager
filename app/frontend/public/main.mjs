@@ -54,30 +54,50 @@ app.on("activate", () => {
   }
 });
 
-function startBackend() {
-  const dockerComposePath = path.join(__dirname, '../../backend');
-
+function backendStarted(port) {
   return new Promise((resolve, reject) => {
-    exec(`cd ${dockerComposePath} && docker-compose up -d`, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Erro ao executar docker-compose: ${error}`);
-        reject(error);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
-      
-      waitForBackend(5000, 10)
-        .then(resolve)
-        .catch(reject);
+    http.get(`http://localhost:${port}/health-check`, (res) => {
+      resolve(res.statusCode === 200);
+    }).on('error', (err) => {
+      console.log(`Erro ao tentar conectar ao backend: ${err.message}`);
+      reject(false);
     });
   });
 }
 
+function startBackend() {
+  const dockerComposePath = path.join(__dirname, '../../backend');
+
+  return new Promise((resolve, reject) => {
+    backendStarted(5000)
+    .then((started) => {
+      if(started) {
+        console.log("The backend has already started!")
+        resolve()
+        return;
+      }
+
+      exec(`cd ${dockerComposePath} && docker-compose up -d`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error when running docker-compose: ${error}`);
+          reject(error);
+          return;
+        }
+        
+        waitForBackend(5000, 10)
+          .then(resolve)
+          .reject(reject)
+      });
+    }).catch((error) => {
+      console.log(error)
+    })
+  })
+}
 
 function waitForBackend(port, retries) {
   return new Promise((resolve, reject) => {
     const attemptConnection = (retryCount) => {
+
       const req = http.get(`http://localhost:${port}/health-check`, (res) => {
         if (res.statusCode === 200) {
           resolve();

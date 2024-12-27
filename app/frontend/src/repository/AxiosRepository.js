@@ -66,7 +66,7 @@ class AxiosRepository {
     return await this.#axiosClient.get(`/rent/${id}`)
   }
 
-  async updateRentMonth({rentId, rentMonthId, dateMonth, amountPaid, paid}) {
+  async updateRentMonth({rentId, rentMonthId, dateMonth, amountPaid, paid, receipt}) {
     return this.#axiosClient.patch(`/rent/${rentId}/month/${rentMonthId}`, {
       dateMonth,
       amountPaid,
@@ -91,6 +91,21 @@ class AxiosRepository {
   
   async deleteExpense({ id }) {
     return this.#axiosClient.delete(`/rent/expense/${id}`)
+  }
+
+  async createRentReceipt({ rentMonthId, receipt }) {
+    const formData = new FormData();
+    formData.append("receipt", receipt); 
+
+    return this.#axiosClient.post(`/rent/receipt/${rentMonthId}`, formData,{
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+    })
+  }
+
+  async getRentReceiptsByRentMonthId({rentMonthId}) {
+    return await this.#axiosClient.get(`/rent/receipt/${rentMonthId}`)
   }
 }
 

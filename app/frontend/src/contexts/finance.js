@@ -10,6 +10,7 @@ export const FinanceProvider = ({ children }) => {
   const [rentData, setRentData] = useState([]);
   const [totalRentalEarnings, setTotalRentalEarnings] = useState(0);
   const [totalAssets, setTotalAssets] = useState(0);
+  const [receipts, setReceipts] = useState([])
 
   // Loading
   const [loadingRentData, setLoadingRentData] = useState(true);
@@ -79,6 +80,12 @@ export const FinanceProvider = ({ children }) => {
     setTotalAssets(sumRentalEarnings);
   };
 
+  const fetchRentReceipts = async (rentMonthId) => {
+    const response = await axiosRepositoryInstance.getRentReceiptsByRentMonthId({rentMonthId})
+      
+    setReceipts(response.data.receipts)
+  }
+
   return (
     <FinanceContext.Provider
       value={{
@@ -91,6 +98,8 @@ export const FinanceProvider = ({ children }) => {
         fetchRentData,
         totalRentalEarnings,
         totalAssets,
+        fetchRentReceipts,
+        receipts
       }}
     >
       {children}

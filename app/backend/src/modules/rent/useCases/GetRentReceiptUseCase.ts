@@ -6,7 +6,7 @@ import { IRent } from "../entities/IRent";
 
 import { rentConstants } from "../contants/rentConstants";
 
-import { formatDateToDDMMYY } from "../../../shared/utils/formatDateToDDMMYY";
+import { loadImage } from "../../../shared/utils/loadImage";
 
 import { AppError } from "../../../shared/errors/AppError";
 import { IRentReceipt } from "../entities/IRentReceipt";
@@ -27,8 +27,22 @@ export class GetRentReceiptUseCase implements IUseCase {
       throw new AppError(rentConstants.RENT_MONTH_NOT_FOUND, 404);
     }
 
-		const rentReceiptsByRenthMonth = await this.rentRepository.findRentReceipts(rentMonthId)
+    const rentReceiptsByRenthMonth = await this.rentRepository.findRentReceipts(
+      rentMonthId
+    );
 
-		return rentReceiptsByRenthMonth
+    const receipts = await Promise.all(
+      rentReceiptsByRenthMonth.map(async (receipt) => {
+        const imageConvertedToBufffer = await loadImage(receipt.receipt);
+
+        return {
+          id: receipt.id,
+          receipt: imageConvertedToBufffer.toString("base64"),
+          rentMonthId: receipt.rentMonthId,
+        };
+      })
+    );
+
+    return receipts;
   }
 }
