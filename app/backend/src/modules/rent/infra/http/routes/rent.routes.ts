@@ -7,8 +7,9 @@ import { GetRentByIdController } from "../controllers/GetRentByIdController";
 import { CreateRentExpenseController } from "../controllers/CreateRentExpenseController";
 import { UpdateRentMonthController } from "../controllers/UpdateRentMonthController";
 import { UpdateRentExpenseController } from "../controllers/UpdateRentExpenseController";
-import { DeleteRentExpenseController } from "../controllers/DeleteRentExpenseController"; 
-import { CreateRentReceiptController } from "../controllers/CreateRentReceiptController"
+import { DeleteRentExpenseController } from "../controllers/DeleteRentExpenseController";
+import { CreateRentReceiptController } from "../controllers/CreateRentReceiptController";
+import { GetRentReceiptController } from "../controllers/GetRentReceiptController";
 
 import { upload } from "../middlewares/uploadImagesMulter";
 
@@ -20,7 +21,8 @@ const createRentExpenseController = new CreateRentExpenseController();
 const updateRentMonthController = new UpdateRentMonthController();
 const updateRentExpenseController = new UpdateRentExpenseController();
 const deleteRentExpenseController = new DeleteRentExpenseController();
-const createRentReceiptController = new CreateRentReceiptController()
+const createRentReceiptController = new CreateRentReceiptController();
+const getRentReceiptController = new GetRentReceiptController();
 
 rentRoutes.post("/", ensureAuthenticated, createRentController.handle);
 rentRoutes.get("/:id", ensureAuthenticated, getRentByIdController.handle);
@@ -47,8 +49,13 @@ rentRoutes.delete(
 rentRoutes.post(
   "/receipt/:rentMonthId",
   ensureAuthenticated,
-	upload.single("receipt"),
+  upload.single("receipt"),
   createRentReceiptController.handle
+);
+rentRoutes.get(
+  "/receipt/:rentMonthId",
+  ensureAuthenticated,
+  getRentReceiptController.handle
 )
 
 export default rentRoutes;
