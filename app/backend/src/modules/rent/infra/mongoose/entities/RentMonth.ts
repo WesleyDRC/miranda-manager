@@ -24,10 +24,12 @@ const rentMonthSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
-  receipt: {
-    type: String,
-    required: false
-  },
+  receipts: [
+    {
+      type: String,
+      ref: "RentReceipt", 
+    },
+  ],
   rentId: {
     type: String,
     ref: "Rent",

@@ -1,13 +1,10 @@
 import { injectable, inject } from "tsyringe";
-import path from "path";
-import fs from "fs";
+
 
 import { IRentRepository } from "../repositories/IRentRepository";
 import { IUseCase } from "./ports/IUseCase";
 
 import { rentConstants } from "../contants/rentConstants";
-
-import { getAppDataPath } from "../../../shared/utils/getAppDataFolder";
 
 import { AppError } from "../../../shared/errors/AppError";
 
@@ -38,27 +35,6 @@ export class UpdateRentMonthUseCase implements IUseCase {
 
     if(updates.dateMonth) {
       throw new AppError(rentConstants.CANNOT_CHANGE_RENT_MONTH, 403)
-    }
-
-    if (updates.receipt) {
-      const tempFilePath = updates.receipt.path;
-      const newFilePath = `${getAppDataPath()}/rent/receipts/${path.basename(
-        tempFilePath
-      )}`;
-      const newDir = path.dirname(newFilePath);
-
-      if (!fs.existsSync(tempFilePath)) {
-        throw new AppError(rentConstants.FILE_NOT_FOUND, 404);
-      }
-
-      if (!fs.existsSync(newDir)) {
-        fs.mkdirSync(newDir, { recursive: true });
-      }
-
-      // Move the file (temporary file will be removed automatically)
-      fs.renameSync(tempFilePath, newFilePath);
-
-      updates.receipt = newFilePath;
     }
 
     return await this.rentRepository.updateRentMonth(

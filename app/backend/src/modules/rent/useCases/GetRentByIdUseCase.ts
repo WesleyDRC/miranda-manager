@@ -31,13 +31,16 @@ export class GetRentByIdUseCase implements IUseCase {
         const rentExpenses = await this.rentRepository.findRentExpenses(
           month.id
         );
+        const rentReceipts = await this.rentRepository.findRentReceipts(
+          month.id
+        );
 
         return {
           id: month.id,
           dateMonth: formatDateToDDMMYY(month.dateMonth),
           amountPaid: month.amountPaid,
           paid: month.paid,
-          receipt: month.receipt,
+          receipt: rentReceipts,
           expenses: rentExpenses,
         };
       })

@@ -1,10 +1,12 @@
 import { IStoreRentDTO } from "../dtos/IStoreRentDTO";
 import { IStoreRentMonthDTO } from "../dtos/IStoreRentMonthDTO";
 import { IStoreRentExpenseDTO } from "../dtos/IStoreRentExpenseDTO";
-import { IRentExpense } from "../entities/IRentExpense";
+import { IStoreRentReceiptDTO } from "../dtos/IStoreRentReceiptDTO";
 
+import { IRentExpense } from "../entities/IRentExpense";
 import { IRent } from "../entities/IRent";
 import { IRentMonth } from "../entities/IRentMonth";
+import { IRentReceipt } from "../entities/IRentReceipt";
 
 export interface IRentRepository {
   create(rent: IStoreRentDTO): Promise<IRent>;
@@ -39,4 +41,8 @@ export interface IRentRepository {
   ): Promise<IRentExpense>;
 
   deleteRentExpense(rentExpenseId: string, userId: string): Promise<boolean>;
+
+  createRentReceipt(rentReceipt: IStoreRentReceiptDTO): Promise<IRentReceipt>
+
+  findRentReceipts(rentMonthId: string): Promise<IRentReceipt[]>
 }

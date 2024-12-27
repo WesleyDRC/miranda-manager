@@ -1,14 +1,17 @@
 import { IStoreRentDTO } from "../../../dtos/IStoreRentDTO";
 import { IStoreRentExpenseDTO } from "../../../dtos/IStoreRentExpenseDTO";
 import { IStoreRentMonthDTO } from "../../../dtos/IStoreRentMonthDTO";
+import { IStoreRentReceiptDTO } from "../../../dtos/IStoreRentReceiptDTO";
 import { IRent } from "../../../entities/IRent";
 import { IRentExpense } from "../../../entities/IRentExpense";
 import { IRentMonth } from "../../../entities/IRentMonth";
+import { IRentReceipt } from "../../../entities/IRentReceipt";
 import { IRentRepository } from "../../../repositories/IRentRepository";
 
 import { Rent } from "../entities/Rent";
 import { RentExpense } from "../entities/RentExpense";
 import { RentMonth } from "../entities/RentMonth";
+import { RentReceipt } from "../entities/RentReceipts"
 
 export class RentRepository implements IRentRepository {
   async create(rent: IStoreRentDTO): Promise<IRent> {
@@ -41,7 +44,6 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonth.dateMonth,
       amountPaid: rentMonth.amountPaid,
       paid: rentMonth.paid,
-      receipt: rentMonth.receipt,
       rentId: rentMonth.rentId,
     });
 
@@ -50,7 +52,6 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonthCreated.dateMonth,
       amountPaid: rentMonthCreated.amountPaid,
       paid: rentMonthCreated.paid,
-      receipt: rentMonthCreated.receipt,
       rentId: rentMonthCreated.rentId,
     };
 
@@ -96,7 +97,6 @@ export class RentRepository implements IRentRepository {
       dateMonth: rentMonthFound.dateMonth,
       amountPaid: rentMonthFound.amountPaid,
       paid: rentMonthFound.paid,
-      receipt: rentMonthFound.receipt,
       rentId: rentMonthFound.rentId,
     };
 
@@ -112,7 +112,6 @@ export class RentRepository implements IRentRepository {
         dateMonth: rentMonth.dateMonth,
         amountPaid: rentMonth.amountPaid,
         paid: rentMonth.paid,
-        receipt: rentMonth.receipt,
         rentId: rentMonth.rentId,
       };
     });
@@ -144,7 +143,6 @@ export class RentRepository implements IRentRepository {
       dateMonth: updatedRentMonth.dateMonth,
       amountPaid: updatedRentMonth.amountPaid,
       paid: updatedRentMonth.paid,
-      receipt: updatedRentMonth.receipt,
       rentId: updatedRentMonth.rentId,
     };
 
@@ -241,4 +239,37 @@ export class RentRepository implements IRentRepository {
 
     return wasDeleted ? true : false;
   }
+
+  async createRentReceipt(
+    rentReceipt: IStoreRentReceiptDTO
+  ): Promise<IRentReceipt> {
+
+    const receiptCreated = await RentReceipt.create({
+      receipt: rentReceipt.receipt,
+      rentMonthId: rentReceipt.rentMonthId
+    })
+
+    const receipt: IRentReceipt = {
+      id: receiptCreated._id,
+      receipt: receiptCreated.receipt,
+      rentMonthId: receiptCreated.rentMonthId
+    }
+
+    return receipt
+  }
+
+  async findRentReceipts(rentMonthId: string): Promise<IRentReceipt[]> {
+    const rentReceiptsFound = await RentReceipt.find({ rentMonthId });
+
+    const rentReceipts: IRentReceipt[] = rentReceiptsFound.map((rentReceipt) => {
+      return {
+        id: rentReceipt._id,
+        receipt: rentReceipt.receipt,
+        rentMonthId: rentReceipt.rentMonthId
+      };
+    });
+
+    return rentReceipts;
+  }
+
 }

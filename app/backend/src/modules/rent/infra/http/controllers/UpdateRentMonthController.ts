@@ -10,8 +10,6 @@ export class UpdateRentMonthController {
       paid,
     } = request.body;
 
-    const receipt = request.file
-
     const userId = request.user.id
 
     const { rentId, rentMonthId } = request.params
@@ -26,11 +24,9 @@ export class UpdateRentMonthController {
 				dateMonth,
 				amountPaid,
 				paid,
-        receipt
 			}
     });
 
 		return response.json({ rentMonth })
-
   }
 }

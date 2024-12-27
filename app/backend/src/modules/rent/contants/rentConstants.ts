@@ -4,5 +4,6 @@ export const rentConstants = {
 	RENT_EXPENSE_NOT_FOUND: "Despesa não encontrada!",
 	RENT_ALREADY_EXISTS: "Já existe um aluguel com esse nome.",
 	FILE_NOT_FOUND: "Arquivo não encontrado.",
-	CANNOT_CHANGE_RENT_MONTH: "You cannot change the rent month."
+	CANNOT_CHANGE_RENT_MONTH: "Você não pode alterar o mês do aluguel.",
+	UPLOAD_VALID_FILE: "Upload a valid file."
 }

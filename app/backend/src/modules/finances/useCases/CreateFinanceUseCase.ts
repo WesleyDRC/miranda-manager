@@ -129,7 +129,6 @@ export class CreateFinanceUseCase implements IUseCase {
       months.push(
         await this.rentRepository.createRentMonth({
           dateMonth: date,
-          receipt: "",
           rentId: rentId,
         })
       );
