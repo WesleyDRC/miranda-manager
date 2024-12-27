@@ -27,7 +27,6 @@ rentRoutes.get("/:id", ensureAuthenticated, getRentByIdController.handle);
 rentRoutes.patch(
   "/:rentId/month/:rentMonthId",
   ensureAuthenticated,
-	upload.single("receipt"),
   updateRentMonthController.handle
 );
 rentRoutes.post(
