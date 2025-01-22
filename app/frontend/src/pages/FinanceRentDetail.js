@@ -55,7 +55,7 @@ export function FinanceRentDetail() {
       <section className={styles.financeData}>
         <h4> Dados do aluguel </h4>
         <RentData
-          tenant={rentData.name}
+          tenant={rentData.tenant}
           rentValue={rentData.value}
           street={rentData.street}
           streetNumber={rentData.streetNumber}
