@@ -1,12 +1,12 @@
 import styles from "./ListItem.module.css"
 
-export function ListItem({ item, type, activaTab, setActivaTab }) {
+export function ListItem({ item, type, activeTab, setActiveTab }) {
   return (
     <li
       className={`${styles.item} ${
-        activaTab === type ? styles.active : ""
+        activeTab === type ? styles.active : ""
       }`}
-      onClick={() => setActivaTab(type)}
+      onClick={() => setActiveTab(type)}
     >
       {item}
     </li>

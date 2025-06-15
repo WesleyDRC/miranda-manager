@@ -10,6 +10,8 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 export function FormSignIn() {
   const { SignIn } = useAuth();
   const [email, setEmail] = useState("");
@@ -31,7 +33,8 @@ export function FormSignIn() {
       setError(logonErrors);
       return;
     }
-
+    
+    toast.success("Seja bem-vindo!")
     navigate("/dashboard");
   };
 

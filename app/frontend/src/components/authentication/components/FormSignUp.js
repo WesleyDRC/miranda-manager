@@ -7,8 +7,9 @@ import { FormButton } from "./FormButton";
 import { useAuth } from "../../../hooks/useAuth";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
-export function FormSignUp() {
+export function FormSignUp({setActivaTab}) {
   const { SignUp } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,14 +24,20 @@ export function FormSignUp() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setError("As senhas não correspondem!");
+      return;
+    }
+
     const createUserErrors = await SignUp(email, password, confirmPassword);
 
     if (createUserErrors) {
       setError(createUserErrors);
       return;
     }
+    toast.success("Usuário cadastrado com sucesso!")
 
-    window.location.reload()
+    setActivaTab("signIn")
   };
 
   return (
