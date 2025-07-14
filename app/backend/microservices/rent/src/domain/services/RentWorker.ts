@@ -42,15 +42,17 @@ export class RentWorker {
 		const month = lastMonthDate.getMonth()
 		const year = lastMonthDate.getFullYear()
 
+		const lastDayMonth = new Date(year, month, 0).getDay()
+		const safeDay = Math.min(day, lastDayMonth)
     const currentDate = new Date();
-		const startDate = new Date(year, month, day)
-    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+		const startDate = new Date(year, month, safeDay)
+    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), safeDay);
     const months = [];
 
 		if (startDate.getMonth() == endDate.getMonth()) {
 			return months
 		}
-  
+
     for (let date = new Date(startDate); date <= endDate; date.setMonth(date.getMonth() + 1)) {
       months.push(
         await this.rentMonthRepository.create({
