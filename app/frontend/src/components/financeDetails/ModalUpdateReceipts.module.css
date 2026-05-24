@@ -1,138 +1,539 @@
 .modal {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: var(--overlay) ;
-	z-index: 1000;
-	font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay);
+  z-index: 3000;
+  font-family: "Inter", sans-serif;
+  backdrop-filter: blur(4px);
 }
 
 .modalContent {
-	background-color: var(--white);
-	padding: 24px;
-	border-radius: 8px;
-	width: 100%;
-	max-width: 900px;
-	opacity: 0;
-	transition: opacity 0.3s ease, visibility 0.3s ease;
+  background-color: var(--white);
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  width: 95%;
+  max-width: 680px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modalHeader {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 48px;
-}
-.modalHeader h2, .modalHeader button {
-	flex: 1;
-	background-color: var(--white);
-	justify-self: flex-end;
-	text-align: end;
-}
-.modalHeader h2 {
-	z-index: 1;
-	margin-left: 48px;
-	font-size: 1.6rem;
-}
-.modalHeader button {
-	cursor: pointer;
-}
-.icon {
-	width: 48px;
-	height: 48px;
-}
-.sectionTitle {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-weight: bold;
-}
-.action {
-	cursor: pointer;
-	display: flex;
-	align-self: center;
-	gap: 4px;
-}
-.modalBody {
-	display: flex;
-	flex-direction: column;
-	gap: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
 }
 
-.modalBody .sectionTitle{
-	margin-bottom: 12px;
+.title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 0;
+}
+
+.btnCloseHeader {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modalBody h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Upload Section & Dropzone */
+.uploadSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  cursor: pointer;
+  background-color: #f8fafc;
+  transition: all var(--transition-fast);
+}
+
+.dropzone:hover {
+  border-color: var(--purple);
+  background-color: #f1f5f9;
+}
+
+.dropzoneActive {
+  border-color: var(--purple);
+  background-color: #f5f3ff;
+  transform: scale(1.01);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.dropzoneIcon {
+  font-size: 2.5rem;
+  color: var(--purple);
+  opacity: 0.8;
+}
+
+.dropzoneText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.dropzoneText strong {
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.dropzoneText span {
+  font-size: 0.78rem;
+  color: var(--gray);
+  margin-top: 4px;
 }
 
 .inputFile {
-	display: none;
+  display: none;
 }
 
-.boxReceipts {
-	border-radius: 8px;
-	border: 1px solid var(--purple);
-	overflow-y: scroll;
-	overflow-x: hidden;
-	max-height: 320px;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
-	padding: 8px;
+/* Preview Card */
+.previewCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  gap: 16px;
+  animation: fadeIn 0.2s ease-out;
 }
-.boxReceipts::-webkit-scrollbar {
-	width: 10px; 
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-.boxReceipts::-webkit-scrollbar-thumb {
-	background: var(--purple); 
-	border-radius: 8px; 
-	cursor: pointer
+
+.previewThumbWrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
 }
-.boxReceipts::-webkit-scrollbar-thumb:hover {
-	background: var(--light-purple); 
+
+.previewThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
+.previewInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.fileIcon {
+  font-size: 1.4rem;
+  color: var(--purple);
+}
+
+.fileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fileDetails strong {
+  font-size: 0.88rem;
+  color: var(--blue);
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fileDetails span {
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.previewActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnSendPreview {
+  background-color: var(--purple);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btnSendPreview:hover:not(:disabled) {
+  background-color: var(--light-purple);
+}
+
+.btnSendPreview:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnRemovePreview {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btnRemovePreview:hover:not(:disabled) {
+  background-color: var(--red);
+  color: white;
+}
+
+.btnRemovePreview:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Receipts Grid Section */
+.receiptsListSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.boxReceiptsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.boxReceiptsGrid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.boxReceiptsGrid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.receiptCard {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  background-color: #f8fafc;
+}
+
 .receiptImage {
-	border-radius: 16px;
-	width: 260px;
-	height: 250px;
-	cursor: pointer;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth);
 }
 
+.receiptCard:hover .receiptImage {
+  transform: scale(1.08);
+}
+
+.receiptHoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.65);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: white;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  font-size: 0.78rem;
+}
+
+.receiptCard:hover .receiptHoverOverlay {
+  opacity: 1;
+}
+
+.receiptHoverOverlay svg {
+  font-size: 1.25rem;
+}
+
+.btnDeleteReceipt {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+}
+
+.receiptCard:hover .btnDeleteReceipt {
+  opacity: 1;
+}
+
+.btnDeleteReceipt:hover {
+  background-color: #dc2626;
+  transform: scale(1.1);
+}
+
+.noReceiptsBox {
+  border: 1px dashed #e2e8f0;
+  padding: 24px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.88rem;
+}
+
+.noReceiptsBox p {
+  margin: 0;
+}
+
+/* Modal Footer */
 .modalFooter {
-	margin-top: 48px;
-	display: flex;
-	width: fit-content;
-	gap: 24px;
-}
-.btn {
-	width: 110px;
-	height: 40px;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	text-align: center;
-	transition: all 0.4s;
-}
-.btnCancel {
-	background-color:var(--white);
-	border: 1px solid var(--red);
-	color: var(--red);
-}
-.btnEdit {
-	background-color: var(--purple);
-	color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+  margin-top: 8px;
 }
 
-.btnCancel:hover {
-	background-color: var(--red);
-	color: var(--white)
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
-.btnEdit:hover {
-	background-color: var(--light-purple)
+
+.btnFinish {
+  background-color: var(--blue);
+  color: white;
+  border: 1px solid var(--blue);
+}
+
+.btnFinish:hover {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Lightbox Fullscreen Overlay */
+.lightboxOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.95);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lightboxContent img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  display: block;
+}
+
+.btnCloseLightbox {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btnCloseLightbox:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.05);
+}
+
+/* Lightbox Carousel Navigation */
+.btnNavLightbox {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: absolute;
+  z-index: 4100;
+}
+
+.btnNavLightbox:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+.btnNavLeft {
+  left: 32px;
+}
+
+.btnNavRight {
+  right: 32px;
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .btnNavLightbox {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  .btnNavLeft {
+    left: 12px;
+  }
+  .btnNavRight {
+    right: 12px;
+  }
+  .lightboxContent {
+    max-width: 95%;
+  }
 }

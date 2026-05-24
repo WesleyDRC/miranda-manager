@@ -116,6 +116,10 @@ class AxiosRepository {
     return await this.#axiosClient.get(`/rent/receipt/${rentMonthId}`)
   }
 
+  async deleteRentReceipt({ id }) {
+    return await this.#axiosClient.delete(`/rent/receipt/${id}`);
+  }
+
   async createRentPayment({ amount, paymentDate, rentMonthId }) {
     return this.#axiosClient.post("/rent/payment", {
       amount,

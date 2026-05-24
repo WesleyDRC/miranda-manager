@@ -46,6 +46,10 @@ export interface IRentRepository {
 
   findRentReceipts(rentMonthId: string): Promise<IRentReceipt[]>;
 
+  deleteRentReceipt(id: string): Promise<boolean>;
+
+  findRentReceiptById(id: string): Promise<IRentReceipt | null>;
+
   createRentPayment(rentPayment: any): Promise<any>;
   findRentPayments(rentMonthId: string): Promise<any[]>;
   deleteRentPayment(rentPaymentId: string, userId: string): Promise<boolean>;

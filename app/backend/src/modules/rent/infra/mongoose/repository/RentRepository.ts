@@ -273,6 +273,21 @@ export class RentRepository implements IRentRepository {
     return rentReceipts;
   }
 
+  async deleteRentReceipt(id: string): Promise<boolean> {
+    const wasDeleted = await RentReceipt.findByIdAndDelete(id);
+    return wasDeleted ? true : false;
+  }
+
+  async findRentReceiptById(id: string): Promise<IRentReceipt | null> {
+    const rentReceipt = await RentReceipt.findById(id);
+    if (!rentReceipt) return null;
+    return {
+      id: rentReceipt._id,
+      receipt: rentReceipt.receipt,
+      rentMonthId: rentReceipt.rentMonthId
+    };
+  }
+
   async createRentPayment(rentPayment: any): Promise<any> {
     const rentPaymentCreated = await RentPayment.create({
       amount: rentPayment.amount,

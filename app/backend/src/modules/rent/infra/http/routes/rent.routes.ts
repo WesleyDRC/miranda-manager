@@ -10,6 +10,7 @@ import { UpdateRentExpenseController } from "../controllers/UpdateRentExpenseCon
 import { DeleteRentExpenseController } from "../controllers/DeleteRentExpenseController";
 import { CreateRentReceiptController } from "../controllers/CreateRentReceiptController";
 import { GetRentReceiptController } from "../controllers/GetRentReceiptController";
+import { DeleteRentReceiptController } from "../controllers/DeleteRentReceiptController";
 
 import { CreateRentPaymentController } from "../controllers/CreateRentPaymentController";
 import { DeleteRentPaymentController } from "../controllers/DeleteRentPaymentController";
@@ -28,6 +29,7 @@ const updateRentExpenseController = new UpdateRentExpenseController();
 const deleteRentExpenseController = new DeleteRentExpenseController();
 const createRentReceiptController = new CreateRentReceiptController();
 const getRentReceiptController = new GetRentReceiptController();
+const deleteRentReceiptController = new DeleteRentReceiptController();
 const createRentPaymentController = new CreateRentPaymentController();
 const deleteRentPaymentController = new DeleteRentPaymentController();
 const getRentDashboardController = new GetRentDashboardController();
@@ -67,7 +69,12 @@ rentRoutes.get(
   "/receipt/:rentMonthId",
   ensureAuthenticated,
   getRentReceiptController.handle
-)
+);
+rentRoutes.delete(
+  "/receipt/:receiptId",
+  ensureAuthenticated,
+  deleteRentReceiptController.handle
+);
 rentRoutes.post(
   "/payment",
   ensureAuthenticated,
