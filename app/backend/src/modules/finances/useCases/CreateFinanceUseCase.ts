@@ -117,9 +117,11 @@ export class CreateFinanceUseCase implements IUseCase {
 
     const [day, month, year] = startRental.split("/").map(Number);
 
+    const lastDayMonth = new Date(year, month, 0).getDay()
+    const safeDay = Math.min(day, lastDayMonth)
     const currentDate = new Date();
-    const startDate = new Date(year, month - 1, day); // (0-11) months in javascript go from 0 to 11
-    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const startDate = new Date(year, month - 1, safeDay); // (0-11) months in javascript go from 0 to 11
+    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), safeDay);
   
     const months = [];
   

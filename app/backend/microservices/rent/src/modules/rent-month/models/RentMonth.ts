@@ -13,7 +13,7 @@ export interface IRentMonth extends Document {
 const rentMonthSchema = new Schema({
 	_id: {
 		type: String,
-		default: uuidv4()
+		default: () => uuidv4()
 	},
 	dateMonth: {
 		type: Date,

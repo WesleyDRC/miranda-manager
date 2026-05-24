@@ -63,11 +63,11 @@ export class RentMonthRepository implements IRentMonthRepository {
 		return months
 	}
 
-	async findLastMonthByRentId(rentId: string): Promise<IRentMonth | []> {
+	async findLastMonthByRentId(rentId: string): Promise<IRentMonth | null> {
 		const lastMonth = await RentMonth.find({ rentId: rentId }).sort({ dateMonth: -1}).limit(1)
 		
 		if (lastMonth.length < 1)
-			return []
+			return null
 		
 		return {
 			id: lastMonth[0]._id.toString(),

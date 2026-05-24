@@ -12,6 +12,7 @@ export class RentRepository implements IRentRepository {
 		rentsFound.forEach(rent => {
 			rents.push({
 				id: rent._id,
+				startRental: rent.startRental,
 				userId: rent.userId
 			})
 		})
