@@ -17,4 +17,9 @@ export interface IRent {
   grossIncome: number;
   netIncome: number;
   userId: string;
+  totalExpected?: number;
+  totalPaid?: number;
+  totalDebt?: number;
+  isDebtFree?: boolean;
+  observations?: string;
 }

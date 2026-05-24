@@ -16,12 +16,57 @@
 .modalContent {
 	background-color: var(--white);
 	padding: 24px;
-	border-radius: 8px;
+	border-radius: var(--radius-lg);
 	width: 100%;
 	max-width: 900px;
 	opacity: 0;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+
+@media (max-width: 940px) {
+	.modalContent {
+		max-width: 95%;
+	}
+}
+
+@media (max-width: 768px) {
+	.modalContent {
+		padding: 16px;
+		max-height: 95vh;
+		overflow-y: auto;
+	}
+
+	.modalHeader {
+		margin-bottom: 24px;
+	}
+
+	.modalHeader h2 {
+		margin-left: 0;
+		font-size: 1.4rem;
+	}
+
+	.icon {
+		width: 32px;
+		height: 32px;
+	}
+
+	.receiptImage {
+		width: 100%;
+		height: auto;
+	}
+
+	.modalFooter {
+		margin-top: 24px;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.btn {
+		width: 100%;
+		max-width: 200px;
+	}
+}
+
 
 .modalHeader {
 	display: flex;
@@ -29,7 +74,7 @@
 	justify-content: space-between;
 	margin-bottom: 48px;
 }
-.modalHeader h2, button{
+.modalHeader h2, .modalHeader button {
 	flex: 1;
 	background-color: var(--white);
 	justify-self: flex-end;

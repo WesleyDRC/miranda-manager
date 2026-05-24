@@ -42,7 +42,16 @@ export interface IRentRepository {
 
   deleteRentExpense(rentExpenseId: string, userId: string): Promise<boolean>;
 
-  createRentReceipt(rentReceipt: IStoreRentReceiptDTO): Promise<IRentReceipt>
+  createRentReceipt(rentReceipt: IStoreRentReceiptDTO): Promise<IRentReceipt>;
 
-  findRentReceipts(rentMonthId: string): Promise<IRentReceipt[]>
+  findRentReceipts(rentMonthId: string): Promise<IRentReceipt[]>;
+
+  createRentPayment(rentPayment: any): Promise<any>;
+  findRentPayments(rentMonthId: string): Promise<any[]>;
+  deleteRentPayment(rentPaymentId: string, userId: string): Promise<boolean>;
+  findAll(userId: string): Promise<IRent[]>;
+  update(id: string, userId: string, updates: any): Promise<IRent | null>;
+  findRentPaymentsByMonthIds(monthIds: string[]): Promise<any[]>;
+  findRentExpensesByMonthIds(monthIds: string[]): Promise<IRentExpense[]>;
+  findRentReceiptsByMonthIds(monthIds: string[]): Promise<IRentReceipt[]>;
 }

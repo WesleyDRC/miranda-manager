@@ -1,10 +1,19 @@
 .formAuth {
 	display: flex;
 	flex-direction: column;
-	width: 520px;
+	width: 100%;
+	max-width: 520px;
 	padding: 40px;
 	gap: 40px;
 }
+
+@media (max-width: 520px) {
+	.formAuth {
+		padding: 24px;
+		gap: 24px;
+	}
+}
+
 
 .error {
   color: red;

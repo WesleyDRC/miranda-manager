@@ -2,7 +2,7 @@ import styles from "./EditPaymentStatus.module.css"
 
 import { useState, useEffect} from "react"
 
-export function EditPaymentStatus({paid, onToggle, onAmountPaid, amount}) {
+export function EditPaymentStatus({paid, onToggle, onAmountPaid, amount, rentValue}) {
 	const [isToggle, setIsToggle] = useState(paid)
   const [amountPaid, setAmountPaid] = useState(amount);
 
@@ -19,7 +19,12 @@ export function EditPaymentStatus({paid, onToggle, onAmountPaid, amount}) {
   }, [amountPaid, onAmountPaid]);
 
 	const handleToggleButton = () => {
-		setIsToggle(!isToggle)
+		setIsToggle(!isToggle);
+    if (!isToggle && rentValue) {
+      setAmountPaid(rentValue);
+    } else {
+      setAmountPaid(0);
+    }
 	}
 
 	const handleAmountPaidInput = (event) => {

@@ -28,7 +28,7 @@
 	justify-content: space-between;
 	margin-bottom: 48px;
 }
-.modalHeader h2, button{
+.modalHeader h2, .modalHeader button {
 	flex: 1;
 	background-color: var(--white);
 	justify-self: flex-end;

@@ -2,26 +2,56 @@ import styles from "./FinanceRentDetail.module.css";
 
 import { RentPaymentTable } from "../components/financeDetails/RentPaymentTable";
 import { NotFound } from "./NotFound";
+import ModalEditMonthRent from "../components/financeDetails/ModalEditMonthRent";
 
 import rentIcon from "../assets/rent-icon.svg";
 
-import { RentData } from "../components/financeDetails/RentData";
+import { TenantDebtSummary } from "../components/financeDetails/TenantDebtSummary";
+import { ModalAllPendingMonths } from "../components/financeDetails/ModalAllPendingMonths";
 import { isEmpty } from "../utils/isEmpty";
 
 import { useParams } from "react-router-dom";
 import { useFinance } from "../hooks/useFinance";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function FinanceRentDetail() {
-  const { 
-    financeData, 
-    rentData, 
-    fetchRentData, 
+  const {
+    financeData,
+    rentData,
+    fetchRentData,
     fetchFinanceData,
     loadingRentData
   } = useFinance()
 
   const {financeId, rentId} = useParams();
+
+  const [isModalEditMonthOpen, setIsModalEditMonthOpen] = useState(false);
+  const [isModalAllPendingOpen, setIsModalAllPendingOpen] = useState(false);
+  
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [currentMonthID, setCurrentMonthID] = useState("");
+  const [amountPaid, setAmountPaid] = useState(0);
+  const [paymentStatus, setPaymentStatus] = useState(false);
+
+  const handleEditMonth = ({ nameMonth, paid, rentMonthId, amountPaid }) => {
+    setCurrentMonth(nameMonth);
+    setPaymentStatus(paid);
+    setCurrentMonthID(rentMonthId);
+    setAmountPaid(amountPaid);
+    setIsModalEditMonthOpen(true);
+  };
+
+  const closeModalEditMonth = () => {
+    setIsModalEditMonthOpen(false);
+  };
+
+  const openAllPendingModal = () => {
+    setIsModalAllPendingOpen(true);
+  };
+
+  const closeAllPendingModal = () => {
+    setIsModalAllPendingOpen(false);
+  };
 
 	useEffect(() => {
 		fetchFinanceData(financeId);
@@ -46,30 +76,47 @@ export function FinanceRentDetail() {
   }
 
   return (
-    <main className={styles.finance}>
-      <section className={styles.financeType}>
-        <img src={rentIcon} alt="Rent" />
-        <h3> {financeData.name} </h3>
-      </section>
+    <>
+      <main className={styles.finance}>
+        <section className={styles.financeType}>
+          <img src={rentIcon} alt="Rent" />
+          <h3> {financeData.name} </h3>
+        </section>
 
-      <section className={styles.financeData}>
-        <h4> Dados do aluguel </h4>
-        <RentData
-          tenant={rentData.tenant}
-          rentValue={rentData.value}
-          street={rentData.street}
-          streetNumber={rentData.streetNumber}
-          startRent={rentData.startRental}
-          grossIncome={rentData.grossIncome}
-          netIncome={rentData.netIncome}
+        <TenantDebtSummary 
+          rentData={rentData} 
+          onEditMonth={handleEditMonth}
+          onViewAll={openAllPendingModal}
         />
-      </section>
 
-      <RentPaymentTable
-        rentId={rentData.id}
-        months={rentData.months}
-        rentalExpenses={rentData.expenses}
-      />
-    </main>
+        <RentPaymentTable
+          rentId={rentData.id}
+          rentValue={rentData.value}
+          months={rentData.months}
+          rentalExpenses={rentData.expenses}
+          onEditMonth={handleEditMonth}
+        />
+      </main>
+
+      {isModalEditMonthOpen && (
+        <ModalEditMonthRent
+          rentId={rentData.id}
+          rentMonthId={currentMonthID}
+          month={currentMonth}
+          paid={paymentStatus}
+          closeModal={closeModalEditMonth}
+          amount={amountPaid}
+        />
+      )}
+
+      {isModalAllPendingOpen && (
+        <ModalAllPendingMonths
+          pendingMonths={rentData.months.filter((m) => !m.paid)}
+          rentValue={parseFloat(rentData.value) || 0}
+          onEditMonth={handleEditMonth}
+          closeModal={closeAllPendingModal}
+        />
+      )}
+    </>
   );
 }

@@ -9,7 +9,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export function FormSignUp({setActivaTab}) {
+export function FormSignUp({setActiveTab}) {
   const { SignUp } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ export function FormSignUp({setActivaTab}) {
     }
     toast.success("Usuário cadastrado com sucesso!")
 
-    setActivaTab("signIn")
+    setActiveTab("signIn")
   };
 
   return (
@@ -66,9 +66,9 @@ export function FormSignUp({setActivaTab}) {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
       {error && <div className={`${styles.error} ${!error ? styles.hidden : ""}`}>{error}</div>}
-      <FormButton 
-        type="submit" 
-        text="Cadastrar" 
+      <FormButton
+        type="submit"
+        text="Cadastrar"
       />
     </form>
   );

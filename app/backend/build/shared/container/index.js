@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("./providers");
+const tsyringe_1 = require("tsyringe");
+const AuthRepository_1 = require("../../modules/auth/infra/mongoose/repository/AuthRepository");
+const CategoryRepository_1 = require("../../modules/category/infra/mongoose/repository/CategoryRepository");
+const FinanceRepository_1 = require("../../modules/finances/infra/mongoose/repository/FinanceRepository");
+const RentRepository_1 = require("../../modules/rent/infra/mongoose/repository/RentRepository");
+tsyringe_1.container.registerSingleton("AuthRepository", AuthRepository_1.AuthRepository);
+tsyringe_1.container.registerSingleton("CategoryRepository", CategoryRepository_1.CategoryRepository);
+tsyringe_1.container.registerSingleton("FinanceRepository", FinanceRepository_1.FinanceRepository);
+tsyringe_1.container.registerSingleton("RentRepository", RentRepository_1.RentRepository);

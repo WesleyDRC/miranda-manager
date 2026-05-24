@@ -12,6 +12,7 @@ import { Rent } from "../entities/Rent";
 import { RentExpense } from "../entities/RentExpense";
 import { RentMonth } from "../entities/RentMonth";
 import { RentReceipt } from "../entities/RentReceipts"
+import { RentPayment } from "../entities/RentPayment";
 
 export class RentRepository implements IRentRepository {
   async create(rent: IStoreRentDTO): Promise<IRent> {
@@ -272,4 +273,111 @@ export class RentRepository implements IRentRepository {
     return rentReceipts;
   }
 
+  async createRentPayment(rentPayment: any): Promise<any> {
+    const rentPaymentCreated = await RentPayment.create({
+      amount: rentPayment.amount,
+      paymentDate: rentPayment.paymentDate,
+      rentMonthId: rentPayment.rentMonthId,
+      userId: rentPayment.userId,
+    });
+
+    return {
+      id: rentPaymentCreated._id,
+      amount: rentPaymentCreated.amount,
+      paymentDate: rentPaymentCreated.paymentDate,
+      rentMonthId: rentPaymentCreated.rentMonthId,
+      userId: rentPaymentCreated.userId,
+    };
+  }
+
+  async findRentPayments(rentMonthId: string): Promise<any[]> {
+    const paymentsFound = await RentPayment.find({ rentMonthId });
+    return paymentsFound.map((payment) => ({
+      id: payment._id,
+      amount: payment.amount,
+      paymentDate: payment.paymentDate,
+      rentMonthId: payment.rentMonthId,
+      userId: payment.userId,
+    }));
+  }
+
+  async deleteRentPayment(rentPaymentId: string, userId: string): Promise<boolean> {
+    const wasDeleted = await RentPayment.findOneAndDelete({
+      _id: rentPaymentId,
+      userId,
+    });
+    return wasDeleted ? true : false;
+  }
+
+  async findAll(userId: string): Promise<IRent[]> {
+    const rentsFound = await Rent.find({ userId });
+    return rentsFound.map((rentFound) => ({
+      id: rentFound._id,
+      tenant: rentFound.tenant,
+      value: rentFound.value,
+      street: rentFound.street,
+      streetNumber: rentFound.streetNumber,
+      startRental: rentFound.startRental,
+      grossIncome: rentFound.grossIncome,
+      netIncome: rentFound.netIncome,
+      userId: rentFound.userId,
+      observations: rentFound.observations,
+    }));
+  }
+
+  async update(id: string, userId: string, updates: any): Promise<IRent | null> {
+    const updatedRent = await Rent.findOneAndUpdate(
+      { _id: id, userId },
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedRent) {
+      return null;
+    }
+
+    return {
+      id: updatedRent._id,
+      tenant: updatedRent.tenant,
+      value: updatedRent.value,
+      street: updatedRent.street,
+      streetNumber: updatedRent.streetNumber,
+      startRental: updatedRent.startRental,
+      grossIncome: updatedRent.grossIncome,
+      netIncome: updatedRent.netIncome,
+      userId: updatedRent.userId,
+      observations: updatedRent.observations,
+    };
+  }
+
+  async findRentPaymentsByMonthIds(monthIds: string[]): Promise<any[]> {
+    const paymentsFound = await RentPayment.find({ rentMonthId: { $in: monthIds } });
+    return paymentsFound.map((payment) => ({
+      id: payment._id,
+      amount: payment.amount,
+      paymentDate: payment.paymentDate,
+      rentMonthId: payment.rentMonthId,
+      userId: payment.userId,
+    }));
+  }
+
+  async findRentExpensesByMonthIds(monthIds: string[]): Promise<IRentExpense[]> {
+    const expensesFound = await RentExpense.find({ rentMonthId: { $in: monthIds } });
+    return expensesFound.map((expense) => ({
+      id: expense._id,
+      amount: expense.amount,
+      reason: expense.reason,
+      rentMonthId: expense.rentMonthId,
+      userId: expense.userId,
+    }));
+  }
+
+  async findRentReceiptsByMonthIds(monthIds: string[]): Promise<IRentReceipt[]> {
+    const receiptsFound = await RentReceipt.find({ rentMonthId: { $in: monthIds } });
+    return receiptsFound.map((receipt) => ({
+      id: receipt._id,
+      receipt: receipt.receipt,
+      rentMonthId: receipt.rentMonthId,
+    }));
+  }
 }

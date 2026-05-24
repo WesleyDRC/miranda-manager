@@ -40,6 +40,10 @@
 				type: String,
 				required: true,
 				ref: "User"
+			},
+			observations: {
+				type: String,
+				default: ""
 			}
 		}
 	)

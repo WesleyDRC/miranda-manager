@@ -1,7 +1,16 @@
 .finances {
 	display: flex;
 	gap: 24px;
+	flex-wrap: wrap;
 }
+
+@media (max-width: 768px) {
+	.finances {
+		justify-content: center;
+		gap: 16px;
+	}
+}
+
 
 .btn {
 	margin-top: 8px;

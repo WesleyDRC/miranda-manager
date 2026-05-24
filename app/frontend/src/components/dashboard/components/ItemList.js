@@ -6,7 +6,11 @@ export function ItemList({ path, icon, alt, onClick}) {
   return (
     <li onClick={onClick}>
       <Link to={path}>
-				<img className={styles.icon} src={icon} alt={alt} />
+        {typeof icon === "string" ? (
+          <img className={styles.icon} src={icon} alt={alt} />
+        ) : (
+          icon
+        )}
       </Link>
     </li>
   );

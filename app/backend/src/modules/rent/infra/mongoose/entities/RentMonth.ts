@@ -55,12 +55,8 @@ async function updateEarnings(rentId: string) {
   }))
 
   const totalGrossIncome = rentMonths.reduce((total, rentMonth) => {
-    if(rentMonth.paid) {
-      total += rentMonth.amountPaid
-    }
-
-    return total
-  },0);
+    return total + (rentMonth.amountPaid || 0);
+  }, 0);
 
   const totalExpenseAmount = rentExpenses[0].reduce(
     (total, rentExpenseAmount) => total + rentExpenseAmount.amount,

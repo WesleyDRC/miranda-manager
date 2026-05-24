@@ -1,0 +1,178 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay, rgba(0, 0, 0, 0.5));
+  z-index: 1000;
+  font-family: "Inter", sans-serif;
+}
+
+.modalContent {
+  background-color: var(--white, #fff);
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 540px) {
+  .modalContent {
+    max-width: 90%;
+    padding: 24px;
+  }
+
+  .modalHeader {
+    margin-bottom: 24px;
+  }
+
+  .modalFooter {
+    margin-top: 32px;
+    width: 100%;
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.modalHeader h2, .modalHeader button {
+  flex: 1;
+  background-color: var(--white);
+  justify-self: flex-end;
+  text-align: end;
+}
+
+.modalHeader h2 {
+  z-index: 1;
+  margin-left: 48px;
+  font-size: 1.6rem;
+  color: var(--font-dark);
+}
+
+.modalHeader button {
+  cursor: pointer;
+  border: none;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--font-light);
+}
+
+.input {
+  border: 1px solid var(--light-gray-border);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 1.6rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+.modalFooter {
+  margin-top: 48px;
+  display: flex;
+  width: fit-content;
+  gap: 24px;
+}
+
+.btn {
+  width: 110px;
+  height: 40px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.4s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnCancel {
+  background-color: var(--white);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+.btnSave {
+  background-color: var(--purple);
+  color: #fff;
+}
+
+.btnCancel:hover {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.btnSave:hover {
+  background-color: var(--light-purple);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.slideInRight {
+  animation: slideInRight 0.3s forwards;
+}
+
+.slideOutRight {
+  animation: slideOutRight 0.3s forwards;
+}

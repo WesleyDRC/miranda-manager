@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 * {
 	margin: 0px;
 	padding: 0px;
 	box-sizing: border-box;
-	font-family: "Noto Sans", sans-serif;
+	font-family: "Inter", "Noto Sans", sans-serif;
 	list-style: none;
 	border: none;
 }
@@ -13,4 +15,6 @@ html {
 
 body {
   font-size: 1.6rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

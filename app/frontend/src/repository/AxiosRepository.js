@@ -66,6 +66,14 @@ class AxiosRepository {
     return await this.#axiosClient.get(`/rent/${id}`)
   }
 
+  async getRentDashboard() {
+    return await this.#axiosClient.get("/rent");
+  }
+
+  async updateRent(id, updates) {
+    return await this.#axiosClient.patch(`/rent/${id}`, updates);
+  }
+
   async updateRentMonth({rentId, rentMonthId, dateMonth, amountPaid, paid, receipt}) {
     return this.#axiosClient.patch(`/rent/${rentId}/month/${rentMonthId}`, {
       dateMonth,
@@ -106,6 +114,18 @@ class AxiosRepository {
 
   async getRentReceiptsByRentMonthId({rentMonthId}) {
     return await this.#axiosClient.get(`/rent/receipt/${rentMonthId}`)
+  }
+
+  async createRentPayment({ amount, paymentDate, rentMonthId }) {
+    return this.#axiosClient.post("/rent/payment", {
+      amount,
+      paymentDate,
+      rentMonthId
+    });
+  }
+
+  async deleteRentPayment({ id }) {
+    return this.#axiosClient.delete(`/rent/payment/${id}`);
   }
 }
 

@@ -26,6 +26,9 @@ export class GetRentByIdUseCase implements IUseCase {
 
     const rentMonths = await this.rentRepository.findAllRentMonthByRentId(id);
 
+    const rentValue = parseFloat(rent.value) || 0;
+    let totalPaid = 0;
+
     const months = await Promise.all(
       rentMonths.map(async (month) => {
         const rentExpenses = await this.rentRepository.findRentExpenses(
@@ -35,18 +38,34 @@ export class GetRentByIdUseCase implements IUseCase {
           month.id
         );
 
+        const rentPayments = await this.rentRepository.findRentPayments(
+          month.id
+        );
+
+        totalPaid += month.amountPaid || 0;
+
         return {
           id: month.id,
           dateMonth: formatDateToDDMMYY(month.dateMonth),
           amountPaid: month.amountPaid,
           paid: month.paid,
+          difference: rentValue - (month.amountPaid || 0),
           receipt: rentReceipts,
           expenses: rentExpenses,
+          payments: rentPayments,
         };
       })
     );
 
+    const totalExpected = months.length * rentValue;
+    const totalDebt = totalExpected - totalPaid;
+    const isDebtFree = totalDebt <= 0;
+
     rent.months = months;
+    rent.totalExpected = totalExpected;
+    rent.totalPaid = totalPaid;
+    rent.totalDebt = totalDebt;
+    rent.isDebtFree = isDebtFree;
 
     return rent;
   }

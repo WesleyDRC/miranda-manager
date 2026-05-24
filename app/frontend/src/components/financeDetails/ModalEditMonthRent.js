@@ -4,6 +4,7 @@ import ModalAddExpense from "./ModalAddExpense";
 import { ExpenseEditModal } from "./ExpenseEditModal";
 import { ModalUpdateReceipts } from "./ModalUpdateReceipts";
 import { ConfirmModal } from "../modals/ConfirmModal";
+import { ModalAddPayment } from "./ModalAddPayment";
 
 import CloseIcon from "../../assets/close-icon.svg";
 import alertIcon from "../../assets/alert-icon.svg";
@@ -11,8 +12,6 @@ import uploadIcon from "../../assets/upload-icon.svg";
 import editIcon from "../../assets/edit-icon.svg";
 import editIconWhite from "../../assets/edit-icon-white.svg";
 import trashIcon from "../../assets/trash-icon.svg";
-
-import { EditPaymentStatus } from "./EditPaymentStatus";
 
 import priceBRL from "../../utils/formatPrice";
 
@@ -32,20 +31,21 @@ export default function ModalEditMonthRent({
   closeModal,
   amount = 0,
 }) {
-  const { rentData, fetchRentData, receipts } = useFinance();
+  const { rentData, fetchRentData, receipts, fetchFinanceData } = useFinance();
 
   const [expenseId, setExpenseId] = useState("");
-  const [paymentStatus, setPaymentStatus] = useState(paid);
-  const [amountPaid, setAmountPaid] = useState(amount);
-  const [showEditPaymentStatus, setShowEditPaymentStatus] = useState(false);
   const [showModalAddExpense, setShowModalAddExpense] = useState(false);
   const [showExpenseEditModal, setShowExpenseEditModal] = useState(false);
   const [showModalUpdateReceipts, setShowModalUpdateReceipts] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showModalAddPayment, setShowModalAddPayment] = useState(false);
+  const [showConfirmPaymentModal, setShowConfirmPaymentModal] = useState(false);
+  const [paymentIdToDelete, setPaymentIdToDelete] = useState("");
   const [modalEditMonthClass, setModalEditMonthClass] = useState(styles.slideInLeft);
   const [modalAddExpenseClass, setModalAddExpenseClass] = useState(styles.slideInLeft);
   const [expenseEditModalClass, setExpenseEditModalClass] = useState(styles.slideInLeft);
   const [modalUpdateReceiptsClass, setModalUpdateReceiptsClass] = useState(styles.slideInLeft);
+  const [modalAddPaymentClass, setModalAddPaymentClass] = useState(styles.slideInLeft);
   const [confirmModalClass, setConfirmModalClass] = useState("");
 
   const [expenseData, setExpenseData] = useState({
@@ -54,18 +54,7 @@ export default function ModalEditMonthRent({
     reason: "",
   });
 
-  const handleToggle = (status) => {
-    setPaymentStatus(status);
-  };
-
-  const handleAmountPaid = (amount) => {
-    setAmountPaid(amount);
-  };
-
-  const handleEditPaymentStatus = () => {
-    setShowEditPaymentStatus(!showEditPaymentStatus);
-    setPaymentStatus(paid);
-  };
+  // Remove outdated toggle handlers
 
   const handleShowModalAddExpense = () => {
     setModalEditMonthClass(styles.slideOutLeft);
@@ -76,23 +65,13 @@ export default function ModalEditMonthRent({
   };
 
   const editMonthData = async () => {
-    if (!paymentStatus !== paid && amountPaid === amount) {
-      toast.error("Você não editou nenhum campo!");
-      return;
-    }
-
-    await axiosRepositoryInstance.updateRentMonth({
-      rentId: rentId,
-      rentMonthId: rentMonthId,
-      paid: paymentStatus,
-      amountPaid: amountPaid,
-    });
-
-    await fetchRentData(rentId);
+    // Only used to close modal now, or other meta-edits if added later
     closeModal();
   };
 
-  let expenses = rentData.months.find((month) => month.id === rentMonthId).expenses;
+  const rentMonthObj = rentData.months.find((month) => month.id === rentMonthId);
+  const expenses = rentMonthObj ? rentMonthObj.expenses : [];
+  const payments = rentMonthObj && rentMonthObj.payments ? rentMonthObj.payments : [];
 
   const closeModalAddExpense = () => {
     setModalEditMonthClass(styles.slideInLeft);
@@ -179,6 +158,52 @@ export default function ModalEditMonthRent({
     setModalUpdateReceiptsClass(styles.slideOutRight);
   };
 
+  const handleShowModalAddPayment = () => {
+    setModalEditMonthClass(styles.slideOutLeft);
+    setShowModalAddPayment(true);
+    setModalAddPaymentClass(styles.slideInRight);
+  };
+
+  const closeModalAddPayment = () => {
+    setModalEditMonthClass(styles.slideInLeft);
+    setTimeout(() => {
+      setShowModalAddPayment(false);
+    }, 300);
+    setModalAddPaymentClass(styles.slideOutRight);
+  };
+
+  const handleDeletePayment = async (id) => {
+    setPaymentIdToDelete(id);
+    setShowConfirmPaymentModal(true);
+  };
+
+  const confirmDeletePayment = async () => {
+    const response = await axiosRepositoryInstance.deleteRentPayment({ id: paymentIdToDelete });
+
+    if (response.status !== 200) {
+      toast.error(response.data?.message || "Erro ao deletar");
+      return;
+    }
+
+    toast.success("Pagamento deletado com sucesso!");
+    await fetchRentData(rentId);
+    
+    const financeId = window.location.pathname.split("/")[2];
+    if (financeId) {
+      fetchFinanceData(financeId); 
+    }
+
+    hideConfirmPaymentModal();
+  };
+
+  const hideConfirmPaymentModal = () => {
+    setConfirmModalClass("hide");
+    setTimeout(() => {
+      setShowConfirmPaymentModal(false);
+      setConfirmModalClass("");
+    }, 300);
+  };
+
   return (
     <>
       <div className={styles.modal} aria-labelledby="modalTitle">
@@ -196,27 +221,60 @@ export default function ModalEditMonthRent({
             <section aria-labelledby="statusTitle">
               <div className={styles.sectionTitle}>
                 <h3 id="statusTitle"> Status do pagamento</h3>
-                <div onClick={handleEditPaymentStatus} className={styles.action}>
-                  <img src={editIcon} alt="Edit Payment Icon" />
-                  <span> Editar </span>
+              </div>
+              <div
+                className={`
+                ${styles.status} ${paid ? styles.paid : styles.pending}`}
+              >
+                {!paid && <img src={alertIcon} alt="Alert icon" />}
+                <span> {paid ? "PAGO" : "PENDENTE"} </span>
+              </div>
+            </section>
+
+            <section aria-labelledby="paymentsTitle">
+              <div className={styles.sectionTitle}>
+                <h3 id="paymentsTitle"> Pagamentos Realizados </h3>
+                <div onClick={handleShowModalAddPayment} className={styles.action}>
+                  <img src={uploadIcon} alt="Add Payment Icon" />
+                  <span> Adicionar Pagamento </span>
                 </div>
               </div>
-              {!showEditPaymentStatus ? (
-                <div
-                  className={`
-                  ${styles.status} ${paid ? styles.paid : styles.pending}`}
-                >
-                  {!paid && <img src={alertIcon} alt="Alert icon" />}
-                  <span> {paid ? "PAGO" : "PENDENTE"} </span>
-                </div>
-              ) : (
-                <EditPaymentStatus
-                  paid={paymentStatus}
-                  onToggle={handleToggle}
-                  onAmountPaid={handleAmountPaid}
-                  amount={amountPaid}
-                />
-              )}
+
+              <div className={styles.tableContainer}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Valor</th>
+                      <th>Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {payments &&
+                      payments.map((payment, index) => (
+                        <tr key={index}>
+                          <td>{new Date(payment.paymentDate).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</td>
+                          <td>{priceBRL(parseFloat(payment.amount))}</td>
+                          <td className={styles.expenseButtons}>
+                            <button
+                              onClick={() => handleDeletePayment(payment.id)}
+                              className={`${styles.btnExpense} ${styles.delete}`}
+                            >
+                              <img src={trashIcon} alt="Trash Icon" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    {payments.length === 0 && (
+                      <tr>
+                        <td colSpan={3} style={{ textAlign: "center", color: "var(--text-muted)", padding: "16px" }}>
+                          Nenhum pagamento registrado
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </section>
 
             <section aria-labelledby="receiptsTitle">
@@ -296,10 +354,7 @@ export default function ModalEditMonthRent({
 
           <footer className={styles.modalFooter}>
             <button onClick={closeModal} className={`${styles.btn} ${styles.btnCancel}`}>
-              Cancelar
-            </button>
-            <button onClick={editMonthData} className={`${styles.btn} ${styles.btnEdit}`}>
-              Editar
+              Fechar
             </button>
           </footer>
         </div>
@@ -345,6 +400,25 @@ export default function ModalEditMonthRent({
           rentId={rentId}
           closeModal={closeModalUpdateReceipts}
           modalUpdateReceiptsClass={modalUpdateReceiptsClass}
+        />
+      )}
+
+      {showModalAddPayment && (
+        <ModalAddPayment
+          rentId={rentId}
+          rentMonthId={rentMonthId}
+          closeModal={closeModalAddPayment}
+          modalAddPaymentClass={modalAddPaymentClass}
+        />
+      )}
+
+      {showConfirmPaymentModal && (
+        <ConfirmModal
+          title="Excluir pagamento"
+          item="o pagamento"
+          onConfirm={confirmDeletePayment}
+          onCancel={hideConfirmPaymentModal}
+          confirmModalClass={confirmModalClass}
         />
       )}
     </>

@@ -1,0 +1,129 @@
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: var(--dark-surface);
+  border-radius: var(--radius-lg);
+  min-width: 240px;
+  flex: 1;
+  overflow: hidden;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-subtle);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(94, 23, 235, 0.12);
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.card:hover .iconContainer {
+  background: rgba(94, 23, 235, 0.2);
+}
+
+.icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.glow {
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(94, 23, 235, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+  opacity: 0;
+}
+
+.card:hover .glow {
+  opacity: 1;
+}
+
+/* Variants */
+.success .iconContainer {
+  background: var(--success-light);
+}
+.success:hover .iconContainer {
+  background: rgba(16, 185, 129, 0.25);
+}
+.success .glow {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+}
+
+.danger .iconContainer {
+  background: var(--danger-light);
+}
+.danger:hover .iconContainer {
+  background: rgba(239, 68, 68, 0.25);
+}
+.danger .glow {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 70%);
+}
+
+.warning .iconContainer {
+  background: var(--warning-light);
+}
+.warning:hover .iconContainer {
+  background: rgba(245, 158, 11, 0.25);
+}
+.warning .glow {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+}
+
+.info .iconContainer {
+  background: var(--info-light);
+}
+.info:hover .iconContainer {
+  background: rgba(59, 130, 246, 0.25);
+}
+.info .glow {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+}

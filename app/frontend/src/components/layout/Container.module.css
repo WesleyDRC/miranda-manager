@@ -3,10 +3,18 @@
   background-color: var(--main-background-color);
   display: flex;
   flex-direction: column;
-	margin-left: 90px;
-  padding: 12px 24px;;
+	margin-left: 96px; /* Match default sidebar width */
+  padding: 24px;
+	transition: margin-left 0.2s ease;
 }
 
 .stretchedSidebar {
-	margin-left:  180px;
+	margin-left: 220px;
 }
+
+@media (max-width: 768px) {
+	.container {
+		margin-left: 0;
+		padding: 16px;
+	}
+}

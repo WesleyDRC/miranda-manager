@@ -5,7 +5,15 @@
 .cards {
 	display: flex;
 	gap: 24px;
+	flex-wrap: wrap;
 }
+
+@media (max-width: 768px) {
+	.cards {
+		gap: 16px;
+	}
+}
+
 
 .back {
 	display: flex;

@@ -12,6 +12,7 @@ import { CreateFinance } from "../pages/CreateFinance"
 import { CreateCategory } from "../pages/CreateCategory"
 import { Finances } from "../pages/Finances"
 import { FinanceRentDetail } from "../pages/FinanceRentDetail"
+import { RentalsDashboard } from "../pages/RentalsDashboard"
 import { useAuth } from "../hooks/useAuth"
 import ErrorPage from "../pages/ErrorPage"
 
@@ -63,6 +64,11 @@ export function AppRoutes() {
 				{
 					path: "/finances", 
 					element: <Private> <Finances /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/rentals",
+					element: <Private> <RentalsDashboard /> </Private>,
 					errorElement: <ErrorPage />
 				},
 				{

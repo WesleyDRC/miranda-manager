@@ -1,5 +1,6 @@
 :root {
-	--main-background-color: #D3D3D3;
+	/* Existing base colors */
+	--main-background-color: #EDEFF3;
 	--error-message: red;
 	--white: white;
 	--gray: #5F5F5F;
@@ -13,4 +14,48 @@
 	--overlay: rgba(0, 0, 0, 0.60);
 	--blue: rgb(6, 6, 50);
 	--blue-light: rgba(6, 6, 50, 0.60);
+
+	/* Premium palette */
+	--purple-soft: #8B5CF6;
+	--purple-gradient: linear-gradient(135deg, #5E17EB 0%, #8B5CF6 100%);
+	--purple-glow: rgba(94, 23, 235, 0.25);
+
+	/* Dark surfaces */
+	--dark-surface: #1a1a2e;
+	--dark-card: #16213e;
+	--dark-card-alt: #1e293b;
+	--dark-card-hover: #1a2744;
+
+	/* Semantic colors */
+	--success: #10B981;
+	--success-light: rgba(16, 185, 129, 0.15);
+	--success-dark: #059669;
+	--danger: #EF4444;
+	--danger-light: rgba(239, 68, 68, 0.15);
+	--warning: #F59E0B;
+	--warning-light: rgba(245, 158, 11, 0.15);
+	--info: #3B82F6;
+	--info-light: rgba(59, 130, 246, 0.15);
+
+	/* Text on dark surfaces */
+	--text-primary: #F1F5F9;
+	--text-secondary: #94A3B8;
+	--text-muted: #64748B;
+
+	/* Borders & shadows */
+	--border-subtle: rgba(255, 255, 255, 0.08);
+	--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+	--shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+	--shadow-card-hover: 0 8px 32px rgba(94, 23, 235, 0.15);
+	--shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+
+	/* Transitions */
+	--transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	--transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* Border radius */
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
 }

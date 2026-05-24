@@ -1,7 +1,57 @@
+.filterSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  background: var(--white);
+  padding: 16px 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.tableTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dark-surface);
+}
+
+.filterControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.yearSelect {
+  padding: 8px 16px;
+  border: 1px solid var(--light-gray-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--white);
+  color: var(--dark-surface);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.yearSelect:focus, .yearSelect:hover {
+  border-color: var(--purple);
+}
+
+.tableContainer {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  overflow-x: auto;
+}
+
 .paymentsTable {
   width: 100%;
-	border-collapse: collapse;
-	background-color: var(--white);
+  border-collapse: collapse;
 }
 
 .paymentsTable th,
@@ -41,3 +91,67 @@
   text-decoration: none;
   font-size: 1.2em;
 }
+
+.expectedValue {
+  color: var(--dark-surface);
+  font-weight: 500;
+}
+
+.paidValue {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.debtValue {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .filterSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .tableTitle {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .filterControl {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .yearSelect {
+    flex: 1;
+  }
+
+  .tableContainer {
+    padding: 12px;
+    margin: 0 -16px; /* Bleed to edges on mobile */
+    border-radius: 0;
+  }
+
+  .paymentsTable th,
+  .paymentsTable td {
+    padding: 10px 8px;
+    font-size: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .headerContent img {
+    width: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .paymentsTable th,
+  .paymentsTable td {
+    padding: 8px 6px;
+    font-size: 1.1rem;
+  }
+}
+

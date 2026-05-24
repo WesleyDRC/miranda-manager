@@ -3,12 +3,21 @@
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 16px;
-	max-width: 376px;
+	width: 100%;
+	max-width: 500px;
 }
 .streetAndNumber {
 	display: flex;
 	gap: 16px;
 }
+
+@media (max-width: 480px) {
+	.streetAndNumber {
+		flex-direction: column;
+		gap: 8px;
+	}
+}
+
 .fields > div {
 	margin: 8px 0;
 }
