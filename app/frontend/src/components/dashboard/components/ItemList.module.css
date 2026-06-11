@@ -1,4 +1,41 @@
+.listItem {
+	width: 100%;
+	display: flex;
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	gap: 16px;
+	width: 100%;
+	padding-left: 32px; /* Exactly (96px sidebar - 32px icon) / 2 to keep it centered when closed */
+}
+
+.iconContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 32px;
+}
+
 .icon {
 	width: 32px;
 	height: 32px;
+}
+
+.label {
+	color: #5F5F5F;
+	font-weight: 500;
+	font-size: 1.1rem;
+	white-space: nowrap;
+	opacity: 0;
+	max-width: 0;
+	overflow: hidden;
+	transition: opacity 0.3s ease, max-width 0.3s ease;
+}
+
+.labelVisible {
+	opacity: 1;
+	max-width: 150px;
 }

@@ -35,8 +35,8 @@ export function Sidebar(props) {
 
   return (
     <>
-      <div 
-        className={`${styles.overlay} ${props.mobileMenuOpen ? styles.mobileOpen : ""}`} 
+      <div
+        className={`${styles.overlay} ${props.mobileMenuOpen ? styles.mobileOpen : ""}`}
         onClick={props.closeMobileMenu}
       />
       <aside className={`${styles.aside} ${styles[props.customClass]} ${props.mobileMenuOpen ? styles.mobileOpen : ""}`}>
@@ -48,14 +48,16 @@ export function Sidebar(props) {
             <div className={`${styles.arrowSidebar} ${styles[props.customClass]}`} onClick={props.handleSidebarSize}>
               <img src={arrowSidebar} alt="Seta da Sidebar" />
             </div>
-            <ItemList 
-              path={"/dashboard"} 
-              icon={currentPage === "dashboard" ? homeIconActivated : homeIconDisabled} 
+            <ItemList
+              path={"/dashboard"}
+              icon={currentPage === "dashboard" ? homeIconActivated : homeIconDisabled}
               alt="Ícone representando a página inicial."
               onClick={() => {
                 setCurrentPage("dashboard");
                 props.closeMobileMenu();
               }}
+              label="Dashboard"
+              isExpanded={props.customClass === "stretchedSidebar"}
             />
             <ItemList
               path={"/finances"}
@@ -65,6 +67,8 @@ export function Sidebar(props) {
                 setCurrentPage("finances");
                 props.closeMobileMenu();
               }}
+              label="Finanças"
+              isExpanded={props.customClass === "stretchedSidebar"}
             />
             <ItemList
               path={"/rentals"}
@@ -74,25 +78,28 @@ export function Sidebar(props) {
                 setCurrentPage("rentals");
                 props.closeMobileMenu();
               }}
+              label="Aluguéis"
+              isExpanded={props.customClass === "stretchedSidebar"}
             />
-            <ItemList
-              path={"/finances"}
+            {/* <ItemList
+              path={"/settings"}
               icon={currentPage === "settings" ? settingsIconActivated : settingsIconDisabled}
               alt="Ícone representando a página de configurações."
               onClick={() => {
                 setCurrentPage("settings");
                 props.closeMobileMenu();
               }}
-            />
+              label="Configurações"
+              isExpanded={props.customClass === "stretchedSidebar"}
+            /> */}
           </ul>
         </nav>
         <div className={styles.help}>
-          <Link to="/help" onClick={props.closeMobileMenu}>
+          {/* <Link to="/help" onClick={props.closeMobileMenu}>
             <img src={helpIcon} alt="Ícone de ajuda" />
-          </Link>
+          </Link> */}
         </div>
       </aside>
     </>
   );
 }
-
