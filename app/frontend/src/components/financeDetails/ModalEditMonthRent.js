@@ -35,7 +35,6 @@ export default function ModalEditMonthRent({
   rentId = "",
   rentMonthId = "",
   month = "Janeiro",
-  paid = false,
   closeModal,
   amount = 0,
 }) {
@@ -212,7 +211,8 @@ export default function ModalEditMonthRent({
     closeModal();
   };
 
-  const rentMonthObj = rentData.months.find((month) => month.id === rentMonthId);
+  const rentMonthObj = rentData && rentData.months ? rentData.months.find((month) => month.id === rentMonthId) : null;
+  const isPaid = rentMonthObj ? rentMonthObj.paid : false;
   const expenses = rentMonthObj ? rentMonthObj.expenses : [];
   const payments = rentMonthObj && rentMonthObj.payments ? rentMonthObj.payments : [];
 
@@ -314,10 +314,10 @@ export default function ModalEditMonthRent({
 
     toast.success("Pagamento deletado com sucesso!");
     await fetchRentData(rentId);
-    
+
     const financeId = window.location.pathname.split("/")[2];
     if (financeId) {
-      fetchFinanceData(financeId); 
+      fetchFinanceData(financeId);
     }
 
     hideConfirmPaymentModal();
@@ -351,10 +351,10 @@ export default function ModalEditMonthRent({
               </div>
               <div
                 className={`
-                ${styles.status} ${paid ? styles.paid : styles.pending}`}
+                ${styles.status} ${isPaid ? styles.paid : styles.pending}`}
               >
-                {!paid && <img src={alertIcon} alt="Alert icon" />}
-                <span> {paid ? "PAGO" : "PENDENTE"} </span>
+                {!isPaid && <img src={alertIcon} alt="Alert icon" />}
+                <span> {isPaid ? "PAGO" : "PENDENTE"} </span>
               </div>
             </section>
 

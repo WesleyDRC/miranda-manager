@@ -183,7 +183,7 @@ export function RentalsDashboard() {
     try {
       // Pre-fetch the specific rent data so that it's in the shared context
       await fetchRentData(selectedRentId);
-      
+
       // Extract month name in Portuguese from dateMonth (which is DD/MM/YYYY)
       const nameMonth = getMonthName(monthObj.dateMonth);
 
@@ -850,7 +850,7 @@ export function RentalsDashboard() {
                     <FaHistory /> Linha do Tempo Financeira
                   </h4>
                   <p className={styles.timelineDesc}>Clique em um mês para editar pagamentos, despesas ou comprovantes.</p>
-                  
+
                   <div className={styles.timeline}>
                     {selectedRent.months.map((month, idx) => {
                       const outstanding = month.difference;
@@ -904,7 +904,6 @@ export function RentalsDashboard() {
           rentId={selectedMonth.rentId}
           rentMonthId={selectedMonth.rentMonthId}
           month={selectedMonth.monthName}
-          paid={selectedMonth.paid}
           amount={selectedMonth.amount}
           closeModal={handleCloseEditMonthModal}
         />

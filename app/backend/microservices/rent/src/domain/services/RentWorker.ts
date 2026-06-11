@@ -42,7 +42,7 @@ export class RentWorker {
 		const month = lastMonthDate.getMonth()
 		const year = lastMonthDate.getFullYear()
 
-		const lastDayMonth = new Date(year, month, 0).getDay()
+		const lastDayMonth = new Date(year, month, 0).getDate()
 		const safeDay = Math.min(day, lastDayMonth)
     const currentDate = new Date();
 		const startDate = new Date(year, month, safeDay)

@@ -27,7 +27,7 @@ export function FinanceRentDetail() {
 
   const [isModalEditMonthOpen, setIsModalEditMonthOpen] = useState(false);
   const [isModalAllPendingOpen, setIsModalAllPendingOpen] = useState(false);
-  
+
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentMonthID, setCurrentMonthID] = useState("");
   const [amountPaid, setAmountPaid] = useState(0);
@@ -83,8 +83,8 @@ export function FinanceRentDetail() {
           <h3> {financeData.name} </h3>
         </section>
 
-        <TenantDebtSummary 
-          rentData={rentData} 
+        <TenantDebtSummary
+          rentData={rentData}
           onEditMonth={handleEditMonth}
           onViewAll={openAllPendingModal}
         />
@@ -103,7 +103,6 @@ export function FinanceRentDetail() {
           rentId={rentData.id}
           rentMonthId={currentMonthID}
           month={currentMonth}
-          paid={paymentStatus}
           closeModal={closeModalEditMonth}
           amount={amountPaid}
         />
