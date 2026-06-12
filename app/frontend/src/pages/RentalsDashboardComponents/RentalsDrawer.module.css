@@ -1,0 +1,206 @@
+.drawerSection {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.drawerSection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.drawerSection h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #0F172A;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.drawerProfile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.drawerAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #5E17EB;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.drawerProfileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #F8FAFC;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.infoIcon {
+  color: #64748B;
+  margin-top: 4px;
+}
+
+.infoItem div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.infoItem strong {
+  font-size: 12px;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoItem span {
+  font-size: 14px;
+  color: #0F172A;
+  font-weight: 500;
+}
+
+.drawerCardsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.drawerCardMini {
+  background-color: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.drawerCardMini span {
+  font-size: 13px;
+  color: #64748B;
+}
+
+.drawerCardMini strong {
+  font-size: 18px;
+  color: #0F172A;
+}
+
+.monthsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.monthCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.monthCard:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.monthCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 8px;
+}
+
+.monthCardHeader strong {
+  font-size: 15px;
+  color: #0F172A;
+}
+
+.monthCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.monthCardBody p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #475569;
+}
+
+.monthCardBody p span {
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.monthCardFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.textDebt {
+  color: #EF4444 !important;
+}
+
+.textZeroDebt {
+  color: #10B981 !important;
+}
+
+.obsTextarea {
+  width: 100%;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  color: #334155;
+  resize: vertical;
+  min-height: 100px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.obsTextarea:focus {
+  border-color: #5E17EB;
+}
+
+.noDataText {
+  color: #64748B;
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
+  background-color: #F8FAFC;
+  border-radius: 8px;
+}

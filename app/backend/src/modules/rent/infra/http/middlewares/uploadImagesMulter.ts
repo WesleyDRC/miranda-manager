@@ -2,17 +2,11 @@ import multer from "multer";
 import {v4 as uuidv4} from "uuid"
 import fs from "fs"
 
-import { getAppDataPath } from "../../../../../shared/utils/getAppDataFolder";
+import uploadConfig from "@/config/upload";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-
-    const tempDir = `${getAppDataPath()}/rent/temp`;
-    if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir, { recursive: true });
-    }
-
-    cb(null, tempDir)
+    cb(null, uploadConfig.tmpFolder)
   },
   filename: function (req, file, cb) {
     const extensionFile = file.originalname.split(".").pop()

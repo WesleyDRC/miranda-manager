@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { container } from "tsyringe";
 
-import { GetCategoryByIdUseCase } from "../../../useCases/GetCategoryByIdUseCase";
+import { GetCategoryByIdUseCase } from "@/modules/category/useCases/GetCategoryByIdUseCase";
 
 export class GetCategoryByIdController {
 	public async handle(request: Request, response: Response): Promise<Response> {

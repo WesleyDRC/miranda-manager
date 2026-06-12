@@ -1,10 +1,10 @@
-import { IStoreCategoryDTO } from "../../../dtos/IStoreCategoryDTO";
-import { ICategoryRepository } from "../../../repositories/ICategoryRepository";
-import { Category } from "../entities/Category";
-import { ICategory } from "../../../entities/ICategory";
-import { AppError } from "../../../../../shared/errors/AppError";
+import { IStoreCategoryDTO } from "@/modules/category/dtos/IStoreCategoryDTO";
+import { ICategoryRepository } from "@/modules/category/repositories/ICategoryRepository";
+import { Category } from "@/modules/category/infra/mongoose/entities/Category";
+import { ICategory } from "@/modules/category/entities/ICategory";
+import { AppError } from "@/shared/errors/AppError";
 
-import { categoryConstants } from "../../../contants/categoryContants";
+import { categoryConstants } from "@/modules/category/contants/categoryContants";
 
 export class CategoryRepository implements ICategoryRepository {
   async create({ name }: IStoreCategoryDTO): Promise<ICategory> {

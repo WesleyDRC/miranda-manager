@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateRentMonthUseCase } from "../../../useCases/UpdateRentMonthUseCase";
+import { UpdateRentMonthUseCase } from "@/modules/rent/useCases/UpdateRentMonthUseCase";
 import { container } from "tsyringe";
 
 export class UpdateRentMonthController {

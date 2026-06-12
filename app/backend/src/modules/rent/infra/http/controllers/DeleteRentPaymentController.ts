@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteRentPaymentUseCase } from "../../../useCases/DeleteRentPaymentUseCase";
+import { DeleteRentPaymentUseCase } from "@/modules/rent/useCases/DeleteRentPaymentUseCase";
 import { container } from "tsyringe";
 
 export class DeleteRentPaymentController {

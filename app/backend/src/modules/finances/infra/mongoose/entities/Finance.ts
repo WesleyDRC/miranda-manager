@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { IRent } from "../../../../rent/entities/IRent";
-import { ICategory } from "../../../../category/entities/ICategory";
+import { IRent } from "@/modules/rent/entities/IRent";
+import { ICategory } from "@/modules/category/entities/ICategory";
 
 interface IFinance extends Document {
   _id: string;

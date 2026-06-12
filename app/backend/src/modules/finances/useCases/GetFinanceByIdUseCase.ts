@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IFinance } from "../entities/IFinance";
-import { IFinanceRepository } from "../repositories/IFinanceRepository";
+import { IUseCase } from "@/modules/finances/useCases/ports/IUseCase";
+import { IFinance } from "@/modules/finances/entities/IFinance";
+import { IFinanceRepository } from "@/modules/finances/repositories/IFinanceRepository";
 
 @injectable()
 export class GetFinanceByIdUseCase implements IUseCase {

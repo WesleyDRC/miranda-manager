@@ -1,0 +1,134 @@
+.expenseCard {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.expenseCard:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.expenseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.expenseTitle {
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.statusWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.statusBadge.paid {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.statusBadge.pending {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.toggleBtn {
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 8px;
+  border: 1px solid transparent;
+}
+
+.toggleBtn:hover {
+  transform: translateY(-1px);
+}
+
+.valueWrapper {
+  min-width: 120px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.attachmentSection {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.attachmentActions {
+  display: flex;
+  gap: 12px;
+}
+
+.attachmentBtn {
+  background: white;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.attachmentBtn:hover {
+  border-color: #6366f1;
+  color: #4f46e5;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+}
+
+.viewAttachmentBtn {
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  border: none;
+}
+
+.viewAttachmentBtn:hover {
+  background: #c7d2fe;
+}

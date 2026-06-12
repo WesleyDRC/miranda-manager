@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { GetRentByIdUseCase } from "../../../useCases/GetRentByIdUseCase";
+import { GetRentByIdUseCase } from "@/modules/rent/useCases/GetRentByIdUseCase";
 
 
 export class GetRentByIdController {

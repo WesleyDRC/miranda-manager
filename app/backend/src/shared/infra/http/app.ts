@@ -6,8 +6,9 @@ import "express-async-errors";
 
 import cors from "cors"
 import express, { Request, Response, NextFunction } from "express";
-import routes from "./routes/routes";
-import { AppError } from "../../errors/AppError";
+import path from "path";
+import routes from "@/shared/infra/http/routes/routes";
+import { AppError } from "@/shared/errors/AppError";
 
 // APP
 const app = express();
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors())
 
 app.use(express.json());
+app.use("/uploads", express.static(path.resolve(__dirname, "..", "..", "..", "..", "tmp", "uploads")));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {

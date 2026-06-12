@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
 
-import { AppError } from "../../../shared/errors/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
-import { IAuthRepository } from "../repositories/IAuthRepository";
-import { IStoreUserDTO } from "../dtos/IStoreUserDTO";
-import { IEncryptManager } from "./ports/IEncryptManager";
-import { ITokenManager } from "./ports/ITokenManager";
-import { IUseCase } from "./ports/IUseCase";
+import { IAuthRepository } from "@/modules/auth/repositories/IAuthRepository";
+import { IStoreUserDTO } from "@/modules/auth/dtos/IStoreUserDTO";
+import { IEncryptManager } from "@/modules/auth/useCases/ports/IEncryptManager";
+import { ITokenManager } from "@/modules/auth/useCases/ports/ITokenManager";
+import { IUseCase } from "@/modules/auth/useCases/ports/IUseCase";
 
-import { userConstants } from "../constants/userConstants";
-import { User } from "../entities/User";
+import { userConstants } from "@/modules/auth/constants/userConstants";
+import { User } from "@/modules/auth/entities/User";
 
 @injectable()
 export class SignUpUseCase implements IUseCase {

@@ -1,7 +1,7 @@
-import { IStoreUserDTO } from "../../../dtos/IStoreUserDTO";
-import { IAuthRepository } from "../../../repositories/IAuthRepository";
-import { IUser } from "../../../entities/IUser";
-import { User } from "../entities/User";
+import { IStoreUserDTO } from "@/modules/auth/dtos/IStoreUserDTO";
+import { IAuthRepository } from "@/modules/auth/repositories/IAuthRepository";
+import { IUser } from "@/modules/auth/entities/IUser";
+import { User } from "@/modules/auth/infra/mongoose/entities/User";
 
 export class AuthRepository implements IAuthRepository {
 	async create({ email, password }: IStoreUserDTO): Promise<string> {

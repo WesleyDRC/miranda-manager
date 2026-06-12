@@ -1,11 +1,11 @@
-import { IStoreRentExpenseDTO } from "../dtos/IStoreRentExpenseDTO";
-import { IRentExpense } from "../entities/IRentExpense";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
+import { IStoreRentExpenseDTO } from "@/modules/rent/dtos/IStoreRentExpenseDTO";
+import { IRentExpense } from "@/modules/rent/entities/IRentExpense";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
 
-import { rentConstants } from "../contants/rentConstants";
+import { rentConstants } from "@/modules/rent/contants/rentConstants";
 
-import { AppError } from "../../../shared/errors/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
 import { inject, injectable } from "tsyringe";
 

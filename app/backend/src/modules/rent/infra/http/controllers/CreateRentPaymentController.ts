@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateRentPaymentUseCase } from "../../../useCases/CreateRentPaymentUseCase";
+import { CreateRentPaymentUseCase } from "@/modules/rent/useCases/CreateRentPaymentUseCase";
 import { container } from "tsyringe";
 
 export class CreateRentPaymentController {

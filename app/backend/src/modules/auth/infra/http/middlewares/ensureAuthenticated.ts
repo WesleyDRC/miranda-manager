@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
-import { AppError } from "../../../../../shared/errors/AppError";
-import { AuthRepository } from "../../mongoose/repository/AuthRepository"
+import { AppError } from "@/shared/errors/AppError";
+import { AuthRepository } from "@/modules/auth/infra/mongoose/repository/AuthRepository"
 import { container } from "tsyringe";
 
 const ensureAuthenticated = async (

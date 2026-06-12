@@ -1,4 +1,4 @@
-import { Category } from "../infra/mongoose/entities/Category"
+import { Category } from "@/modules/category/infra/mongoose/entities/Category"
 
 export class InitializeCategoriesUseCase {
   async execute(): Promise<void> {

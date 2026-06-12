@@ -13,6 +13,12 @@ import { CreateCategory } from "../pages/CreateCategory"
 import { Finances } from "../pages/Finances"
 import { FinanceRentDetail } from "../pages/FinanceRentDetail"
 import { RentalsDashboard } from "../pages/RentalsDashboard"
+import { ForecastDashboard } from "../pages/ForecastDashboard"
+import { WalletsDashboard } from "../pages/WalletsDashboard"
+import { PatrimonyDashboard } from "../pages/PatrimonyDashboard"
+import { PatrimonyDetail } from "../pages/PatrimonyDetail"
+import { TransactionsDashboard } from "../pages/TransactionsDashboard"
+import { VehicleDetail } from "../pages/VehicleDetail"
 import { useAuth } from "../hooks/useAuth"
 import ErrorPage from "../pages/ErrorPage"
 
@@ -69,6 +75,36 @@ export function AppRoutes() {
 				{
 					path: "/rentals",
 					element: <Private> <RentalsDashboard /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/forecast",
+					element: <Private> <ForecastDashboard /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/wallets",
+					element: <Private> <WalletsDashboard /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/patrimony",
+					element: <Private> <PatrimonyDashboard /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/patrimony/:id",
+					element: <Private> <PatrimonyDetail /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/patrimony/vehicle/:id",
+					element: <Private> <VehicleDetail /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/transactions",
+					element: <Private> <TransactionsDashboard /> </Private>,
 					errorElement: <ErrorPage />
 				},
 				{

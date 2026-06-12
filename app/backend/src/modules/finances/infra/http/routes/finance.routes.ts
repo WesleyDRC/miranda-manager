@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
-import { CreateFinanceController } from "../controllers/CreateFinanceController";
-import { GetFinancesController } from "../controllers/GetFinancesController";
-import { GetFinanceByIdController } from "../controllers/GetFinanceByIdController";
+import { CreateFinanceController } from "@/modules/finances/infra/http/controllers/CreateFinanceController";
+import { GetFinancesController } from "@/modules/finances/infra/http/controllers/GetFinancesController";
+import { GetFinanceByIdController } from "@/modules/finances/infra/http/controllers/GetFinanceByIdController";
 
 const financeRoutes = Router();
 const createFinanceController = new CreateFinanceController();

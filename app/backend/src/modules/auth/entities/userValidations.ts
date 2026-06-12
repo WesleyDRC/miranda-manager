@@ -1,4 +1,4 @@
-import { userConstants } from "../constants/userConstants";
+import { userConstants } from "@/modules/auth/constants/userConstants";
 
 const MIN_PASSWORD = 5;
 

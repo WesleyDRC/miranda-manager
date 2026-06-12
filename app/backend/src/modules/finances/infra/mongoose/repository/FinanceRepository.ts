@@ -1,8 +1,8 @@
-import { IFinanceRepository } from "../../../repositories/IFinanceRepository";
-import { IStoreFinanceDTO } from "../../../dtos/IStoreFinanceDTO";
-import { IFinance } from "../../../entities/IFinance";
+import { IFinanceRepository } from "@/modules/finances/repositories/IFinanceRepository";
+import { IStoreFinanceDTO } from "@/modules/finances/dtos/IStoreFinanceDTO";
+import { IFinance } from "@/modules/finances/entities/IFinance";
 
-import { Finance } from "../entities/Finance";
+import { Finance } from "@/modules/finances/infra/mongoose/entities/Finance";
 
 export class FinanceRepository implements IFinanceRepository {
 	async create({name, categoryId, rentId, userId}: IStoreFinanceDTO): Promise<IFinance> {

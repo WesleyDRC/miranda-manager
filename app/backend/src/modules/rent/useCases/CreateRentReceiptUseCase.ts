@@ -2,14 +2,14 @@ import { inject, injectable } from "tsyringe";
 import path from "path";
 import fs from "fs";
 
-import { IRentReceipt } from "../entities/IRentReceipt";
-import { IStoreRentReceiptDTO } from "../dtos/IStoreRentReceiptDTO";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
+import { IRentReceipt } from "@/modules/rent/entities/IRentReceipt";
+import { IStoreRentReceiptDTO } from "@/modules/rent/dtos/IStoreRentReceiptDTO";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
 
-import { rentConstants } from "../contants/rentConstants";
-import { getAppDataPath } from "../../../shared/utils/getAppDataFolder";
-import { AppError } from "../../../shared/errors/AppError";
+import { rentConstants } from "@/modules/rent/contants/rentConstants";
+import uploadConfig from "@/config/upload";
+import { AppError } from "@/shared/errors/AppError";
 
 @injectable()
 export class CreateRentReceiptUseCase implements IUseCase {
@@ -33,17 +33,10 @@ export class CreateRentReceiptUseCase implements IUseCase {
 		}
 
 		const tempFilePath = this.getReceiptPath(receipt);
-		const newFilePath = `${getAppDataPath()}/rent/receipts/${path.basename(
-			tempFilePath
-		)}`;
-		const newDir = path.dirname(newFilePath);
+		const newFilePath = `${uploadConfig.uploadsFolder}/${path.basename(tempFilePath)}`;
 
 		if (!fs.existsSync(tempFilePath)) {
 			throw new AppError(rentConstants.FILE_NOT_FOUND, 404);
-		}
-
-		if (!fs.existsSync(newDir)) {
-			fs.mkdirSync(newDir, { recursive: true });
 		}
 
 		// Move the file (temporary file will be removed automatically)

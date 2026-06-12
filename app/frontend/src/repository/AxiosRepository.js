@@ -131,6 +131,89 @@ class AxiosRepository {
   async deleteRentPayment({ id }) {
     return this.#axiosClient.delete(`/rent/payment/${id}`);
   }
+
+  async getForecastDashboard(scenario) {
+    const url = scenario ? `/forecast/dashboard?simulateScenario=${scenario}` : "/forecast/dashboard";
+    return await this.#axiosClient.get(url);
+  }
+
+  // Wallets
+  async getWallets() {
+    return await this.#axiosClient.get("/wallet");
+  }
+
+  async createWallet({ name, balance }) {
+    return await this.#axiosClient.post("/wallet", { name, balance });
+  }
+
+  async updateWallet(id, { name, balance }) {
+    return await this.#axiosClient.patch(`/wallet/${id}`, { name, balance });
+  }
+
+  async deleteWallet(id) {
+    return await this.#axiosClient.delete(`/wallet/${id}`);
+  }
+
+  // Patrimony
+  async getPatrimonies() {
+    return await this.#axiosClient.get("/patrimony");
+  }
+
+  async getPatrimonyById({ id }) {
+    return await this.#axiosClient.get(`/patrimony/${id}`);
+  }
+
+  async createPatrimony({ name, type, marketValue, isFinanced, financingDetails }) {
+    return await this.#axiosClient.post("/patrimony", {
+      name,
+      type,
+      marketValue,
+      isFinanced,
+      financingDetails
+    });
+  }
+
+  async deletePatrimony({ id }) {
+    return await this.#axiosClient.delete(`/patrimony/${id}`);
+  }
+
+  async updatePatrimony(id, updates) {
+    return await this.#axiosClient.patch(`/patrimony/${id}`, updates);
+  }
+
+  async uploadFile(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return await this.#axiosClient.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+  }
+
+  // Transactions
+  async getTransactions() {
+    return await this.#axiosClient.get("/transaction");
+  }
+
+  async getTransactionsByPatrimonyId(patrimonyId) {
+    return await this.#axiosClient.get(`/transaction/patrimony/${patrimonyId}`);
+  }
+
+  async createTransaction({ type, amount, dueDate, isPaid, isRecurring, source, description, walletId, patrimonyId, endDate }) {
+    return await this.#axiosClient.post("/transaction", {
+      type, amount, dueDate, isPaid, isRecurring, source, description, walletId, patrimonyId, endDate
+    });
+  }
+
+  async updateTransaction(id, updates) {
+    return await this.#axiosClient.patch(`/transaction/${id}`, updates);
+  }
+
+  async deleteTransaction(id, deleteHistory = false) {
+    const query = deleteHistory ? "?deleteHistory=true" : "";
+    return await this.#axiosClient.delete(`/transaction/${id}${query}`);
+  }
 }
 
 const axiosRepositoryInstance = new AxiosRepository()

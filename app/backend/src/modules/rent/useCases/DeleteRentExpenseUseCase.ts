@@ -1,10 +1,10 @@
 import { injectable, inject } from "tsyringe";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
 
-import { rentConstants } from "../contants/rentConstants";
+import { rentConstants } from "@/modules/rent/contants/rentConstants";
 
-import { AppError } from "../../../shared/errors/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
 @injectable()
 export class DeleteRentExpenseUseCase implements IUseCase {

@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IRent } from "../entities/IRent";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IRent } from "@/modules/rent/entities/IRent";
 
-import { rentConstants } from "../contants/rentConstants";
+import { rentConstants } from "@/modules/rent/contants/rentConstants";
 
-import { loadImage } from "../../../shared/utils/loadImage";
+import { loadImage } from "@/shared/utils/loadImage";
 
-import { AppError } from "../../../shared/errors/AppError";
-import { IRentReceipt } from "../entities/IRentReceipt";
+import { AppError } from "@/shared/errors/AppError";
+import { IRentReceipt } from "@/modules/rent/entities/IRentReceipt";
 
 @injectable()
 export class GetRentReceiptUseCase implements IUseCase {

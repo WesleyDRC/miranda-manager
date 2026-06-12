@@ -1,0 +1,61 @@
+import { inject, injectable } from "tsyringe";
+
+import { IUseCase } from "@/modules/patrimony/useCases/ports/IUseCase";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { ICreatePatrimonyDTO } from "@/modules/patrimony/dtos/ICreatePatrimonyDTO";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
+
+@injectable()
+export class CreatePatrimonyUseCase implements IUseCase {
+  constructor(
+    @inject("PatrimonyRepository")
+    private patrimonyRepository: IPatrimonyRepository,
+    @inject("TransactionRepository")
+    private transactionRepository: ITransactionRepository
+  ) {}
+
+  async execute({
+    name,
+    type,
+    marketValue,
+    isFinanced,
+    financingDetails,
+    userId,
+  }: ICreatePatrimonyDTO): Promise<IPatrimony> {
+    const patrimony = await this.patrimonyRepository.create({
+      name,
+      type,
+      marketValue,
+      isFinanced,
+      financingDetails,
+      userId,
+    });
+
+    if (isFinanced && financingDetails && financingDetails.startDate && financingDetails.endDate) {
+      const start = new Date(financingDetails.startDate);
+      const end = new Date(financingDetails.endDate);
+      const transactionsData = [];
+      
+      const totalMonths = (end.getUTCFullYear() - start.getUTCFullYear()) * 12 + (end.getUTCMonth() - start.getUTCMonth()) + 1;
+
+      for (let i = 0; i < totalMonths; i++) {
+        const dueDate = new Date(start.getUTCFullYear(), start.getUTCMonth() + i, financingDetails.dueDateDay || 10);
+        transactionsData.push({
+          type: "EXPENSE" as const,
+          amount: financingDetails.installmentValue,
+          dueDate,
+          isPaid: false,
+          isRecurring: false,
+          source: "FINANCING" as const,
+          description: `Parcela ${i + 1}/${totalMonths} - ${name}`,
+          patrimonyId: patrimony.id,
+          userId,
+        });
+      }
+      await this.transactionRepository.createMany(transactionsData);
+    }
+
+    return patrimony;
+  }
+}

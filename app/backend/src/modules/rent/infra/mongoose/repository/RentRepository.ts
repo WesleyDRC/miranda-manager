@@ -1,18 +1,18 @@
-import { IStoreRentDTO } from "../../../dtos/IStoreRentDTO";
-import { IStoreRentExpenseDTO } from "../../../dtos/IStoreRentExpenseDTO";
-import { IStoreRentMonthDTO } from "../../../dtos/IStoreRentMonthDTO";
-import { IStoreRentReceiptDTO } from "../../../dtos/IStoreRentReceiptDTO";
-import { IRent } from "../../../entities/IRent";
-import { IRentExpense } from "../../../entities/IRentExpense";
-import { IRentMonth } from "../../../entities/IRentMonth";
-import { IRentReceipt } from "../../../entities/IRentReceipt";
-import { IRentRepository } from "../../../repositories/IRentRepository";
+import { IStoreRentDTO } from "@/modules/rent/dtos/IStoreRentDTO";
+import { IStoreRentExpenseDTO } from "@/modules/rent/dtos/IStoreRentExpenseDTO";
+import { IStoreRentMonthDTO } from "@/modules/rent/dtos/IStoreRentMonthDTO";
+import { IStoreRentReceiptDTO } from "@/modules/rent/dtos/IStoreRentReceiptDTO";
+import { IRent } from "@/modules/rent/entities/IRent";
+import { IRentExpense } from "@/modules/rent/entities/IRentExpense";
+import { IRentMonth } from "@/modules/rent/entities/IRentMonth";
+import { IRentReceipt } from "@/modules/rent/entities/IRentReceipt";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
 
-import { Rent } from "../entities/Rent";
-import { RentExpense } from "../entities/RentExpense";
-import { RentMonth } from "../entities/RentMonth";
-import { RentReceipt } from "../entities/RentReceipts"
-import { RentPayment } from "../entities/RentPayment";
+import { Rent } from "@/modules/rent/infra/mongoose/entities/Rent";
+import { RentExpense } from "@/modules/rent/infra/mongoose/entities/RentExpense";
+import { RentMonth } from "@/modules/rent/infra/mongoose/entities/RentMonth";
+import { RentReceipt } from "@/modules/rent/infra/mongoose/entities/RentReceipts"
+import { RentPayment } from "@/modules/rent/infra/mongoose/entities/RentPayment";
 
 export class RentRepository implements IRentRepository {
   async create(rent: IStoreRentDTO): Promise<IRent> {

@@ -1,23 +1,23 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
-import { CreateRentController } from "../controllers/CreateRentController";
-import { GetRentByIdController } from "../controllers/GetRentByIdController";
-import { CreateRentExpenseController } from "../controllers/CreateRentExpenseController";
-import { UpdateRentMonthController } from "../controllers/UpdateRentMonthController";
-import { UpdateRentExpenseController } from "../controllers/UpdateRentExpenseController";
-import { DeleteRentExpenseController } from "../controllers/DeleteRentExpenseController";
-import { CreateRentReceiptController } from "../controllers/CreateRentReceiptController";
-import { GetRentReceiptController } from "../controllers/GetRentReceiptController";
-import { DeleteRentReceiptController } from "../controllers/DeleteRentReceiptController";
+import { CreateRentController } from "@/modules/rent/infra/http/controllers/CreateRentController";
+import { GetRentByIdController } from "@/modules/rent/infra/http/controllers/GetRentByIdController";
+import { CreateRentExpenseController } from "@/modules/rent/infra/http/controllers/CreateRentExpenseController";
+import { UpdateRentMonthController } from "@/modules/rent/infra/http/controllers/UpdateRentMonthController";
+import { UpdateRentExpenseController } from "@/modules/rent/infra/http/controllers/UpdateRentExpenseController";
+import { DeleteRentExpenseController } from "@/modules/rent/infra/http/controllers/DeleteRentExpenseController";
+import { CreateRentReceiptController } from "@/modules/rent/infra/http/controllers/CreateRentReceiptController";
+import { GetRentReceiptController } from "@/modules/rent/infra/http/controllers/GetRentReceiptController";
+import { DeleteRentReceiptController } from "@/modules/rent/infra/http/controllers/DeleteRentReceiptController";
 
-import { CreateRentPaymentController } from "../controllers/CreateRentPaymentController";
-import { DeleteRentPaymentController } from "../controllers/DeleteRentPaymentController";
-import { GetRentDashboardController } from "../controllers/GetRentDashboardController";
-import { UpdateRentController } from "../controllers/UpdateRentController";
+import { CreateRentPaymentController } from "@/modules/rent/infra/http/controllers/CreateRentPaymentController";
+import { DeleteRentPaymentController } from "@/modules/rent/infra/http/controllers/DeleteRentPaymentController";
+import { GetRentDashboardController } from "@/modules/rent/infra/http/controllers/GetRentDashboardController";
+import { UpdateRentController } from "@/modules/rent/infra/http/controllers/UpdateRentController";
 
-import { upload } from "../middlewares/uploadImagesMulter";
+import { upload } from "@/modules/rent/infra/http/middlewares/uploadImagesMulter";
 
 const rentRoutes = Router();
 
