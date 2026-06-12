@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { UpdateTransactionUseCase } from "../../../useCases/UpdateTransactionUseCase";
+import { UpdateTransactionUseCase } from "@/modules/transactions/useCases/UpdateTransactionUseCase";
 
 export class UpdateTransactionController {
   async handle(request: Request, response: Response): Promise<Response> {

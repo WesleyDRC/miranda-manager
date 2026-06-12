@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IPatrimonyRepository } from "../repositories/IPatrimonyRepository";
-import { ITransactionRepository } from "../../transactions/repositories/ITransactionRepository";
-import { ICreatePatrimonyDTO } from "../dtos/ICreatePatrimonyDTO";
-import { IPatrimony } from "../entities/IPatrimony";
+import { IUseCase } from "@/modules/patrimony/useCases/ports/IUseCase";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { ICreatePatrimonyDTO } from "@/modules/patrimony/dtos/ICreatePatrimonyDTO";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
 
 @injectable()
 export class CreatePatrimonyUseCase implements IUseCase {

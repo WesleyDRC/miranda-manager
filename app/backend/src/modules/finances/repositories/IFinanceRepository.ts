@@ -1,5 +1,5 @@
-import { IStoreFinanceDTO } from "../dtos/IStoreFinanceDTO";
-import { IFinance } from "../entities/IFinance";
+import { IStoreFinanceDTO } from "@/modules/finances/dtos/IStoreFinanceDTO";
+import { IFinance } from "@/modules/finances/entities/IFinance";
 
 export interface IFinanceRepository {
 	create(finance: IStoreFinanceDTO): Promise<IFinance>

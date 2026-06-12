@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import "dotenv/config";
-import { User } from "./modules/auth/infra/mongoose/entities/User";
-import { Wallet } from "./modules/wallets/infra/mongoose/entities/Wallet";
-import { Patrimony } from "./modules/patrimony/infra/mongoose/entities/Patrimony";
-import { Transaction } from "./modules/transactions/infra/mongoose/entities/Transaction";
-import { RecurrenceRule } from "./modules/transactions/infra/mongoose/entities/RecurrenceRule";
+import { User } from "@/modules/auth/infra/mongoose/entities/User";
+import { Wallet } from "@/modules/wallets/infra/mongoose/entities/Wallet";
+import { Patrimony } from "@/modules/patrimony/infra/mongoose/entities/Patrimony";
+import { Transaction } from "@/modules/transactions/infra/mongoose/entities/Transaction";
+import { RecurrenceRule } from "@/modules/transactions/infra/mongoose/entities/RecurrenceRule";
 
 async function seed() {
   const mongoUri = "mongodb://root:example@localhost:27017/miranda_manager_database?authSource=admin";

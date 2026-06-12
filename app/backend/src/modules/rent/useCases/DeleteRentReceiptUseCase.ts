@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import fs from "fs";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
-import { AppError } from "../../../shared/errors/AppError";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
+import { AppError } from "@/shared/errors/AppError";
 
 @injectable()
 export class DeleteRentReceiptUseCase implements IUseCase {

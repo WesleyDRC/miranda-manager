@@ -1,4 +1,4 @@
-import { IRentExpense } from "./IRentExpense";
+import { IRentExpense } from "@/modules/rent/entities/IRentExpense";
 
 interface IRentMonth {
   dateMonth: string;

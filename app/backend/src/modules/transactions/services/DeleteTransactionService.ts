@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
-import { IRecurrenceRuleRepository } from "../repositories/IRecurrenceRuleRepository";
-import { AppError } from "../../../shared/errors/AppError";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { IRecurrenceRuleRepository } from "@/modules/transactions/repositories/IRecurrenceRuleRepository";
+import { AppError } from "@/shared/errors/AppError";
 
 @injectable()
 export class DeleteTransactionService {

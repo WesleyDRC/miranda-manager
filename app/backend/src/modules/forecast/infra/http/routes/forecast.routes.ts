@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
-import { GetForecastController } from "../controller/GetForecastController";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
+import { GetForecastController } from "@/modules/forecast/infra/http/controller/GetForecastController";
 
 const forecastRoutes = Router();
 const getForecastController = new GetForecastController();

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
-import { IRecurrenceRuleRepository } from "../repositories/IRecurrenceRuleRepository";
-import { ITransaction } from "../entities/ITransaction";
-import { AppError } from "../../../shared/errors/AppError";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { IRecurrenceRuleRepository } from "@/modules/transactions/repositories/IRecurrenceRuleRepository";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
+import { AppError } from "@/shared/errors/AppError";
 
 interface IRequest {
   id: string;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { SignUpUseCase } from "../../../useCases/SignUpUseCase";
+import { SignUpUseCase } from "@/modules/auth/useCases/SignUpUseCase";
 
 import { container } from "tsyringe";
 

@@ -1,12 +1,12 @@
-import { IStoreRentDTO } from "../dtos/IStoreRentDTO";
-import { IStoreRentMonthDTO } from "../dtos/IStoreRentMonthDTO";
-import { IStoreRentExpenseDTO } from "../dtos/IStoreRentExpenseDTO";
-import { IStoreRentReceiptDTO } from "../dtos/IStoreRentReceiptDTO";
+import { IStoreRentDTO } from "@/modules/rent/dtos/IStoreRentDTO";
+import { IStoreRentMonthDTO } from "@/modules/rent/dtos/IStoreRentMonthDTO";
+import { IStoreRentExpenseDTO } from "@/modules/rent/dtos/IStoreRentExpenseDTO";
+import { IStoreRentReceiptDTO } from "@/modules/rent/dtos/IStoreRentReceiptDTO";
 
-import { IRentExpense } from "../entities/IRentExpense";
-import { IRent } from "../entities/IRent";
-import { IRentMonth } from "../entities/IRentMonth";
-import { IRentReceipt } from "../entities/IRentReceipt";
+import { IRentExpense } from "@/modules/rent/entities/IRentExpense";
+import { IRent } from "@/modules/rent/entities/IRent";
+import { IRentMonth } from "@/modules/rent/entities/IRentMonth";
+import { IRentReceipt } from "@/modules/rent/entities/IRentReceipt";
 
 export interface IRentRepository {
   create(rent: IStoreRentDTO): Promise<IRent>;

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IPatrimonyRepository } from "../repositories/IPatrimonyRepository";
-import { IPatrimony } from "../entities/IPatrimony";
+import { IUseCase } from "@/modules/patrimony/useCases/ports/IUseCase";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
 
 @injectable()
 export class GetPatrimonyByIdUseCase implements IUseCase {

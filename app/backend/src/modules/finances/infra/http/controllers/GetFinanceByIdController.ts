@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { GetFinanceByIdUseCase } from "../../../useCases/GetFinanceByIdUseCase";
+import { GetFinanceByIdUseCase } from "@/modules/finances/useCases/GetFinanceByIdUseCase";
 
 export class GetFinanceByIdController {
   public async handle(request: Request, response: Response): Promise<Response> {

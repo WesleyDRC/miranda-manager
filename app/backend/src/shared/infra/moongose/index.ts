@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { initializeData } from "./initializeData";
+import { initializeData } from "@/shared/infra/moongose/initializeData";
 
 class Database {
   connection: any;

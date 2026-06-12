@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
 
-import { IStoreFinanceDTO } from "../dtos/IStoreFinanceDTO";
-import { IUseCase } from "./ports/IUseCase";
-import { IFinanceRepository } from "../repositories/IFinanceRepository";
-import { IRentRepository } from "../../rent/repositories/IRentRepository";
-import { ICategoryRepository } from "../../category/repositories/ICategoryRepository";
-import { IFinance } from "../entities/IFinance";
-import { ICategory } from "../../category/entities/ICategory";
+import { IStoreFinanceDTO } from "@/modules/finances/dtos/IStoreFinanceDTO";
+import { IUseCase } from "@/modules/finances/useCases/ports/IUseCase";
+import { IFinanceRepository } from "@/modules/finances/repositories/IFinanceRepository";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { ICategoryRepository } from "@/modules/category/repositories/ICategoryRepository";
+import { IFinance } from "@/modules/finances/entities/IFinance";
+import { ICategory } from "@/modules/category/entities/ICategory";
 
-import { financeConstants } from "../contants/financeContants";
-import { categoryConstants } from "../../category/contants/categoryContants";
+import { financeConstants } from "@/modules/finances/contants/financeContants";
+import { categoryConstants } from "@/modules/category/contants/categoryContants";
 
-import { AppError } from "../../../shared/errors/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
 @injectable()
 export class CreateFinanceUseCase implements IUseCase {

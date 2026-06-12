@@ -1,5 +1,5 @@
-import { ICreatePatrimonyDTO } from "../dtos/ICreatePatrimonyDTO";
-import { IPatrimony } from "../entities/IPatrimony";
+import { ICreatePatrimonyDTO } from "@/modules/patrimony/dtos/ICreatePatrimonyDTO";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
 
 export interface IPatrimonyRepository {
   create(data: ICreatePatrimonyDTO): Promise<IPatrimony>;

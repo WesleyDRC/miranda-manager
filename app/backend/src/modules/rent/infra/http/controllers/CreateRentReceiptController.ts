@@ -1,6 +1,6 @@
 import {Request, Response} from "express"
 
-import { CreateRentReceiptUseCase } from "../../../useCases/CreateRentReceiptUseCase"
+import { CreateRentReceiptUseCase } from "@/modules/rent/useCases/CreateRentReceiptUseCase"
 
 import { container } from "tsyringe"
 

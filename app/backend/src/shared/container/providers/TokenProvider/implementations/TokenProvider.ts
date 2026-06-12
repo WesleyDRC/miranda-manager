@@ -1,4 +1,4 @@
-import { ITokenProvider } from "../models/ITokenProvider";
+import { ITokenProvider } from "@/shared/container/providers/TokenProvider/models/ITokenProvider";
 import { sign } from "jsonwebtoken"
 
 export class JwTProvider implements ITokenProvider {

@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
-import { CreateCategoryController } from "../controller/CreateCategoryController";
-import { GetCategoryController } from "../controller/GetCategoryController";
-import { GetCategoryByIdController } from "../controller/GetCategoryByIdController";
+import { CreateCategoryController } from "@/modules/category/infra/http/controller/CreateCategoryController";
+import { GetCategoryController } from "@/modules/category/infra/http/controller/GetCategoryController";
+import { GetCategoryByIdController } from "@/modules/category/infra/http/controller/GetCategoryByIdController";
 
 const categoryRoutes = Router()
 

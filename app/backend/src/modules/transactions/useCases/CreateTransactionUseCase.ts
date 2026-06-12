@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
-import { ICreateTransactionDTO } from "../dtos/ICreateTransactionDTO";
-import { ITransaction } from "../entities/ITransaction";
+import { IUseCase } from "@/modules/transactions/useCases/ports/IUseCase";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { ICreateTransactionDTO } from "@/modules/transactions/dtos/ICreateTransactionDTO";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
 
-import { IRecurrenceRuleRepository } from "../repositories/IRecurrenceRuleRepository";
-import { GenerateTransactionsFromRuleUseCase } from "./GenerateTransactionsFromRuleUseCase";
+import { IRecurrenceRuleRepository } from "@/modules/transactions/repositories/IRecurrenceRuleRepository";
+import { GenerateTransactionsFromRuleUseCase } from "@/modules/transactions/useCases/GenerateTransactionsFromRuleUseCase";
 import { container } from "tsyringe";
 
 @injectable()

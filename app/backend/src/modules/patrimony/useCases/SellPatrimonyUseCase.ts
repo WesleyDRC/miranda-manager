@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IPatrimonyRepository } from "../repositories/IPatrimonyRepository";
-import { ITransactionRepository } from "../../transactions/repositories/ITransactionRepository";
+import { IUseCase } from "@/modules/patrimony/useCases/ports/IUseCase";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
 
 @injectable()
 export class SellPatrimonyUseCase implements IUseCase {

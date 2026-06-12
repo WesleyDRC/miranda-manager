@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICategory } from "../entities/ICategory";
-import { IUseCase } from "./ports/IUseCase";
-import { ICategoryRepository } from "../repositories/ICategoryRepository";
-import { AppError } from "../../../shared/errors/AppError";
+import { ICategory } from "@/modules/category/entities/ICategory";
+import { IUseCase } from "@/modules/category/useCases/ports/IUseCase";
+import { ICategoryRepository } from "@/modules/category/repositories/ICategoryRepository";
+import { AppError } from "@/shared/errors/AppError";
 
-import { categoryConstants } from "../contants/categoryContants";
+import { categoryConstants } from "@/modules/category/contants/categoryContants";
 
 @injectable()
 export class GetCategoryByIdUseCase implements IUseCase {

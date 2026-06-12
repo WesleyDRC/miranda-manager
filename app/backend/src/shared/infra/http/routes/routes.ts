@@ -1,14 +1,14 @@
 import { Router } from "express"
 
-import authRoutes from "../../../../modules/auth/infra/http/routes/auth.routes"
-import categoryRoutes from "../../../../modules/category/infra/http/routes/category.routes"
-import financeRoutes from "../../../../modules/finances/infra/http/routes/finance.routes"
-import rentRoutes from "../../../../modules/rent/infra/http/routes/rent.routes"
-import walletRoutes from "../../../../modules/wallets/infra/http/routes/wallet.routes"
-import patrimonyRoutes from "../../../../modules/patrimony/infra/http/routes/patrimony.routes"
-import transactionRoutes from "../../../../modules/transactions/infra/http/routes/transaction.routes"
-import forecastRoutes from "../../../../modules/forecast/infra/http/routes/forecast.routes"
-import uploadRoutes from "./upload.routes"
+import authRoutes from "@/modules/auth/infra/http/routes/auth.routes"
+import categoryRoutes from "@/modules/category/infra/http/routes/category.routes"
+import financeRoutes from "@/modules/finances/infra/http/routes/finance.routes"
+import rentRoutes from "@/modules/rent/infra/http/routes/rent.routes"
+import walletRoutes from "@/modules/wallets/infra/http/routes/wallet.routes"
+import patrimonyRoutes from "@/modules/patrimony/infra/http/routes/patrimony.routes"
+import transactionRoutes from "@/modules/transactions/infra/http/routes/transaction.routes"
+import forecastRoutes from "@/modules/forecast/infra/http/routes/forecast.routes"
+import uploadRoutes from "@/shared/infra/http/routes/upload.routes"
 
 const routes = Router()
 

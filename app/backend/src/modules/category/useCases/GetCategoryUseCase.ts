@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { ICategoryRepository } from "../repositories/ICategoryRepository";
+import { IUseCase } from "@/modules/category/useCases/ports/IUseCase";
+import { ICategoryRepository } from "@/modules/category/repositories/ICategoryRepository";
 
 
 @injectable()

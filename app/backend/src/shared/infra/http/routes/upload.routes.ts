@@ -1,10 +1,10 @@
 import { Router } from "express";
 import multer from "multer";
 
-import uploadConfig from "../../../../config/upload";
-import { UploadController } from "../controllers/UploadController";
+import uploadConfig from "@/config/upload";
+import { UploadController } from "@/shared/infra/http/controllers/UploadController";
 
-import ensureAuthenticated from "../../../../modules/auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
 const uploadRoutes = Router();
 const upload = multer(uploadConfig);

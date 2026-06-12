@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
-import { CreatePatrimonyController } from "../controller/CreatePatrimonyController";
-import { ListPatrimonyController } from "../controller/ListPatrimonyController";
-import { SellPatrimonyController } from "../controller/SellPatrimonyController";
+import { CreatePatrimonyController } from "@/modules/patrimony/infra/http/controller/CreatePatrimonyController";
+import { ListPatrimonyController } from "@/modules/patrimony/infra/http/controller/ListPatrimonyController";
+import { SellPatrimonyController } from "@/modules/patrimony/infra/http/controller/SellPatrimonyController";
 
-import { GetPatrimonyByIdController } from "../controller/GetPatrimonyByIdController";
-import { UpdatePatrimonyController } from "../controller/UpdatePatrimonyController";
+import { GetPatrimonyByIdController } from "@/modules/patrimony/infra/http/controller/GetPatrimonyByIdController";
+import { UpdatePatrimonyController } from "@/modules/patrimony/infra/http/controller/UpdatePatrimonyController";
 
 const patrimonyRoutes = Router();
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateTransactionUseCase } from "../../../useCases/CreateTransactionUseCase";
+import { CreateTransactionUseCase } from "@/modules/transactions/useCases/CreateTransactionUseCase";
 
 export class CreateTransactionController {
   public async handle(request: Request, response: Response) {

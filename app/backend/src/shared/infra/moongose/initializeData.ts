@@ -1,4 +1,4 @@
-import { InitializeCategoriesUseCase } from "../../../modules/category/useCases/InitializeCategoriesUseCase";
+import { InitializeCategoriesUseCase } from "@/modules/category/useCases/InitializeCategoriesUseCase";
 
 export const initializeData = async () => {
   const initializeCategoriesUseCase = new InitializeCategoriesUseCase();

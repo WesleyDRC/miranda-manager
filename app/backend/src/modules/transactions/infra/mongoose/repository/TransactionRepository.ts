@@ -1,8 +1,8 @@
-import { ICreateTransactionDTO } from "../../../dtos/ICreateTransactionDTO";
-import { ITransactionRepository } from "../../../repositories/ITransactionRepository";
-import { Transaction } from "../entities/Transaction";
-import { ITransaction } from "../../../entities/ITransaction";
-import { AppError } from "../../../../../shared/errors/AppError";
+import { ICreateTransactionDTO } from "@/modules/transactions/dtos/ICreateTransactionDTO";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { Transaction } from "@/modules/transactions/infra/mongoose/entities/Transaction";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
+import { AppError } from "@/shared/errors/AppError";
 import mongoose from "mongoose";
 
 export class TransactionRepository implements ITransactionRepository {

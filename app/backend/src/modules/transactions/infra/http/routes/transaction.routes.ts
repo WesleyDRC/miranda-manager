@@ -1,17 +1,17 @@
 import { Router } from "express";
 
-import ensureAuthenticated from "../../../../auth/infra/http/middlewares/ensureAuthenticated";
+import ensureAuthenticated from "@/modules/auth/infra/http/middlewares/ensureAuthenticated";
 
-import { CreateTransactionController } from "../controller/CreateTransactionController";
-import { ListTransactionsController } from "../controller/ListTransactionsController";
-import { MarkTransactionAsPaidController } from "../controller/MarkTransactionAsPaidController";
+import { CreateTransactionController } from "@/modules/transactions/infra/http/controller/CreateTransactionController";
+import { ListTransactionsController } from "@/modules/transactions/infra/http/controller/ListTransactionsController";
+import { MarkTransactionAsPaidController } from "@/modules/transactions/infra/http/controller/MarkTransactionAsPaidController";
 
-import { ListTransactionsByPatrimonyController } from "../controller/ListTransactionsByPatrimonyController";
-import { UpdateTransactionController } from "../controller/UpdateTransactionController";
-import { DeleteTransactionController } from "../controller/DeleteTransactionController";
+import { ListTransactionsByPatrimonyController } from "@/modules/transactions/infra/http/controller/ListTransactionsByPatrimonyController";
+import { UpdateTransactionController } from "@/modules/transactions/infra/http/controller/UpdateTransactionController";
+import { DeleteTransactionController } from "@/modules/transactions/infra/http/controller/DeleteTransactionController";
 
 import { z } from "zod";
-import { validateRequest } from "../../../../../shared/infra/http/middlewares/validateRequest";
+import { validateRequest } from "@/shared/infra/http/middlewares/validateRequest";
 
 const transactionRoutes = Router();
 

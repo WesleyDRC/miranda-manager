@@ -1,5 +1,5 @@
-import { IStoreCategoryDTO } from "../dtos/IStoreCategoryDTO";
-import { ICategory } from "../entities/ICategory";
+import { IStoreCategoryDTO } from "@/modules/category/dtos/IStoreCategoryDTO";
+import { ICategory } from "@/modules/category/entities/ICategory";
 
 export interface ICategoryRepository {
 	create(category: IStoreCategoryDTO): Promise<ICategory>

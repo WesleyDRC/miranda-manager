@@ -1,8 +1,8 @@
-import { ICreateWalletDTO } from "../../../dtos/ICreateWalletDTO";
-import { IWalletRepository } from "../../../repositories/IWalletRepository";
-import { Wallet } from "../entities/Wallet";
-import { IWallet } from "../../../entities/IWallet";
-import { AppError } from "../../../../../shared/errors/AppError";
+import { ICreateWalletDTO } from "@/modules/wallets/dtos/ICreateWalletDTO";
+import { IWalletRepository } from "@/modules/wallets/repositories/IWalletRepository";
+import { Wallet } from "@/modules/wallets/infra/mongoose/entities/Wallet";
+import { IWallet } from "@/modules/wallets/entities/IWallet";
+import { AppError } from "@/shared/errors/AppError";
 
 export class WalletRepository implements IWalletRepository {
   async create({ name, balance, userId }: ICreateWalletDTO): Promise<IWallet> {
@@ -88,5 +88,31 @@ export class WalletRepository implements IWalletRepository {
       balance: wallet.balance,
       userId: wallet.userId,
     };
+  }
+
+  async update(id: string, data: { name?: string, balance?: number }): Promise<IWallet> {
+    const wallet = await Wallet.findOneAndUpdate(
+      { _id: id },
+      { $set: data },
+      { new: true }
+    );
+
+    if (!wallet) {
+      throw new AppError("Wallet not found", 404);
+    }
+
+    return {
+      id: wallet._id,
+      name: wallet.name,
+      balance: wallet.balance,
+      userId: wallet.userId,
+    };
+  }
+
+  async delete(id: string): Promise<void> {
+    const wallet = await Wallet.findOneAndDelete({ _id: id });
+    if (!wallet) {
+      throw new AppError("Wallet not found", 404);
+    }
   }
 }

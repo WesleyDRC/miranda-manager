@@ -146,6 +146,14 @@ class AxiosRepository {
     return await this.#axiosClient.post("/wallet", { name, balance });
   }
 
+  async updateWallet(id, { name, balance }) {
+    return await this.#axiosClient.patch(`/wallet/${id}`, { name, balance });
+  }
+
+  async deleteWallet(id) {
+    return await this.#axiosClient.delete(`/wallet/${id}`);
+  }
+
   // Patrimony
   async getPatrimonies() {
     return await this.#axiosClient.get("/patrimony");

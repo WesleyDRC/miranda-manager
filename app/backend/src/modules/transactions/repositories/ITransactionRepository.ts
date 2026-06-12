@@ -1,5 +1,5 @@
-import { ICreateTransactionDTO } from "../dtos/ICreateTransactionDTO";
-import { ITransaction } from "../entities/ITransaction";
+import { ICreateTransactionDTO } from "@/modules/transactions/dtos/ICreateTransactionDTO";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
 
 export interface ITransactionRepository {
   create(data: ICreateTransactionDTO): Promise<ITransaction>;

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { AppError } from "../../../shared/errors/AppError";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
-import { rentConstants } from "../contants/rentConstants";
+import { AppError } from "@/shared/errors/AppError";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
+import { rentConstants } from "@/modules/rent/contants/rentConstants";
 
 @injectable()
 export class CreateRentPaymentUseCase implements IUseCase {

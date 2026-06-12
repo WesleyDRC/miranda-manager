@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IWalletRepository } from "../../wallets/repositories/IWalletRepository";
-import { ITransactionRepository } from "../../transactions/repositories/ITransactionRepository";
-import { IPatrimonyRepository } from "../../patrimony/repositories/IPatrimonyRepository";
-import { IRentRepository } from "../../rent/repositories/IRentRepository";
-import { ITransaction } from "../../transactions/entities/ITransaction";
-import { IPatrimony } from "../../patrimony/entities/IPatrimony";
+import { IWalletRepository } from "@/modules/wallets/repositories/IWalletRepository";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
 
 interface IForecastResult {
   currentBalance: number;

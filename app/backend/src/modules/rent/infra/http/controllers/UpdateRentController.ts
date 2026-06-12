@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { UpdateRentUseCase } from "../../../useCases/UpdateRentUseCase";
+import { UpdateRentUseCase } from "@/modules/rent/useCases/UpdateRentUseCase";
 
 export class UpdateRentController {
   public async handle(request: Request, response: Response): Promise<Response> {

@@ -1,7 +1,7 @@
-import { ICreateRecurrenceRuleDTO } from "../../../dtos/ICreateRecurrenceRuleDTO";
-import { IRecurrenceRuleRepository } from "../../../repositories/IRecurrenceRuleRepository";
-import { RecurrenceRule } from "../entities/RecurrenceRule";
-import { IRecurrenceRule } from "../../../entities/IRecurrenceRule";
+import { ICreateRecurrenceRuleDTO } from "@/modules/transactions/dtos/ICreateRecurrenceRuleDTO";
+import { IRecurrenceRuleRepository } from "@/modules/transactions/repositories/IRecurrenceRuleRepository";
+import { RecurrenceRule } from "@/modules/transactions/infra/mongoose/entities/RecurrenceRule";
+import { IRecurrenceRule } from "@/modules/transactions/entities/IRecurrenceRule";
 
 export class RecurrenceRuleRepository implements IRecurrenceRuleRepository {
   async create(data: ICreateRecurrenceRuleDTO): Promise<IRecurrenceRule> {

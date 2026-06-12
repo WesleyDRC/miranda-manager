@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { ForecastService } from "../../../services/ForecastService";
+import { ForecastService } from "@/modules/forecast/services/ForecastService";
 
 export class GetForecastController {
   public async handle(request: Request, response: Response) {

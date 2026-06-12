@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateWalletUseCase } from "../../../useCases/CreateWalletUseCase";
+import { CreateWalletUseCase } from "@/modules/wallets/useCases/CreateWalletUseCase";
 
 export class CreateWalletController {
   public async handle(request: Request, response: Response) {

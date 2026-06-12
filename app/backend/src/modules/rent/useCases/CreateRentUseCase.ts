@@ -1,7 +1,7 @@
-import { IStoreRentDTO } from "../dtos/IStoreRentDTO";
-import { IRent } from "../entities/IRent";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IUseCase } from "./ports/IUseCase";
+import { IStoreRentDTO } from "@/modules/rent/dtos/IStoreRentDTO";
+import { IRent } from "@/modules/rent/entities/IRent";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
 
 import { inject, injectable } from "tsyringe";
 

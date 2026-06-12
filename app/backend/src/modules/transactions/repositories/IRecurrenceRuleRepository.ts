@@ -1,5 +1,5 @@
-import { ICreateRecurrenceRuleDTO } from "../dtos/ICreateRecurrenceRuleDTO";
-import { IRecurrenceRule } from "../entities/IRecurrenceRule";
+import { ICreateRecurrenceRuleDTO } from "@/modules/transactions/dtos/ICreateRecurrenceRuleDTO";
+import { IRecurrenceRule } from "@/modules/transactions/entities/IRecurrenceRule";
 
 export interface IRecurrenceRuleRepository {
   create(data: ICreateRecurrenceRuleDTO): Promise<IRecurrenceRule>;

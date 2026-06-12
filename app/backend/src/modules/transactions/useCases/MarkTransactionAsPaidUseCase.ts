@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
-import { IWalletRepository } from "../../wallets/repositories/IWalletRepository";
-import { ITransaction } from "../entities/ITransaction";
-import { AppError } from "../../../shared/errors/AppError";
-import { LedgerEntry } from "../../wallets/infra/mongoose/entities/LedgerEntry";
+import { IUseCase } from "@/modules/transactions/useCases/ports/IUseCase";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { IWalletRepository } from "@/modules/wallets/repositories/IWalletRepository";
+import { ITransaction } from "@/modules/transactions/entities/ITransaction";
+import { AppError } from "@/shared/errors/AppError";
+import { LedgerEntry } from "@/modules/wallets/infra/mongoose/entities/LedgerEntry";
 
 interface IRequest {
   id: string;

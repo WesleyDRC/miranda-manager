@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { UpdatePatrimonyUseCase } from "../../../useCases/UpdatePatrimonyUseCase";
+import { UpdatePatrimonyUseCase } from "@/modules/patrimony/useCases/UpdatePatrimonyUseCase";
 
 export class UpdatePatrimonyController {
   async handle(request: Request, response: Response): Promise<Response> {

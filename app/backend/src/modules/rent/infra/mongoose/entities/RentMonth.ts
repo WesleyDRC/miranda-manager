@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { Rent } from "./Rent";
-import { RentExpense } from "./RentExpense";
+import { Rent } from "@/modules/rent/infra/mongoose/entities/Rent";
+import { RentExpense } from "@/modules/rent/infra/mongoose/entities/RentExpense";
 
 const rentMonthSchema = new mongoose.Schema({
   _id: {

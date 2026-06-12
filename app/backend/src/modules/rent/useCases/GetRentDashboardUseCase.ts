@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IRentRepository } from "../repositories/IRentRepository";
-import { IRent } from "../entities/IRent";
-import { IRentMonth } from "../entities/IRentMonth";
-import { formatDateToDDMMYY } from "../../../shared/utils/formatDateToDDMMYY";
+import { IUseCase } from "@/modules/rent/useCases/ports/IUseCase";
+import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
+import { IRent } from "@/modules/rent/entities/IRent";
+import { IRentMonth } from "@/modules/rent/entities/IRentMonth";
+import { formatDateToDDMMYY } from "@/shared/utils/formatDateToDDMMYY";
 
 const MONTH_NAMES = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",

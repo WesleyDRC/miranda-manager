@@ -1,6 +1,6 @@
 import { container } from "tsyringe";
 
-import { BCryptHashProvider } from "./implementations/BCryptHashProvider";
-import { IHashProvider } from "./models/IHashProvider";
+import { BCryptHashProvider } from "@/shared/container/providers/HashProvider/implementations/BCryptHashProvider";
+import { IHashProvider } from "@/shared/container/providers/HashProvider/models/IHashProvider";
 
 container.registerSingleton<IHashProvider>("HashProvider", BCryptHashProvider);

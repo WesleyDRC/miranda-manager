@@ -1,5 +1,5 @@
-import { IStoreUserDTO }  from "../dtos/IStoreUserDTO"
-import { IUser } from "../entities/IUser"
+import { IStoreUserDTO }  from "@/modules/auth/dtos/IStoreUserDTO"
+import { IUser } from "@/modules/auth/entities/IUser"
 
 export interface IAuthRepository {
 	create(user: IStoreUserDTO): Promise<string>

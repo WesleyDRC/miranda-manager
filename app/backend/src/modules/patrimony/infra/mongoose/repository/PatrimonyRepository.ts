@@ -1,8 +1,8 @@
-import { ICreatePatrimonyDTO } from "../../../dtos/ICreatePatrimonyDTO";
-import { IPatrimonyRepository } from "../../../repositories/IPatrimonyRepository";
-import { Patrimony } from "../entities/Patrimony";
-import { IPatrimony } from "../../../entities/IPatrimony";
-import { AppError } from "../../../../../shared/errors/AppError";
+import { ICreatePatrimonyDTO } from "@/modules/patrimony/dtos/ICreatePatrimonyDTO";
+import { IPatrimonyRepository } from "@/modules/patrimony/repositories/IPatrimonyRepository";
+import { Patrimony } from "@/modules/patrimony/infra/mongoose/entities/Patrimony";
+import { IPatrimony } from "@/modules/patrimony/entities/IPatrimony";
+import { AppError } from "@/shared/errors/AppError";
 
 export class PatrimonyRepository implements IPatrimonyRepository {
   async create(data: ICreatePatrimonyDTO): Promise<IPatrimony> {

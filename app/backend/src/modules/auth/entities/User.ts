@@ -1,6 +1,6 @@
-import { AppError } from "../../../shared/errors/AppError";
+import { AppError } from "@/shared/errors/AppError";
 
-import mustAttentionIn from "./userValidations";
+import mustAttentionIn from "@/modules/auth/entities/userValidations";
 
 export class User {
   private readonly _email: string;

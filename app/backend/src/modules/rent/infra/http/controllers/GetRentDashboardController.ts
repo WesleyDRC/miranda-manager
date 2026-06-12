@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { GetRentDashboardUseCase } from "../../../useCases/GetRentDashboardUseCase";
+import { GetRentDashboardUseCase } from "@/modules/rent/useCases/GetRentDashboardUseCase";
 
 export class GetRentDashboardController {
   public async handle(request: Request, response: Response): Promise<Response> {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreatePatrimonyUseCase } from "../../../useCases/CreatePatrimonyUseCase";
+import { CreatePatrimonyUseCase } from "@/modules/patrimony/useCases/CreatePatrimonyUseCase";
 
 export class CreatePatrimonyController {
   public async handle(request: Request, response: Response) {

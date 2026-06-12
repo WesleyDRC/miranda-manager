@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
-import { IRecurrenceRuleRepository } from "../repositories/IRecurrenceRuleRepository";
+import { IUseCase } from "@/modules/transactions/useCases/ports/IUseCase";
+import { ITransactionRepository } from "@/modules/transactions/repositories/ITransactionRepository";
+import { IRecurrenceRuleRepository } from "@/modules/transactions/repositories/IRecurrenceRuleRepository";
 
 @injectable()
 export class GenerateTransactionsFromRuleUseCase implements IUseCase {

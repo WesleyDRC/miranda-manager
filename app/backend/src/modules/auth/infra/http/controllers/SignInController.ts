@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { SignInUseCase } from "../../../useCases/SignInUseCase";
+import { SignInUseCase } from "@/modules/auth/useCases/SignInUseCase";
 import { container } from "tsyringe";
 
 export class SignInController {

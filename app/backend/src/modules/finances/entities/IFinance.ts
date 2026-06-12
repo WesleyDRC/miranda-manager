@@ -1,4 +1,4 @@
-import { IRent } from "../../rent/entities/IRent"
+import { IRent } from "@/modules/rent/entities/IRent"
 
 export interface IFinance {
 	id: string,

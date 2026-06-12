@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IWalletRepository } from "../repositories/IWalletRepository";
-import { IWallet } from "../entities/IWallet";
+import { IUseCase } from "@/modules/wallets/useCases/ports/IUseCase";
+import { IWalletRepository } from "@/modules/wallets/repositories/IWalletRepository";
+import { IWallet } from "@/modules/wallets/entities/IWallet";
 
 @injectable()
 export class ListWalletsUseCase implements IUseCase {

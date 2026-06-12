@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
-import { IUseCase } from "./ports/IUseCase";
-import { IWalletRepository } from "../repositories/IWalletRepository";
-import { ICreateWalletDTO } from "../dtos/ICreateWalletDTO";
-import { IWallet } from "../entities/IWallet";
+import { IUseCase } from "@/modules/wallets/useCases/ports/IUseCase";
+import { IWalletRepository } from "@/modules/wallets/repositories/IWalletRepository";
+import { ICreateWalletDTO } from "@/modules/wallets/dtos/ICreateWalletDTO";
+import { IWallet } from "@/modules/wallets/entities/IWallet";
 
 @injectable()
 export class CreateWalletUseCase implements IUseCase {

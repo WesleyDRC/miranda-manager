@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { DeleteTransactionService } from "../../../services/DeleteTransactionService";
+import { DeleteTransactionService } from "@/modules/transactions/services/DeleteTransactionService";
 
 export class DeleteTransactionController {
   async handle(request: Request, response: Response): Promise<Response> {
