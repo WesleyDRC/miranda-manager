@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { inject, injectable } from "tsyringe";
 
 import { IUseCase } from "./ports/IUseCase";
@@ -5,6 +6,7 @@ import { ITransactionRepository } from "../repositories/ITransactionRepository";
 import { IWalletRepository } from "../../wallets/repositories/IWalletRepository";
 import { ITransaction } from "../entities/ITransaction";
 import { AppError } from "../../../shared/errors/AppError";
+import { LedgerEntry } from "../../wallets/infra/mongoose/entities/LedgerEntry";
 
 interface IRequest {
   id: string;
@@ -12,7 +14,7 @@ interface IRequest {
 }
 
 @injectable()
-export class MarkTransactionAsPaidUseCase implements IUseCase {
+export class MarkTransactionAsPaidUseCase implements IUseCase<IRequest, ITransaction> {
   constructor(
     @inject("TransactionRepository")
     private transactionRepository: ITransactionRepository,
@@ -31,12 +33,33 @@ export class MarkTransactionAsPaidUseCase implements IUseCase {
       throw new AppError("Transaction is already paid", 400);
     }
 
-    // O repositório markAsPaid agora executa a Sessão Mongoose (ACID),
-    // deduzindo da wallet e criando o LedgerEntry atomicamente.
+    const session = await mongoose.startSession();
+    let updatedTx: ITransaction;
 
-    // Mark as paid
-    const updatedTx = await this.transactionRepository.markAsPaid(id, walletId);
+    try {
+      await session.withTransaction(async () => {
+        // Mark as paid
+        updatedTx = await this.transactionRepository.markAsPaid(id, walletId, session);
 
-    return updatedTx;
+        // Update Wallet Balance
+        const amountToApply = tx.type === "INCOME" ? tx.amount : -tx.amount;
+        await this.walletRepository.incrementBalance(walletId, amountToApply, session);
+
+        // Create Ledger Entry
+        await LedgerEntry.create([{
+          walletId: walletId,
+          transactionId: tx.id,
+          type: tx.type === "INCOME" ? "CREDIT" : "DEBIT",
+          amount: tx.amount,
+          description: `Pagamento da transação: ${tx.description}`,
+        }], { session });
+      });
+    } catch (err) {
+      throw err;
+    } finally {
+      await session.endSession();
+    }
+
+    return updatedTx!;
   }
 }

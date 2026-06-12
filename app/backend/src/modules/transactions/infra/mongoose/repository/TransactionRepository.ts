@@ -4,10 +4,12 @@ import { Transaction } from "../entities/Transaction";
 import { ITransaction } from "../../../entities/ITransaction";
 import { AppError } from "../../../../../shared/errors/AppError";
 import mongoose from "mongoose";
-import { Wallet } from "../../../../../modules/wallets/infra/mongoose/entities/Wallet";
-import { LedgerEntry } from "../../../../../modules/wallets/infra/mongoose/entities/LedgerEntry";
 
 export class TransactionRepository implements ITransactionRepository {
+  async createMany(data: ICreateTransactionDTO[]): Promise<void> {
+    await Transaction.insertMany(data);
+  }
+
   async create(data: ICreateTransactionDTO): Promise<ITransaction> {
     const createdTx = await Transaction.create(data);
 
@@ -34,7 +36,7 @@ export class TransactionRepository implements ITransactionRepository {
     
     // Fetch rules to get endDate
     const ruleIds = [...new Set(txsFound.map(t => t.recurrenceRuleId).filter(id => id))];
-    const { RecurrenceRule } = await import("../entities/RecurrenceRule");
+    const RecurrenceRule = mongoose.model("RecurrenceRule");
     const rules = await RecurrenceRule.find({ _id: { $in: ruleIds } });
     const ruleMap = new Map(rules.map(r => [r.id, r]));
 
@@ -136,60 +138,28 @@ export class TransactionRepository implements ITransactionRepository {
     };
   }
 
-  async markAsPaid(id: string, walletId: string): Promise<ITransaction> {
-    const session = await mongoose.startSession();
-    let updatedTxData: any;
+  async markAsPaid(id: string, walletId: string, session?: any): Promise<ITransaction> {
+    const tx = await Transaction.findOne({ _id: id }).session(session);
+    if (!tx) throw new AppError("Transaction not found", 404);
+    if (tx.isPaid) throw new AppError("Transaction already paid", 400);
 
-    try {
-      await session.withTransaction(async () => {
-        // 1. Fetch and lock Transaction (na verdade, withTransaction já garante atomicidade, mas vamos buscar para ler valores)
-        const tx = await Transaction.findOne({ _id: id }).session(session);
-        if (!tx) throw new AppError("Transaction not found", 404);
-        if (tx.isPaid) throw new AppError("Transaction already paid", 400);
-
-        // 2. Update Transaction
-        tx.isPaid = true;
-        tx.walletId = walletId;
-        await tx.save({ session });
-        updatedTxData = tx;
-
-        // 3. Fetch Wallet
-        const wallet = await Wallet.findOne({ _id: walletId }).session(session);
-        if (!wallet) throw new AppError("Wallet not found", 404);
-
-        // 4. Calculate effect on balance
-        const amountToApply = tx.type === "INCOME" ? tx.amount : -tx.amount;
-        wallet.balance += amountToApply;
-        await wallet.save({ session });
-
-        // 5. Create Ledger Entry
-        await LedgerEntry.create([{
-          walletId: wallet._id,
-          transactionId: tx._id,
-          type: tx.type === "INCOME" ? "CREDIT" : "DEBIT",
-          amount: tx.amount,
-          description: `Pagamento da transação: ${tx.description}`,
-        }], { session });
-      });
-    } catch (err) {
-      throw err;
-    } finally {
-      session.endSession();
-    }
+    tx.isPaid = true;
+    tx.walletId = walletId;
+    await tx.save({ session });
 
     return {
-      id: updatedTxData._id,
-      type: updatedTxData.type as "INCOME" | "EXPENSE",
-      amount: updatedTxData.amount,
-      dueDate: updatedTxData.dueDate,
-      isPaid: updatedTxData.isPaid,
-      isRecurring: updatedTxData.isRecurring,
-      source: updatedTxData.source as "MANUAL" | "RENT" | "FINANCING",
-      description: updatedTxData.description,
-      walletId: updatedTxData.walletId,
-      patrimonyId: updatedTxData.patrimonyId,
-      recurrenceRuleId: updatedTxData.recurrenceRuleId,
-      userId: updatedTxData.userId,
+      id: tx._id,
+      type: tx.type as "INCOME" | "EXPENSE",
+      amount: tx.amount,
+      dueDate: tx.dueDate,
+      isPaid: tx.isPaid,
+      isRecurring: tx.isRecurring,
+      source: tx.source as "MANUAL" | "RENT" | "FINANCING",
+      description: tx.description,
+      walletId: tx.walletId,
+      patrimonyId: tx.patrimonyId,
+      recurrenceRuleId: tx.recurrenceRuleId,
+      userId: tx.userId,
     };
   }
 

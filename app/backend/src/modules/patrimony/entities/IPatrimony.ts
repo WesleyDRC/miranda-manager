@@ -24,4 +24,6 @@ export interface IPatrimony {
     imageUrl?: string;
   };
   userId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

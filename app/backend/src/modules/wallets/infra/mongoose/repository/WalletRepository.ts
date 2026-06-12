@@ -70,4 +70,23 @@ export class WalletRepository implements IWalletRepository {
       userId: wallet.userId,
     };
   }
+
+  async incrementBalance(id: string, amount: number, session?: any): Promise<IWallet> {
+    const wallet = await Wallet.findOneAndUpdate(
+      { _id: id },
+      { $inc: { balance: amount } },
+      { new: true, session }
+    );
+
+    if (!wallet) {
+      throw new AppError("Wallet not found", 404);
+    }
+
+    return {
+      id: wallet._id,
+      name: wallet.name,
+      balance: wallet.balance,
+      userId: wallet.userId,
+    };
+  }
 }

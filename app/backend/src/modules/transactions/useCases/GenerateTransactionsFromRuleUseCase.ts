@@ -30,6 +30,7 @@ export class GenerateTransactionsFromRuleUseCase implements IUseCase {
 
     const startMonth = rule.startDate.getMonth();
     const startYear = rule.startDate.getFullYear();
+    const transactionsData = [];
 
     for (let i = 0; i < monthsToProject; i++) {
       const projectionDate = new Date(startYear, startMonth + i, rule.dayOfMonth);
@@ -43,7 +44,7 @@ export class GenerateTransactionsFromRuleUseCase implements IUseCase {
         }
       }
 
-      await this.transactionRepository.create({
+      transactionsData.push({
         type: rule.type,
         amount: rule.amount,
         dueDate: projectionDate,
@@ -54,6 +55,10 @@ export class GenerateTransactionsFromRuleUseCase implements IUseCase {
         recurrenceRuleId: rule.id,
         userId: rule.userId,
       });
+    }
+
+    if (transactionsData.length > 0) {
+      await this.transactionRepository.createMany(transactionsData);
     }
   }
 }

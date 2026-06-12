@@ -18,6 +18,8 @@ export class PatrimonyRepository implements IPatrimonyRepository {
       vehicleDetails: createdPatrimony.vehicleDetails,
       realEstateDetails: createdPatrimony.realEstateDetails,
       userId: createdPatrimony.userId,
+      createdAt: (createdPatrimony as any).createdAt,
+      updatedAt: (createdPatrimony as any).updatedAt,
     };
 
     return Promise.resolve(patrimony);
@@ -39,6 +41,8 @@ export class PatrimonyRepository implements IPatrimonyRepository {
         vehicleDetails: patrimoniesFound[i].vehicleDetails,
         realEstateDetails: patrimoniesFound[i].realEstateDetails,
         userId: patrimoniesFound[i].userId,
+        createdAt: (patrimoniesFound[i] as any).createdAt,
+        updatedAt: (patrimoniesFound[i] as any).updatedAt,
       };
 
       patrimonies.push(patrimony);
@@ -64,6 +68,8 @@ export class PatrimonyRepository implements IPatrimonyRepository {
       vehicleDetails: patrimonyFound.vehicleDetails,
       realEstateDetails: patrimonyFound.realEstateDetails,
       userId: patrimonyFound.userId,
+      createdAt: (patrimonyFound as any).createdAt,
+      updatedAt: (patrimonyFound as any).updatedAt,
     };
   }
 
@@ -92,6 +98,8 @@ export class PatrimonyRepository implements IPatrimonyRepository {
       vehicleDetails: updatedPatrimony.vehicleDetails,
       realEstateDetails: updatedPatrimony.realEstateDetails,
       userId: updatedPatrimony.userId,
+      createdAt: (updatedPatrimony as any).createdAt,
+      updatedAt: (updatedPatrimony as any).updatedAt,
     };
   }
 }

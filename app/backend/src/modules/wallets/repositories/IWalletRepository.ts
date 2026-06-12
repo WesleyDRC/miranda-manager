@@ -6,4 +6,5 @@ export interface IWalletRepository {
   findByUserId(userId: string): Promise<IWallet[]>;
   findById(id: string): Promise<IWallet | null>;
   updateBalance(id: string, balance: number): Promise<IWallet>;
+  incrementBalance(id: string, amount: number, session?: any): Promise<IWallet>;
 }

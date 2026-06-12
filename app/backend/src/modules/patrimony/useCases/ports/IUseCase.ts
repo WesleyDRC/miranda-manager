@@ -1,3 +1,3 @@
-export interface IUseCase {
-  execute(data?: any): Promise<any>;
+export interface IUseCase<IRequest = any, IResponse = any> {
+  execute(data?: IRequest): Promise<IResponse>;
 }
