@@ -15,7 +15,7 @@ import helpIcon from "../../assets/help.svg";
 import arrowSidebar from "../../assets/arrow-sidebar.svg"
 
 import { ItemList } from "../dashboard/components/ItemList.js";
-import { FaBuilding } from "react-icons/fa";
+import { FaBuilding, FaChartLine, FaWallet, FaHome, FaExchangeAlt } from "react-icons/fa";
 
 import { Link, useLocation} from "react-router-dom";
 import { useState, useEffect } from "react"
@@ -79,6 +79,50 @@ export function Sidebar(props) {
                 props.closeMobileMenu();
               }}
               label="Aluguéis"
+              isExpanded={props.customClass === "stretchedSidebar"}
+            />
+            <ItemList
+              path={"/wallets"}
+              icon={<FaWallet style={{ color: currentPage === "wallets" ? "#5E17EB" : "#5F5F5F", width: "32px", height: "32px" }} />}
+              alt="Ícone representando a página de carteiras."
+              onClick={() => {
+                setCurrentPage("wallets");
+                props.closeMobileMenu();
+              }}
+              label="Carteiras"
+              isExpanded={props.customClass === "stretchedSidebar"}
+            />
+            <ItemList
+              path={"/patrimony"}
+              icon={<FaHome style={{ color: currentPage === "patrimony" ? "#5E17EB" : "#5F5F5F", width: "32px", height: "32px" }} />}
+              alt="Ícone representando a página de patrimônio."
+              onClick={() => {
+                setCurrentPage("patrimony");
+                props.closeMobileMenu();
+              }}
+              label="Patrimônio"
+              isExpanded={props.customClass === "stretchedSidebar"}
+            />
+            <ItemList
+              path={"/transactions"}
+              icon={<FaExchangeAlt style={{ color: currentPage === "transactions" ? "#5E17EB" : "#5F5F5F", width: "32px", height: "32px" }} />}
+              alt="Ícone representando a página de receitas e despesas."
+              onClick={() => {
+                setCurrentPage("transactions");
+                props.closeMobileMenu();
+              }}
+              label="Fluxo de Caixa"
+              isExpanded={props.customClass === "stretchedSidebar"}
+            />
+            <ItemList
+              path={"/forecast"}
+              icon={<FaChartLine style={{ color: currentPage === "forecast" ? "#5E17EB" : "#5F5F5F", width: "32px", height: "32px" }} />}
+              alt="Ícone representando a página de previsão financeira."
+              onClick={() => {
+                setCurrentPage("forecast");
+                props.closeMobileMenu();
+              }}
+              label="Projeção"
               isExpanded={props.customClass === "stretchedSidebar"}
             />
             {/* <ItemList

@@ -54,7 +54,7 @@ export function Dashboard() {
     useFinance();
 
   const [monthlyData, setMonthlyData] = useState([]);
-  const [loadingCharts, setLoadingCharts] = useState(true);
+  const [loadingCharts, setLoadingCharts] = useState(false);
 
   useEffect(() => {
     fetchFinances();
@@ -64,8 +64,8 @@ export function Dashboard() {
   useEffect(() => {
     const fetchRentDetails = async () => {
       if (finances.length === 0) return;
-
       setLoadingCharts(true);
+
       try {
         const rentFinances = finances.filter(
           (f) => f.category?.name?.toLowerCase() === "aluguel" && f.rent?.id
@@ -91,13 +91,16 @@ export function Dashboard() {
             }
           } catch (err) {
             /* skip rent if fetch fails */
+            console.log("error")
           }
         }
 
         setMonthlyData(allMonthlyData);
       } catch (err) {
         /* silent */
+        setLoadingCharts(false);
       }
+      console.log("LAODING FALSE")
       setLoadingCharts(false);
     };
 
