@@ -13,7 +13,8 @@ export class RentRepository implements IRentRepository {
 			rents.push({
 				id: rent._id,
 				startRental: rent.startRental,
-				userId: rent.userId
+				userId: rent.userId,
+				fixedExpenses: rent.fixedExpenses
 			})
 		})
 

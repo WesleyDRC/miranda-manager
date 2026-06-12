@@ -20,6 +20,23 @@ export function RentalFinanceForm({ selectedOption }) {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
+  const [fixedExpenses, setFixedExpenses] = useState([]);
+
+  const handleAddExpense = () => {
+    setFixedExpenses([...fixedExpenses, { reason: "", amount: "" }]);
+  };
+
+  const handleRemoveExpense = (index) => {
+    const updated = [...fixedExpenses];
+    updated.splice(index, 1);
+    setFixedExpenses(updated);
+  };
+
+  const handleExpenseChange = (index, field, value) => {
+    const updated = [...fixedExpenses];
+    updated[index][field] = value;
+    setFixedExpenses(updated);
+  };
 
   const financeSchema = Joi.object({
     financeName: Joi.string().min(3).required().messages({
@@ -67,6 +84,10 @@ export function RentalFinanceForm({ selectedOption }) {
       const monthDate = formatDate(data.startRental);
 
 
+      const formattedExpenses = fixedExpenses
+        .filter(exp => exp.reason && exp.amount)
+        .map(exp => ({ reason: exp.reason, amount: parseFloat(exp.amount) }));
+
       const response = await AxiosRepository.createFinance({
         name: data.financeName,
         category: selectedOption,
@@ -75,6 +96,7 @@ export function RentalFinanceForm({ selectedOption }) {
         rentalStreet: data.street,
         rentalStreetNumber: data.number,
         startRental: monthDate,
+        fixedExpenses: formattedExpenses,
       });
 
       navigate("/dashboard");
@@ -151,6 +173,41 @@ export function RentalFinanceForm({ selectedOption }) {
           {...register("tenant")}
         />
         {renderErrorForm("tenant")}
+
+        <div style={{ marginTop: "20px" }}>
+          <h4 style={{ color: "#fff", marginBottom: "10px", fontSize: "14px" }}>Gastos Fixos (Água, Luz, etc.)</h4>
+          {fixedExpenses.map((expense, index) => (
+            <div key={index} style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+              <input
+                style={{ flex: 1, padding: "10px", borderRadius: "5px", border: "none", backgroundColor: "#fff", color: "#000" }}
+                placeholder="Motivo (Ex: Água)"
+                value={expense.reason}
+                onChange={(e) => handleExpenseChange(index, "reason", e.target.value)}
+              />
+              <input
+                style={{ flex: 1, padding: "10px", borderRadius: "5px", border: "none", backgroundColor: "#fff", color: "#000" }}
+                placeholder="Valor (Ex: 100)"
+                type="number"
+                value={expense.amount}
+                onChange={(e) => handleExpenseChange(index, "amount", e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveExpense(index)}
+                style={{ padding: "10px 15px", borderRadius: "5px", border: "none", backgroundColor: "#ff4d4f", color: "#fff", cursor: "pointer", fontWeight: "bold" }}
+              >
+                X
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddExpense}
+            style={{ padding: "10px", borderRadius: "5px", border: "1px dashed #ccc", backgroundColor: "transparent", color: "#ccc", cursor: "pointer", width: "100%", marginBottom: "10px", fontSize: "14px" }}
+          >
+            + Adicionar Gasto Fixo
+          </button>
+        </div>
       </div>
 
       <ButtonNextStep type="submit" text={"CRIAR FINANÇA!"} />

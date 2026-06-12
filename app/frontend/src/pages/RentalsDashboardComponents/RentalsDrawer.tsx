@@ -20,6 +20,8 @@ interface RentalsDrawerProps {
   selectedRent: any;
   observationsText: string;
   setObservationsText: (val: string) => void;
+  fixedExpensesArray: any[];
+  setFixedExpensesArray: (val: any[]) => void;
   savingObservations: boolean;
   onSaveObservations: () => void;
   onOpenEditMonth: (monthObj: any) => void;
@@ -31,6 +33,8 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
   selectedRent,
   observationsText,
   setObservationsText,
+  fixedExpensesArray,
+  setFixedExpensesArray,
   savingObservations,
   onSaveObservations,
   onOpenEditMonth
@@ -144,6 +148,56 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
         )}
       </section>
 
+      {/* Fixed Expenses */}
+      <section className={styles.drawerSection}>
+        <h3><FaDollarSign /> Gastos Fixos</h3>
+        {fixedExpensesArray.map((expense, index) => (
+          <div key={index} style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+            <input
+              style={{ flex: 1, padding: "8px", borderRadius: "5px", border: "1px solid #334155", backgroundColor: "#1E293B", color: "#F8FAFC" }}
+              placeholder="Motivo (Ex: Água)"
+              value={expense.reason}
+              onChange={(e) => {
+                const updated = [...fixedExpensesArray];
+                updated[index].reason = e.target.value;
+                setFixedExpensesArray(updated);
+              }}
+            />
+            <input
+              style={{ flex: 1, padding: "8px", borderRadius: "5px", border: "1px solid #334155", backgroundColor: "#1E293B", color: "#F8FAFC" }}
+              placeholder="Valor"
+              type="number"
+              value={expense.amount}
+              onChange={(e) => {
+                const updated = [...fixedExpensesArray];
+                updated[index].amount = e.target.value;
+                setFixedExpensesArray(updated);
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const updated = [...fixedExpensesArray];
+                updated.splice(index, 1);
+                setFixedExpensesArray(updated);
+              }}
+              style={{ padding: "8px 12px", borderRadius: "5px", border: "none", backgroundColor: "#EF4444", color: "#fff", cursor: "pointer", fontWeight: "bold" }}
+            >
+              X
+            </button>
+          </div>
+        ))}
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+            <button
+              type="button"
+              onClick={() => setFixedExpensesArray([...fixedExpensesArray, { reason: "", amount: "" }])}
+              style={{ padding: "8px 16px", borderRadius: "5px", border: "1px dashed #64748B", backgroundColor: "transparent", color: "#94A3B8", cursor: "pointer", fontSize: "14px" }}
+            >
+              + Adicionar Gasto Fixo
+            </button>
+          </div>
+      </section>
+
       {/* Observations */}
       <section className={styles.drawerSection}>
         <h3><FaRegClipboard /> Observações Gerais</h3>
@@ -154,14 +208,15 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
           value={observationsText}
           onChange={(e) => setObservationsText(e.target.value)}
         />
-        <Button 
-          variant="primary" 
-          onClick={onSaveObservations} 
-          disabled={savingObservations}
-          style={{ width: '100%', marginTop: '12px' }}
-        >
-          {savingObservations ? 'Salvando...' : <><FaSave style={{ marginRight: '8px' }}/> Salvar Observações</>}
-        </Button>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px" }}>
+          <Button 
+            variant="primary" 
+            onClick={onSaveObservations} 
+            disabled={savingObservations}
+          >
+            {savingObservations ? 'Salvando...' : <><FaSave style={{ marginRight: '8px' }}/> Salvar Alterações</>}
+          </Button>
+        </div>
       </section>
     </Drawer>
   );

@@ -22,4 +22,5 @@ export interface IRent {
   totalDebt?: number;
   isDebtFree?: boolean;
   observations?: string;
+  fixedExpenses?: { reason: string; amount: number }[];
 }

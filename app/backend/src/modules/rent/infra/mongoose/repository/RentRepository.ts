@@ -23,6 +23,7 @@ export class RentRepository implements IRentRepository {
       streetNumber: rent.streetNumber,
       startRental: rent.startRental,
       userId: rent.userId,
+      fixedExpenses: rent.fixedExpenses,
     });
 
     const rental = {
@@ -35,6 +36,7 @@ export class RentRepository implements IRentRepository {
       grossIncome: rentalCreated.grossIncome,
       netIncome: rentalCreated.netIncome,
       userId: rentalCreated.userId,
+      fixedExpenses: rentalCreated.fixedExpenses,
     };
 
     return rental;
@@ -79,6 +81,7 @@ export class RentRepository implements IRentRepository {
       grossIncome: rentFound.grossIncome,
       netIncome: rentFound.netIncome,
       userId: rentFound.userId,
+      fixedExpenses: rentFound.fixedExpenses,
     };
 
     return rent;
@@ -337,6 +340,7 @@ export class RentRepository implements IRentRepository {
       netIncome: rentFound.netIncome,
       userId: rentFound.userId,
       observations: rentFound.observations,
+      fixedExpenses: rentFound.fixedExpenses,
     }));
   }
 
@@ -362,6 +366,7 @@ export class RentRepository implements IRentRepository {
       netIncome: updatedRent.netIncome,
       userId: updatedRent.userId,
       observations: updatedRent.observations,
+      fixedExpenses: updatedRent.fixedExpenses,
     };
   }
 

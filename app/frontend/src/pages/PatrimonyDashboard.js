@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosRepositoryInstance from "../repository/AxiosRepository";
-import styles from "./PatrimonyDashboard.module.css"; 
+import styles from "./PatrimonyDashboard.module.css";
 import priceBRL from "../utils/formatPrice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -96,7 +96,7 @@ export function PatrimonyDashboard() {
       <section className={styles.chartSection} style={{ marginBottom: "24px" }}>
         <h3>Adicionar Bem</h3>
         <form onSubmit={handleCreate} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          
+
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 2 }}>
               <label style={{ fontSize: "14px", fontWeight: 600 }}>Nome do Bem</label>
@@ -157,7 +157,7 @@ export function PatrimonyDashboard() {
         ) : (
           patrimonies.map(pat => (
             <div key={pat.id} className={styles.kpiCard} style={{ borderLeftColor: pat.isFinanced ? "#F59E0B" : "#10B981", position: "relative" }}>
-              <button 
+              <button
                 onClick={() => handleDelete(pat.id)}
                 style={{ position: "absolute", top: "12px", right: "12px", background: "#FEE2E2", color: "#DC2626", border: "none", borderRadius: "4px", padding: "4px 8px", cursor: "pointer", fontSize: "12px", fontWeight: "bold" }}>
                 Deletar
@@ -172,7 +172,7 @@ export function PatrimonyDashboard() {
                   </div>
                 </div>
               )}
-              <button 
+              <button
                 onClick={() => {
                   if (pat.type === "VEHICLE") {
                     navigate(`/patrimony/vehicle/${pat.id}`);
@@ -181,7 +181,7 @@ export function PatrimonyDashboard() {
                   }
                 }}
                 style={{ width: "100%", marginTop: "16px", padding: "8px", borderRadius: "6px", background: "#F1F5F9", color: "#334155", border: "1px solid #E2E8F0", cursor: "pointer", fontWeight: "bold" }}>
-                Ver Detalhes e Balões
+                Ver Detalhes
               </button>
             </div>
           ))

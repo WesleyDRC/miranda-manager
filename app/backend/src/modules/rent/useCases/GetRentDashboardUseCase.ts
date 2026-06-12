@@ -214,6 +214,7 @@ export class GetRentDashboardUseCase implements IUseCase {
         lastPaymentDate: lastPaymentDate ? formatDateToDDMMYY(lastPaymentDate) : "—",
         nextDue: nextDue || "—",
         months: mappedMonths,
+        fixedExpenses: rent.fixedExpenses || []
       };
     });
 
@@ -298,6 +299,18 @@ export class GetRentDashboardUseCase implements IUseCase {
         dateMonth: new Date(lastDate),
         rentId: rent.id,
       });
+
+      if (rent.fixedExpenses) {
+        for (const expense of rent.fixedExpenses) {
+          await this.rentRepository.createRentExpense({
+            amount: expense.amount,
+            reason: expense.reason,
+            rentMonthId: firstMonth.id,
+            userId: rent.userId,
+          });
+        }
+      }
+
       sortedMonths.push(firstMonth);
       nextDate.setMonth(nextDate.getMonth() + 1);
     }
@@ -316,6 +329,18 @@ export class GetRentDashboardUseCase implements IUseCase {
           dateMonth: new Date(date),
           rentId: rent.id,
         });
+
+        if (rent.fixedExpenses) {
+          for (const expense of rent.fixedExpenses) {
+            await this.rentRepository.createRentExpense({
+              amount: expense.amount,
+              reason: expense.reason,
+              rentMonthId: created.id,
+              userId: rent.userId,
+            });
+          }
+        }
+
         newMonths.push(created);
       }
     }

@@ -80,6 +80,7 @@ export function RentalsDashboard() {
   const [selectedRentId, setSelectedRentId] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [observationsText, setObservationsText] = useState("");
+  const [fixedExpensesArray, setFixedExpensesArray] = useState([]);
   const [savingObservations, setSavingObservations] = useState(false);
 
   // Edit Month Modal State
@@ -145,6 +146,7 @@ export function RentalsDashboard() {
   const handleSelectRent = (rent) => {
     setSelectedRentId(rent.id);
     setObservationsText(rent.observations || "");
+    setFixedExpensesArray(rent.fixedExpenses || []);
     setIsDrawerOpen(true);
   };
 
@@ -152,17 +154,24 @@ export function RentalsDashboard() {
     if (!selectedRentId) return;
     setSavingObservations(true);
     try {
+      const formattedExpenses = fixedExpensesArray
+        .filter((exp) => exp.reason && exp.amount)
+        .map((exp) => ({ reason: exp.reason, amount: parseFloat(exp.amount) }));
+
       await axiosRepositoryInstance.updateRent(selectedRentId, {
         observations: observationsText,
+        fixedExpenses: formattedExpenses,
       });
-      toast.success("Observações salvas com sucesso!");
+      toast.success("Dados salvos com sucesso!");
       // Update local state without full reload
       setDashboardData((prev) => {
         if (!prev) return prev;
         return {
           ...prev,
           rentals: prev.rentals.map((r) =>
-            r.id === selectedRentId ? { ...r, observations: observationsText } : r
+            r.id === selectedRentId
+              ? { ...r, observations: observationsText, fixedExpenses: formattedExpenses }
+              : r
           ),
         };
       });
@@ -399,6 +408,8 @@ export function RentalsDashboard() {
         selectedRent={selectedRent} 
         observationsText={observationsText} 
         setObservationsText={setObservationsText} 
+        fixedExpensesArray={fixedExpensesArray}
+        setFixedExpensesArray={setFixedExpensesArray}
         savingObservations={savingObservations} 
         onSaveObservations={handleSaveObservations} 
         onOpenEditMonth={handleOpenEditMonthModal} 

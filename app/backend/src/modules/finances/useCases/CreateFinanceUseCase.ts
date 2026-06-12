@@ -44,11 +44,15 @@ export class CreateFinanceUseCase implements IUseCase {
 
     const rentMonths = await this.createRentMonthIfNeeded(
       categoryFound.name,
-      rent.startRental,
-      rentCreated.id
+      rent?.startRental,
+      rentCreated?.id,
+      userId,
+      rent?.fixedExpenses || []
     );
 
-    rentCreated.months = rentMonths;
+    if (rentCreated) {
+      rentCreated.months = rentMonths;
+    }
 
     const financeCreated = await this.financeRepository.create({
       name,
@@ -101,6 +105,7 @@ export class CreateFinanceUseCase implements IUseCase {
       streetNumber: rent.streetNumber,
       startRental: rent.startRental,
       userId: userId,
+      fixedExpenses: rent.fixedExpenses,
     });
 
     return rentCreated;
@@ -109,7 +114,9 @@ export class CreateFinanceUseCase implements IUseCase {
   private async createRentMonthIfNeeded(
     categoryName: string,
     startRental: string,
-    rentId: string
+    rentId: string,
+    userId: string,
+    fixedExpenses: { reason: string; amount: number }[]
   ) {
     if (categoryName !== "Aluguel") {
       return null;
@@ -126,12 +133,21 @@ export class CreateFinanceUseCase implements IUseCase {
     const months = [];
   
     for (let date = new Date(startDate); date <= endDate; date.setMonth(date.getMonth() + 1)) {
-      months.push(
-        await this.rentRepository.createRentMonth({
-          dateMonth: new Date(date), 
-          rentId: rentId,
-        })
-      );
+      const monthCreated = await this.rentRepository.createRentMonth({
+        dateMonth: new Date(date), 
+        rentId: rentId,
+      });
+
+      for (const expense of fixedExpenses) {
+        await this.rentRepository.createRentExpense({
+          amount: expense.amount,
+          reason: expense.reason,
+          rentMonthId: monthCreated.id,
+          userId: userId,
+        });
+      }
+
+      months.push(monthCreated);
     }
 
     return months;

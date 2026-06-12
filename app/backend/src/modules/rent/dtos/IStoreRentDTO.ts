@@ -4,5 +4,6 @@ export interface IStoreRentDTO {
 	street: string,
 	streetNumber: string,
 	startRental: string,
-	userId: string
+	userId: string,
+	fixedExpenses?: { reason: string; amount: number }[]
 }

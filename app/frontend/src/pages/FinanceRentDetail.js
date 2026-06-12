@@ -3,6 +3,9 @@ import styles from "./FinanceRentDetail.module.css";
 import { RentPaymentTable } from "../components/financeDetails/RentPaymentTable";
 import { NotFound } from "./NotFound";
 import ModalEditMonthRent from "../components/financeDetails/ModalEditMonthRent";
+import AxiosRepository from "../repository/AxiosRepository";
+import { toast } from "react-toastify";
+import { FaDollarSign, FaSave } from "react-icons/fa";
 
 import rentIcon from "../assets/rent-icon.svg";
 
@@ -32,6 +35,9 @@ export function FinanceRentDetail() {
   const [currentMonthID, setCurrentMonthID] = useState("");
   const [amountPaid, setAmountPaid] = useState(0);
   const [paymentStatus, setPaymentStatus] = useState(false);
+  
+  const [fixedExpensesArray, setFixedExpensesArray] = useState([]);
+  const [savingExpenses, setSavingExpenses] = useState(false);
 
   const handleEditMonth = ({ nameMonth, paid, rentMonthId, amountPaid }) => {
     setCurrentMonth(nameMonth);
@@ -63,6 +69,31 @@ export function FinanceRentDetail() {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (rentData && rentData.fixedExpenses) {
+      setFixedExpensesArray(rentData.fixedExpenses);
+    }
+  }, [rentData]);
+
+  const handleSaveFixedExpenses = async () => {
+    setSavingExpenses(true);
+    try {
+      const formattedExpenses = fixedExpensesArray
+        .filter((exp) => exp.reason && exp.amount)
+        .map((exp) => ({ reason: exp.reason, amount: parseFloat(exp.amount) }));
+
+      await AxiosRepository.updateRent(rentId, {
+        fixedExpenses: formattedExpenses,
+      });
+      toast.success("Gastos fixos atualizados com sucesso!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao atualizar gastos fixos.");
+    } finally {
+      setSavingExpenses(false);
+    }
+  };
+
   if(loadingRentData) {
     return (
       <h1> Carregando</h1>
@@ -87,6 +118,10 @@ export function FinanceRentDetail() {
           rentData={rentData}
           onEditMonth={handleEditMonth}
           onViewAll={openAllPendingModal}
+          fixedExpensesArray={fixedExpensesArray}
+          setFixedExpensesArray={setFixedExpensesArray}
+          onSaveFixedExpenses={handleSaveFixedExpenses}
+          savingExpenses={savingExpenses}
         />
 
         <RentPaymentTable

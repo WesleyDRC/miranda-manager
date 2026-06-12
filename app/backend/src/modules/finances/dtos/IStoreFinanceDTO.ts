@@ -6,7 +6,8 @@ export interface IStoreFinanceDTO {
 		street: string,
 		streetNumber: string,
 		startRental: string,
-		userId: string
+		userId: string,
+		fixedExpenses?: { reason: string; amount: number }[]
 	},
 	category?: string,
 	rentId?: string,

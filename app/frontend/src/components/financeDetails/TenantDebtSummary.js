@@ -3,9 +3,17 @@ import styles from "./TenantDebtSummary.module.css";
 import priceBRL from "../../utils/formatPrice";
 import { getMonthName, getYear } from "../../utils/formatDate";
 
-import { FaMapMarkerAlt, FaCalendarAlt, FaUser } from "react-icons/fa";
+import { FaMapMarkerAlt, FaCalendarAlt, FaUser, FaDollarSign, FaSave } from "react-icons/fa";
 
-export function TenantDebtSummary({ rentData, onEditMonth, onViewAll }) {
+export function TenantDebtSummary({ 
+  rentData, 
+  onEditMonth, 
+  onViewAll,
+  fixedExpensesArray = [],
+  setFixedExpensesArray,
+  onSaveFixedExpenses,
+  savingExpenses 
+}) {
   if (!rentData || !rentData.months) {
     return null;
   }
@@ -109,6 +117,74 @@ export function TenantDebtSummary({ rentData, onEditMonth, onViewAll }) {
                 {pendingMonths.length === 1 ? "mês pendente" : "meses pendentes"}
               </span>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* Fixed Expenses Section */}
+      <div className={styles.drawerSection} style={{ marginTop: "28px" }}>
+        <h4 className={styles.sectionHeading}>
+          <FaDollarSign style={{ marginRight: "4px" }} /> Gastos Fixos do Contrato
+        </h4>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {fixedExpensesArray.map((expense, index) => (
+            <div key={index} style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+              <input
+                style={{ flex: 1, padding: "10px 14px", borderRadius: "8px", border: "1px solid #e2e8f0", backgroundColor: "#f8fafc", color: "#334155", fontSize: "0.9rem" }}
+                placeholder="Motivo (Ex: Água, Luz)"
+                value={expense.reason}
+                onChange={(e) => {
+                  if (!setFixedExpensesArray) return;
+                  const updated = [...fixedExpensesArray];
+                  updated[index].reason = e.target.value;
+                  setFixedExpensesArray(updated);
+                }}
+              />
+              <input
+                style={{ flex: 1, padding: "10px 14px", borderRadius: "8px", border: "1px solid #e2e8f0", backgroundColor: "#f8fafc", color: "#334155", fontSize: "0.9rem" }}
+                placeholder="Valor"
+                type="number"
+                value={expense.amount}
+                onChange={(e) => {
+                  if (!setFixedExpensesArray) return;
+                  const updated = [...fixedExpensesArray];
+                  updated[index].amount = e.target.value;
+                  setFixedExpensesArray(updated);
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  if (!setFixedExpensesArray) return;
+                  const updated = [...fixedExpensesArray];
+                  updated.splice(index, 1);
+                  setFixedExpensesArray(updated);
+                }}
+                style={{ padding: "10px 14px", borderRadius: "8px", border: "none", backgroundColor: "#fee2e2", color: "#dc2626", cursor: "pointer", fontWeight: "bold", transition: "all 0.2s" }}
+              >
+                X
+              </button>
+            </div>
+          ))}
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "12px" }}>
+            <button
+              type="button"
+              onClick={() => {
+                if (!setFixedExpensesArray) return;
+                setFixedExpensesArray([...fixedExpensesArray, { reason: "", amount: "" }]);
+              }}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "1px dashed #cbd5e1", backgroundColor: "transparent", color: "#64748b", cursor: "pointer", fontSize: "0.9rem", fontWeight: "600" }}
+            >
+              + Adicionar Novo Gasto
+            </button>
+            <button
+              type="button"
+              onClick={onSaveFixedExpenses}
+              disabled={savingExpenses}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "none", backgroundColor: "var(--blue)", color: "#fff", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", fontSize: "0.9rem", fontWeight: "600", opacity: savingExpenses ? 0.7 : 1 }}
+            >
+              {savingExpenses ? "Salvando..." : <><FaSave /> Salvar Alterações</>}
+            </button>
           </div>
         </div>
       </div>
