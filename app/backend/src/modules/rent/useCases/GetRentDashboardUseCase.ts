@@ -5,6 +5,7 @@ import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
 import { IRent } from "@/modules/rent/entities/IRent";
 import { IRentMonth } from "@/modules/rent/entities/IRentMonth";
 import { formatDateToDDMMYY } from "@/shared/utils/formatDateToDDMMYY";
+import { Finance } from "@/modules/finances/infra/mongoose/entities/Finance";
 
 const MONTH_NAMES = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -25,8 +26,10 @@ export class GetRentDashboardUseCase implements IUseCase {
     const rentsWithMonths = await Promise.all(
       rents.map(async (rent) => {
         const months = await this.fillMissingMonths(rent);
+        const finance = await Finance.findOne({ rentId: rent.id });
         return {
           ...rent,
+          financeName: finance ? finance.name : "N/A",
           months,
         };
       })
@@ -207,6 +210,8 @@ export class GetRentDashboardUseCase implements IUseCase {
         startRental: rent.startRental,
         grossIncome: rent.grossIncome,
         netIncome: rent.netIncome,
+        financeName: (rent as any).financeName,
+        rentStatus: rent.status || "active",
         observations: rent.observations || "",
         totalPaid: rentTotalPaid,
         totalDebt: rentTotalDebt,
@@ -282,6 +287,10 @@ export class GetRentDashboardUseCase implements IUseCase {
     const currentDate = new Date();
     // End date is the due day in the current calendar month
     const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+
+    if (rent.status === "finished") {
+      return sortedMonths;
+    }
 
     let lastDate: Date;
     if (sortedMonths.length > 0) {

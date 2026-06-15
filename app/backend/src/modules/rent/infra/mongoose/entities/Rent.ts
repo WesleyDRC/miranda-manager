@@ -28,6 +28,10 @@
 				type: String,
 				required: true
 			},
+			status: {
+				type: String,
+				default: "active"
+			},
 			grossIncome: {
 				type: Number,
 				default: 0

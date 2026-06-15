@@ -6,6 +6,7 @@ import axiosRepositoryInstance from "../repository/AxiosRepository";
 import priceBRL from "../utils/formatPrice";
 import { getMonthName } from "../utils/formatDate";
 import ModalEditMonthRent from "../components/financeDetails/ModalEditMonthRent";
+import ModalEditRent from "../components/financeDetails/ModalEditRent";
 import { toast } from "react-toastify";
 import { RentalsKPI } from "./RentalsDashboardComponents/RentalsKPI";
 import { RentalsTable } from "./RentalsDashboardComponents/RentalsTable";
@@ -87,6 +88,9 @@ export function RentalsDashboard() {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [isEditMonthModalOpen, setIsEditMonthModalOpen] = useState(false);
   const [activePieSegment, setActivePieSegment] = useState(null);
+
+  // Edit Rent Modal State
+  const [isEditRentModalOpen, setIsEditRentModalOpen] = useState(false);
 
   const fetchDashboardData = async (silent = false) => {
     if (!silent) setLoading(true);
@@ -412,8 +416,18 @@ export function RentalsDashboard() {
         setFixedExpensesArray={setFixedExpensesArray}
         savingObservations={savingObservations} 
         onSaveObservations={handleSaveObservations} 
-        onOpenEditMonth={handleOpenEditMonthModal} 
+        onOpenEditMonth={handleOpenEditMonthModal}
+        onOpenEditRent={() => setIsEditRentModalOpen(true)}
       />
+
+      {/* Edit Rent Modal integration */}
+      {isEditRentModalOpen && selectedRent && (
+        <ModalEditRent
+          rent={selectedRent}
+          closeModal={() => setIsEditRentModalOpen(false)}
+          onSave={() => fetchDashboardData(true)}
+        />
+      )}
 
       {/* Edit Rent Month Modal integration */}
       {isEditMonthModalOpen && selectedMonth && (

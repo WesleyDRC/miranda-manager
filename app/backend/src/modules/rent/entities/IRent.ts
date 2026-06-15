@@ -13,6 +13,8 @@ export interface IRent {
   street: string;
   streetNumber: string;
   startRental: string;
+  status?: string;
+  financeName?: string;
   months?: IRentMonth[];
   grossIncome: number;
   netIncome: number;

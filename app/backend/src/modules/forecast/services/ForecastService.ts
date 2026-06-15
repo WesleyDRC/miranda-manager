@@ -31,11 +31,11 @@ export class ForecastService {
   ) {}
 
   public async execute(
-    userId: string, 
+    userId: string,
     simulateScenario?: "LOSS_JOB" | "SELL_CAR" | "NEW_BABY"
   ): Promise<IForecastResult> {
     const today = new Date();
-    
+
     // 1. Coletar Saldo Atual
     const wallets = await this.walletRepository.findByUserId(userId);
     const currentBalance = wallets.reduce((acc, wallet) => acc + wallet.balance, 0);
@@ -49,7 +49,8 @@ export class ForecastService {
     const bailoutAssets = [...patrimonies].sort((a, b) => a.marketValue - b.marketValue);
 
     // 4. Receitas de Aluguéis (Incomes)
-    const rents = await this.rentRepository.findAll(userId);
+    const allRents = await this.rentRepository.findAll(userId);
+    const rents = allRents.filter((r: any) => r.status !== "finished");
     const totalRentIncome = rents.reduce((acc: number, r: any) => acc + Number(r.value), 0);
 
     // --- ALGORITMO DE HORIZONTE DINÂMICO ---
@@ -62,9 +63,9 @@ export class ForecastService {
     const timeline: any[] = [];
     const oldestDate = this.findOldestDate(transactions, patrimonies, today);
     const monthsPassed = (today.getFullYear() - oldestDate.getFullYear()) * 12 + (today.getMonth() - oldestDate.getMonth());
-    
+
     let backwardsBalance = currentBalance;
-    this.buildPastTimeline(timeline, monthsPassed, today, transactions, financedPatrimonies, totalMarketValue, backwardsBalance);
+    this.buildPastTimeline(timeline, monthsPassed, today, transactions, financedPatrimonies, totalMarketValue, backwardsBalance, allRents);
 
     // --- LOOP DE SIMULAÇÃO (Futuro) ---
     const futureResult = this.buildFutureTimeline({
@@ -137,7 +138,7 @@ export class ForecastService {
     return oldest;
   }
 
-  private buildPastTimeline(timeline: any[], monthsPassed: number, today: Date, transactions: ITransaction[], financedPatrimonies: IPatrimony[], totalMarketValue: number, backwardsBalance: number) {
+  private buildPastTimeline(timeline: any[], monthsPassed: number, today: Date, transactions: ITransaction[], financedPatrimonies: IPatrimony[], totalMarketValue: number, backwardsBalance: number, rents: any[]) {
     for (let i = 0; i >= -monthsPassed; i--) {
       const targetDate = new Date(today.getFullYear(), today.getMonth() + i, 1);
       const targetMonth = targetDate.getMonth();
@@ -145,6 +146,35 @@ export class ForecastService {
 
       let incomes = 0, expenses = 0, pastRent = 0, pastSalary = 0, pastFixed = 0, pastPatrimony = 0;
       const detailedTransactions: any[] = [];
+
+      rents.forEach((r: any) => {
+        let isAfterStart = true;
+        if (r.startRental) {
+          const parts = r.startRental.split('/');
+          if (parts.length === 3) {
+            const startYear = parseInt(parts[2], 10);
+            const startMonth = parseInt(parts[1], 10) - 1;
+            if (targetYear < startYear || (targetYear === startYear && targetMonth < startMonth)) {
+              isAfterStart = false;
+            }
+          }
+        }
+        if (isAfterStart) {
+          const hasTransaction = transactions.some(tx => {
+            const txDate = new Date(tx.dueDate);
+            return tx.type === "INCOME" &&
+                   txDate.getMonth() === targetMonth &&
+                   txDate.getFullYear() === targetYear &&
+                   ((tx.source || tx.description || "").includes(r.tenant) || tx.source === "RENT");
+          });
+
+          if (!hasTransaction) {
+            detailedTransactions.push({ id: `rent-past-${r.id}-${i}`, type: "INCOME", source: `Aluguel: ${r.tenant}`, amount: Number(r.value), day: 10 });
+            incomes += Number(r.value);
+            pastRent += Number(r.value);
+          }
+        }
+      });
 
       transactions.forEach(tx => {
         const txDate = new Date(tx.dueDate);
@@ -182,7 +212,7 @@ export class ForecastService {
   private buildFutureTimeline(params: any) {
     const { maxMonths, simulateScenario, today, totalRentIncome, rents, transactions, financedPatrimonies, totalMarketValue, bailoutAssets } = params;
     let { projectedBalance } = params;
-    
+
     let bankruptMonthIndex = null, bankruptDate = null, projectedDebt = null, bailoutPlan = null;
     const timeline = [];
 

@@ -25,6 +25,7 @@ interface RentalsDrawerProps {
   savingObservations: boolean;
   onSaveObservations: () => void;
   onOpenEditMonth: (monthObj: any) => void;
+  onOpenEditRent: () => void;
 }
 
 export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
@@ -37,13 +38,14 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
   setFixedExpensesArray,
   savingObservations,
   onSaveObservations,
-  onOpenEditMonth
+  onOpenEditMonth,
+  onOpenEditRent
 }) => {
   if (!selectedRent) return <Drawer isOpen={isOpen} onClose={onClose}><div/></Drawer>;
 
   return (
-    <Drawer 
-      isOpen={isOpen} 
+    <Drawer
+      isOpen={isOpen}
       onClose={onClose}
       title="Ficha do Inquilino"
       subtitle="Informações contratuais e financeiras"
@@ -57,11 +59,19 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
           <div className={styles.drawerProfileInfo}>
             <h3 style={{ margin: 0, fontSize: '18px' }}>{selectedRent.tenant}</h3>
             <Badge variant={
-              selectedRent.status === "Pago" ? "success" : 
+              selectedRent.status === "Pago" ? "success" :
               selectedRent.status === "Atrasado" ? "danger" : "warning"
             }>
               {selectedRent.status}
             </Badge>
+            {selectedRent.rentStatus === "finished" && (
+              <Badge variant="default">
+                Finalizado
+              </Badge>
+            )}
+            <Button variant="secondary" size="sm" onClick={onOpenEditRent} style={{ marginLeft: "8px", padding: "4px 8px", fontSize: "12px" }}>
+              Editar Info
+            </Button>
           </div>
         </div>
 
@@ -85,6 +95,13 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
             <div>
               <strong>Valor Mensal do Aluguel</strong>
               <span>{priceBRL(parseFloat(selectedRent.value) || 0)}</span>
+            </div>
+          </div>
+          <div className={styles.infoItem}>
+            <FaRegClipboard className={styles.infoIcon} />
+            <div>
+              <strong>Finança Vinculada</strong>
+              <span>{selectedRent.financeName || "N/A"}</span>
             </div>
           </div>
         </div>
@@ -131,8 +148,8 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
                     )}
                   </div>
                   <div className={styles.monthCardFooter}>
-                    <Button 
-                      variant="secondary" 
+                    <Button
+                      variant="secondary"
                       size="sm"
                       onClick={() => onOpenEditMonth(month)}
                     >
@@ -209,9 +226,9 @@ export const RentalsDrawer: React.FC<RentalsDrawerProps> = ({
           onChange={(e) => setObservationsText(e.target.value)}
         />
         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px" }}>
-          <Button 
-            variant="primary" 
-            onClick={onSaveObservations} 
+          <Button
+            variant="primary"
+            onClick={onSaveObservations}
             disabled={savingObservations}
           >
             {savingObservations ? 'Salvando...' : <><FaSave style={{ marginRight: '8px' }}/> Salvar Alterações</>}

@@ -3,6 +3,7 @@ import styles from "./FinanceRentDetail.module.css";
 import { RentPaymentTable } from "../components/financeDetails/RentPaymentTable";
 import { NotFound } from "./NotFound";
 import ModalEditMonthRent from "../components/financeDetails/ModalEditMonthRent";
+import ModalEditRent from "../components/financeDetails/ModalEditRent";
 import AxiosRepository from "../repository/AxiosRepository";
 import { toast } from "react-toastify";
 import { FaDollarSign, FaSave } from "react-icons/fa";
@@ -30,6 +31,7 @@ export function FinanceRentDetail() {
 
   const [isModalEditMonthOpen, setIsModalEditMonthOpen] = useState(false);
   const [isModalAllPendingOpen, setIsModalAllPendingOpen] = useState(false);
+  const [isModalEditRentOpen, setIsModalEditRentOpen] = useState(false);
 
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentMonthID, setCurrentMonthID] = useState("");
@@ -122,6 +124,7 @@ export function FinanceRentDetail() {
           setFixedExpensesArray={setFixedExpensesArray}
           onSaveFixedExpenses={handleSaveFixedExpenses}
           savingExpenses={savingExpenses}
+          onOpenEditRent={() => setIsModalEditRentOpen(true)}
         />
 
         <RentPaymentTable
@@ -149,6 +152,14 @@ export function FinanceRentDetail() {
           rentValue={parseFloat(rentData.value) || 0}
           onEditMonth={handleEditMonth}
           closeModal={closeAllPendingModal}
+        />
+      )}
+
+      {isModalEditRentOpen && rentData && (
+        <ModalEditRent
+          rent={rentData}
+          closeModal={() => setIsModalEditRentOpen(false)}
+          onSave={() => fetchRentData(rentId)}
         />
       )}
     </>

@@ -9,6 +9,7 @@ import { rentConstants } from "@/modules/rent/contants/rentConstants";
 import { formatDateToDDMMYY } from "@/shared/utils/formatDateToDDMMYY";
 
 import { AppError } from "@/shared/errors/AppError";
+import { Finance } from "@/modules/finances/infra/mongoose/entities/Finance";
 
 @injectable()
 export class GetRentByIdUseCase implements IUseCase {
@@ -61,11 +62,15 @@ export class GetRentByIdUseCase implements IUseCase {
     const totalDebt = totalExpected - totalPaid;
     const isDebtFree = totalDebt <= 0;
 
+    const finance = await Finance.findOne({ rentId: rent.id });
+
     rent.months = months;
     rent.totalExpected = totalExpected;
     rent.totalPaid = totalPaid;
     rent.totalDebt = totalDebt;
     rent.isDebtFree = isDebtFree;
+    (rent as any).financeName = finance ? finance.name : "N/A";
+    (rent as any).rentStatus = rent.status || "active";
 
     return rent;
   }

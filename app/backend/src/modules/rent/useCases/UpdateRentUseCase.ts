@@ -5,6 +5,7 @@ import { IRentRepository } from "@/modules/rent/repositories/IRentRepository";
 import { IRent } from "@/modules/rent/entities/IRent";
 import { rentConstants } from "@/modules/rent/contants/rentConstants";
 import { AppError } from "@/shared/errors/AppError";
+import { Finance } from "@/modules/finances/infra/mongoose/entities/Finance";
 
 @injectable()
 export class UpdateRentUseCase implements IUseCase {
@@ -26,6 +27,14 @@ export class UpdateRentUseCase implements IUseCase {
 
     if (!rentFound) {
       throw new AppError(rentConstants.NOT_FOUND, 404);
+    }
+
+    if (updates.financeName) {
+      await Finance.findOneAndUpdate(
+        { rentId: id },
+        { name: updates.financeName }
+      );
+      delete updates.financeName;
     }
 
     const updatedRent = await this.rentRepository.update(id, userId, updates);

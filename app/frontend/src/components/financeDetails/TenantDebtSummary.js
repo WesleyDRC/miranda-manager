@@ -12,7 +12,8 @@ export function TenantDebtSummary({
   fixedExpensesArray = [],
   setFixedExpensesArray,
   onSaveFixedExpenses,
-  savingExpenses 
+  savingExpenses,
+  onOpenEditRent
 }) {
   if (!rentData || !rentData.months) {
     return null;
@@ -50,6 +51,17 @@ export function TenantDebtSummary({
             >
               {isDebtFree ? "Em Dia" : "Pendente"}
             </span>
+            {rentData.rentStatus === "finished" && (
+              <span className={styles.statusTag} style={{ backgroundColor: "#64748b", color: "#fff", marginLeft: "8px" }}>
+                Finalizado
+              </span>
+            )}
+            <button 
+              onClick={onOpenEditRent} 
+              style={{ marginLeft: "12px", padding: "6px 12px", borderRadius: "6px", border: "1px solid #cbd5e1", backgroundColor: "transparent", color: "#475569", cursor: "pointer", fontSize: "12px", fontWeight: "600" }}
+            >
+              Editar Info
+            </button>
           </div>
         </div>
 
@@ -73,6 +85,13 @@ export function TenantDebtSummary({
             <div>
               <strong>Inquilino</strong>
               <span>{rentData.tenant}</span>
+            </div>
+          </div>
+          <div className={styles.infoItem}>
+            <FaDollarSign className={styles.infoIcon} />
+            <div>
+              <strong>Finança Vinculada</strong>
+              <span>{rentData.financeName || "N/A"}</span>
             </div>
           </div>
         </div>
