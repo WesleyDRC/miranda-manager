@@ -19,6 +19,17 @@ export interface IPatrimony {
     imageUrl?: string;
     ipvaReceiptUrl?: string;
     insurancePolicyUrl?: string;
+    ipvaHistory?: {
+      year: number;
+      value: number;
+      paid: boolean;
+      receiptUrl?: string;
+    }[];
+    insuranceHistory?: {
+      year: number;
+      value: number;
+      policyUrl?: string;
+    }[];
   };
   realEstateDetails?: {
     imageUrl?: string;

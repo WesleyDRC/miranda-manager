@@ -11,7 +11,7 @@ import { ImageUploadCard } from "../components/patrimony/ImageUploadCard";
 import { ImageCropModal } from "../components/patrimony/ImageCropModal";
 import { EquityProgressBar } from "../components/patrimony/EquityProgressBar";
 import { EditableDataRow } from "../components/patrimony/EditableDataRow";
-import { ExpenseCard } from "../components/patrimony/ExpenseCard";
+import { ExpenseHistoryCard } from "../components/patrimony/ExpenseHistoryCard";
 import { api } from "../services/api";
 
 export function VehicleDetail() {
@@ -114,6 +114,40 @@ export function VehicleDetail() {
     }
   };
 
+  const handleAddHistory = async (fieldHistoryName) => {
+    const history = vehicle.vehicleDetails?.[fieldHistoryName] || [];
+    const newYear = history.length > 0 ? Math.max(...history.map(h => h.year)) + 1 : new Date().getFullYear();
+    const newEntry = { year: newYear, value: 0 };
+    if (fieldHistoryName === 'ipvaHistory') newEntry.paid = false;
+    
+    const newHistory = [...history, newEntry];
+    await handleUpdateField(fieldHistoryName, newHistory, true);
+  };
+
+  const handleUpdateHistoryItem = async (fieldHistoryName, index, field, value) => {
+    const history = [...(vehicle.vehicleDetails?.[fieldHistoryName] || [])];
+    history[index] = { ...history[index], [field]: value };
+    await handleUpdateField(fieldHistoryName, history, true);
+  };
+
+  const handleDeleteHistoryItem = async (fieldHistoryName, index) => {
+    const history = [...(vehicle.vehicleDetails?.[fieldHistoryName] || [])];
+    history.splice(index, 1);
+    await handleUpdateField(fieldHistoryName, history, true);
+  };
+
+  const handleHistoryFileUpload = async (file, fieldHistoryName, index, urlFieldName) => {
+    if (!file) return;
+    try {
+      toast.info("Fazendo upload...");
+      const response = await AxiosRepository.uploadFile(file);
+      const fullUrl = `${api.defaults.baseURL || "http://localhost:3333"}${response.data.url}`;
+      await handleUpdateHistoryItem(fieldHistoryName, index, urlFieldName, fullUrl);
+    } catch (error) {
+      toast.error("Erro no upload.");
+    }
+  };
+
   const toggleIpvaStatus = async () => {
     const isPaid = vehicle.vehicleDetails?.ipvaPaid;
     await handleUpdateField("ipvaPaid", !isPaid, true);
@@ -175,24 +209,24 @@ export function VehicleDetail() {
           <div className={styles.card}>
             <h3 className={styles.sectionTitle}>Obrigações e Despesas</h3>
             
-            <ExpenseCard 
+            <ExpenseHistoryCard 
               title="IPVA"
               subtitle="Imposto Anual"
-              status={vehicle.vehicleDetails?.ipvaPaid ? 'PAID' : 'PENDING'}
-              onToggleStatus={toggleIpvaStatus}
-              value={vehicle.vehicleDetails?.ipvaValue}
-              onSaveValue={(val) => handleUpdateField("ipvaValue", val, true)}
-              attachmentUrl={vehicle.vehicleDetails?.ipvaReceiptUrl}
-              onFileSelect={(file) => handleFileUpload({ target: { files: [file] } }, "ipvaReceiptUrl")}
+              history={vehicle.vehicleDetails?.ipvaHistory || []}
+              onAddHistory={() => handleAddHistory('ipvaHistory')}
+              onUpdateHistory={(index, field, value) => handleUpdateHistoryItem('ipvaHistory', index, field, value)}
+              onDeleteHistory={(index) => handleDeleteHistoryItem('ipvaHistory', index)}
+              onFileSelect={(file, index) => handleHistoryFileUpload(file, 'ipvaHistory', index, 'receiptUrl')}
             />
 
-            <ExpenseCard 
+            <ExpenseHistoryCard 
               title="Seguro Auto"
               subtitle="Apólice / Franquia"
-              value={vehicle.vehicleDetails?.insuranceValue}
-              onSaveValue={(val) => handleUpdateField("insuranceValue", val, true)}
-              attachmentUrl={vehicle.vehicleDetails?.insurancePolicyUrl}
-              onFileSelect={(file) => handleFileUpload({ target: { files: [file] } }, "insurancePolicyUrl")}
+              history={vehicle.vehicleDetails?.insuranceHistory || []}
+              onAddHistory={() => handleAddHistory('insuranceHistory')}
+              onUpdateHistory={(index, field, value) => handleUpdateHistoryItem('insuranceHistory', index, field, value)}
+              onDeleteHistory={(index) => handleDeleteHistoryItem('insuranceHistory', index)}
+              onFileSelect={(file, index) => handleHistoryFileUpload(file, 'insuranceHistory', index, 'policyUrl')}
             />
             
             {vehicle.isFinanced && (

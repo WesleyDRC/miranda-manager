@@ -22,6 +22,17 @@ export interface IPatrimonyDocument extends Document {
     imageUrl?: string;
     ipvaReceiptUrl?: string;
     insurancePolicyUrl?: string;
+    ipvaHistory?: {
+      year: number;
+      value: number;
+      paid: boolean;
+      receiptUrl?: string;
+    }[];
+    insuranceHistory?: {
+      year: number;
+      value: number;
+      policyUrl?: string;
+    }[];
   };
   realEstateDetails?: {
     imageUrl?: string;
@@ -68,6 +79,21 @@ const patrimonySchema = new mongoose.Schema(
       imageUrl: { type: String },
       ipvaReceiptUrl: { type: String },
       insurancePolicyUrl: { type: String },
+      ipvaHistory: [
+        {
+          year: { type: Number },
+          value: { type: Number },
+          paid: { type: Boolean },
+          receiptUrl: { type: String },
+        },
+      ],
+      insuranceHistory: [
+        {
+          year: { type: Number },
+          value: { type: Number },
+          policyUrl: { type: String },
+        },
+      ],
     },
     realEstateDetails: {
       imageUrl: { type: String },
