@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build: 
+      context: .
+      dockerfile: app.dockerfile
+    container_name: miranda-manager-frontend
+    restart: always
+    ports:
+      - "127.0.0.1:3001:3000" 
+    environment:
+      - NODE_ENV=production
+    # volumes:
+    #   - .:/app
