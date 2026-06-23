@@ -21,6 +21,8 @@ import { TransactionsDashboard } from "../pages/TransactionsDashboard"
 import { VehicleDetail } from "../pages/VehicleDetail"
 import { useAuth } from "../hooks/useAuth"
 import ErrorPage from "../pages/ErrorPage"
+import { TreasuryDashboard } from "../pages/TreasuryDashboard"
+import { TreasuryDetail } from "../pages/TreasuryDetail"
 
 export function AppRoutes() {
 	const { authenticated, loading } = useAuth();
@@ -110,6 +112,16 @@ export function AppRoutes() {
 				{
 					path: "/finance/:financeId/rent/:rentId", 
 					element: <Private> <FinanceRentDetail /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/investments/treasury",
+					element: <Private> <TreasuryDashboard /> </Private>,
+					errorElement: <ErrorPage />
+				},
+				{
+					path: "/investments/treasury/:name",
+					element: <Private> <TreasuryDetail /> </Private>,
 					errorElement: <ErrorPage />
 				}
 			]

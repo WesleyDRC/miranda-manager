@@ -8,7 +8,9 @@ import walletRoutes from "@/modules/wallets/infra/http/routes/wallet.routes"
 import patrimonyRoutes from "@/modules/patrimony/infra/http/routes/patrimony.routes"
 import transactionRoutes from "@/modules/transactions/infra/http/routes/transaction.routes"
 import forecastRoutes from "@/modules/forecast/infra/http/routes/forecast.routes"
+import treasuryRoutes from "@/modules/treasury/infra/http/routes/treasury.routes"
 import uploadRoutes from "@/shared/infra/http/routes/upload.routes"
+import marketDataRoutes from "@/core/market-data/presentation/routes/market-data.routes"
 
 const routes = Router()
 
@@ -24,6 +26,8 @@ routes.use("/wallet", walletRoutes)
 routes.use("/patrimony", patrimonyRoutes)
 routes.use("/transaction", transactionRoutes)
 routes.use("/forecast", forecastRoutes)
+routes.use("/treasury", treasuryRoutes)
 routes.use("/upload", uploadRoutes)
+routes.use("/market-data", marketDataRoutes)
 
 export default routes

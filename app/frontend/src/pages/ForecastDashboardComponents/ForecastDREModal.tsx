@@ -54,12 +54,12 @@ export const ForecastDREModal: React.FC<ForecastDREModalProps> = ({
                   {tx.source} <span style={{fontSize: '11px', color: '#94A3B8', marginLeft: '8px'}}>Dia {tx.day}</span>
                 </td>
                 <td style={{ padding: '16px' }}>
-                  <Badge variant={tx.type === 'INCOME' ? 'success' : 'danger'}>
-                    {tx.type === 'INCOME' ? 'RECEITA' : 'DESPESA'}
+                  <Badge variant={tx.type === 'INCOME' ? 'success' : tx.type === 'EXPENSE' ? 'danger' : 'info'}>
+                    {tx.type === 'INCOME' ? 'RECEITA' : tx.type === 'EXPENSE' ? 'DESPESA' : 'RENDIMENTO (EQUITY)'}
                   </Badge>
                 </td>
-                <td style={{ padding: '16px', textAlign: 'right', fontWeight: 'bold', color: tx.type === 'INCOME' ? '#10B981' : '#EF4444', fontSize: '16px' }}>
-                  {tx.type === 'INCOME' ? '+' : '-'} {priceBRL(tx.amount)}
+                <td style={{ padding: '16px', textAlign: 'right', fontWeight: 'bold', color: tx.type === 'INCOME' ? '#10B981' : tx.type === 'EXPENSE' ? '#EF4444' : '#5E17EB', fontSize: '16px' }}>
+                  {tx.type === 'INCOME' ? '+' : tx.type === 'EXPENSE' ? '-' : '+'} {priceBRL(tx.amount)}
                 </td>
               </tr>
             ))}

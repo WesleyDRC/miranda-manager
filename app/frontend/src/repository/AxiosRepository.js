@@ -216,9 +216,57 @@ class AxiosRepository {
     const query = deleteHistory ? "?deleteHistory=true" : "";
     return await this.#axiosClient.delete(`/transaction/${id}${query}`);
   }
+
+  // Treasury
+  async getTreasuries() {
+    return await this.#axiosClient.get("/treasury");
+  }
+
+  async getTreasuryProducts() {
+    return await this.#axiosClient.get("/treasury/products");
+  }
+
+  async getTreasuryById({ id }) {
+    return await this.#axiosClient.get(`/treasury/${id}`);
+  }
+
+  async createTreasury({ treasuryType, titleName, purchaseDate, maturityDate, investedAmount, annualRate, liquidityAvailable, quantity, unitPrice, notes }) {
+    return await this.#axiosClient.post("/treasury", {
+      treasuryType, titleName, purchaseDate, maturityDate, investedAmount, annualRate, liquidityAvailable, quantity, unitPrice, notes
+    });
+  }
+
+  async deleteTreasury({ id }) {
+    return await this.#axiosClient.delete(`/treasury/${id}`);
+  }
+
+  async createTreasuryMovement({ treasuryId, movementType, amount, movementDate, description }) {
+    return await this.#axiosClient.post(`/treasury/${treasuryId}/movement`, {
+      movementType, amount, movementDate, description
+    });
+  }
+
+  async deleteTreasuryMovement({ id }) {
+    return await this.#axiosClient.delete(`/treasury/movement/${id}`);
+  }
+
+  async getTreasuryMovements(treasuryId) {
+    return await this.#axiosClient.get(`/treasury/${treasuryId}/movement`);
+  }
+
+  async getTreasurySnapshots(treasuryId) {
+    return await this.#axiosClient.get(`/treasury/${treasuryId}/snapshot`);
+  }
+
+  async bulkUpdateTreasuryMarketPrice(payload) {
+    return await this.#axiosClient.patch('/treasury/bulk-market-price', payload);
+  }
+
+  async getIpcaFocus() {
+    return await this.#axiosClient.get("/market-data/ipca");
+  }
 }
 
 const axiosRepositoryInstance = new AxiosRepository()
 
 export default axiosRepositoryInstance
-

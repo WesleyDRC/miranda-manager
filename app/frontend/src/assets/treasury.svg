@@ -1,0 +1,18 @@
+<svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base structure (Bank / Institution) -->
+  <path d="M27.5 10L8 22H47L27.5 10Z" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M43 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <path d="M18 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M31 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M37 22V42" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Base steps -->
+  <path d="M6 42H49V45H6V42Z" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4 45H51V48H4V45Z" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Pediment detail -->
+  <circle cx="27.5" cy="17" r="2.5" stroke="#5E17EB" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

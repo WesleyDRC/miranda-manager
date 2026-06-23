@@ -1,0 +1,130 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #64748B;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.formSection, .tableSection {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.formSection h3, .tableSection h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGrid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.formGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.formGroup input, .formGroup select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  font-size: 14px;
+  color: #1E293B;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  border-color: #5E17EB;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.checkboxGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.submitBtn {
+  margin-top: 16px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: #5E17EB;
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+
+.submitBtn:hover {
+  background: #4C11C1;
+}
+
+.detailsBtn {
+  background: #F1F5F9;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.detailsBtn:hover {
+  background: #E2E8F0;
+  color: #1E293B;
+}

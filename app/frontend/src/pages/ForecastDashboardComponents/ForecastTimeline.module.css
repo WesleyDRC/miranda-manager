@@ -1,0 +1,252 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.select {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  background: #f8fafc;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardContainer {
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  cursor: pointer;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cardHeaderExpanded {
+  background: #ede9fe;
+}
+
+.cardHeaderTitleBox {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 200px;
+}
+
+.cardHeaderDate {
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.cardHeaderIndicators {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+  justify-content: center;
+}
+
+.indicatorBox {
+  text-align: center;
+}
+
+.indicatorLabel {
+  font-size: 12px;
+  color: #64748b;
+  display: block;
+}
+
+.indicatorValueSuccess {
+  color: #10b981;
+}
+
+.indicatorValueDanger {
+  color: #ef4444;
+}
+
+.indicatorValuePrimary {
+  color: #5e17eb;
+}
+
+.indicatorSub {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.indicatorSubSuccess {
+  color: #10b981;
+}
+
+.indicatorSubDanger {
+  color: #ef4444;
+  margin-left: 4px;
+}
+
+.cardHeaderBalanceBox {
+  text-align: right;
+  width: 200px;
+}
+
+.balanceValue {
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.balanceValueNegative {
+  font-size: 18px;
+  color: #ef4444;
+}
+
+.expandedDetails {
+  padding: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.detailsTitle {
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.tableHeaderRow {
+  border-bottom: 2px solid #e2e8f0;
+  color: #64748b;
+  font-size: 12px;
+  text-align: left;
+}
+
+.tableTh {
+  padding-bottom: 8px;
+}
+
+.tableThRight {
+  padding-bottom: 8px;
+  text-align: right;
+}
+
+.tableRow {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tableTdSource {
+  padding: 12px 0;
+  font-weight: bold;
+  color: #334155;
+}
+
+.tableTdDay {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-left: 8px;
+}
+
+.tableTdType {
+  padding: 12px 0;
+}
+
+.tableTdAmount {
+  padding: 12px 0;
+  text-align: right;
+  font-weight: bold;
+}
+
+.tableTdAmountSuccess {
+  color: #10b981;
+}
+
+.tableTdAmountDanger {
+  color: #ef4444;
+}
+
+.tableTdAmountPrimary {
+  color: #5e17eb;
+}
+
+.investmentsSection {
+  margin-top: 32px;
+}
+
+.investmentsTotalRow {
+  border-top: 2px solid #e2e8f0;
+}
+
+.investmentsTotalLabel {
+  padding: 12px 0;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.investmentsTotalValue {
+  padding: 12px 0;
+  text-align: right;
+  font-weight: bold;
+  color: #10b981;
+  font-size: 16px;
+}
+
+.footerRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 2px dashed #cbd5e1;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footerBoxLeft {
+  text-align: left;
+}
+
+.footerBoxRight {
+  text-align: right;
+}
+
+.footerText {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.footerStrongSuccess {
+  color: #10b981;
+}
+
+.footerStrongDanger {
+  color: #ef4444;
+}

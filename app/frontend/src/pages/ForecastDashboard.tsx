@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axiosRepositoryInstance from "../repository/AxiosRepository";
 import styles from "./ForecastDashboard.module.css";
 import { toast } from "react-toastify";
@@ -36,6 +36,19 @@ export function ForecastDashboard() {
     fetchForecast(activeScenario);
   }, [activeScenario]);
 
+  const filteredTimeline = useMemo(() => {
+    if (!data?.timeline) return [];
+    return timeFilter === "FUTURE_ONLY" ? data.timeline.filter((m: any) => m.monthIndex >= 0) : data.timeline;
+  }, [data, timeFilter]);
+
+  const availableYears = useMemo(() => {
+    return [...new Set(filteredTimeline.map((m: any) => Number(m.date.split('/')[1])))].sort();
+  }, [filteredTimeline]);
+
+  const timelineToShow = useMemo(() => {
+    return filteredTimeline.filter((m: any) => Number(m.date.split('/')[1]) === selectedYear);
+  }, [filteredTimeline, selectedYear]);
+
   if (loading) {
     return <div className={styles.container}><div className={styles.loading}>Analisando matriz financeira...</div></div>;
   }
@@ -50,12 +63,9 @@ export function ForecastDashboard() {
     bankruptDate,
     projectedDebt,
     timeline,
-    bailoutPlan
+    bailoutPlan,
+    autoRescues
   } = data;
-
-  const filteredTimeline = timeFilter === "FUTURE_ONLY" ? timeline.filter(m => m.monthIndex >= 0) : timeline;
-  const availableYears = [...new Set(filteredTimeline.map(m => Number(m.date.split('/')[1])))].sort();
-  const timelineToShow = filteredTimeline.filter(m => Number(m.date.split('/')[1]) === selectedYear);
 
   return (
     <div className={styles.container}>
@@ -71,6 +81,7 @@ export function ForecastDashboard() {
         projectedDebt={projectedDebt}
         bankruptDate={bankruptDate}
         bailoutPlan={bailoutPlan}
+        autoRescues={autoRescues}
       />
 
       <ForecastKPIs 

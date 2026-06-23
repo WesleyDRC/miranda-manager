@@ -5,14 +5,15 @@ import { ForecastService } from "@/modules/forecast/services/ForecastService";
 export class GetForecastController {
   public async handle(request: Request, response: Response) {
     const { id: userId } = request.user;
-    const { simulateScenario } = request.query;
+    const { simulateScenario, investmentScenario, simulationPeriod } = request.query;
 
     const forecastService = container.resolve(ForecastService);
 
-    const forecastResult = await forecastService.execute(
-      userId, 
-      simulateScenario as "LOSS_JOB" | "SELL_CAR" | "NEW_BABY" | undefined
-    );
+    const forecastResult = await forecastService.execute(userId, {
+      simulateScenario: simulateScenario as "LOSS_JOB" | "SELL_CAR" | "NEW_BABY" | undefined,
+      investmentScenario: investmentScenario as "CONSERVATIVE" | "MODERATE" | "OPTIMISTIC" | undefined,
+      simulationPeriod: simulationPeriod as "12_MONTHS" | "24_MONTHS" | "UNTIL_MATURITY" | undefined,
+    });
 
     return response.status(200).json(forecastResult);
   }

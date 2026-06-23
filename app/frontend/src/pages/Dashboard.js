@@ -21,6 +21,7 @@ import {
 
 import expenseIcon from "../assets/expense.svg";
 import categoryIcon from "../assets/category.svg";
+import treasuryIcon from "../assets/treasury.svg";
 
 import { useFinance } from "../hooks/useFinance";
 import { useEffect, useState, useMemo } from "react";
@@ -133,6 +134,12 @@ export function Dashboard() {
       name: "Criar categoria",
       path: "/category/create",
     },
+    {
+      id: 3,
+      icon: treasuryIcon,
+      name: "Tesouro Direto",
+      path: "/investments/treasury",
+    },
   ];
 
   return (
@@ -147,13 +154,15 @@ export function Dashboard() {
             value={priceBRL(totalAssets, true)}
             subtitle="Total acumulado"
           />
-          <KpiCard
-            icon="📈"
-            label="Investimentos"
-            value="—"
-            subtitle="Em breve"
-            variant="info"
-          />
+          <Link to="/investments/treasury" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+            <KpiCard
+              icon="📈"
+              label="Investimentos"
+              value="Ativos"
+              subtitle="Tesouro Direto"
+              variant="info"
+            />
+          </Link>
           <KpiCard
             icon="📋"
             label="Despesas"
@@ -273,11 +282,6 @@ export function Dashboard() {
       <section className={styles.comingSoonSection}>
         <h2 className={styles.sectionTitle}>Próximas funcionalidades</h2>
         <div className={styles.comingSoonGrid}>
-          <ComingSoonCard
-            icon="🏦"
-            title="Tesouro Direto"
-            description="Acompanhe seus investimentos no Tesouro Direto"
-          />
           <ComingSoonCard
             icon="📊"
             title="Relatórios"

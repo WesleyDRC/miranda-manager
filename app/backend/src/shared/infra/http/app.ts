@@ -16,6 +16,12 @@ const app = express();
 app.use(cors())
 
 app.use(express.json());
+
+// Middleware para logar as requisições no terminal
+app.use((request: Request, response: Response, next: NextFunction) => {
+  console.log(`[${new Date().toISOString()}] ${request.method} ${request.url}`);
+  next();
+});
 app.use("/uploads", express.static(path.resolve(__dirname, "..", "..", "..", "..", "tmp", "uploads")));
 app.use(routes);
 

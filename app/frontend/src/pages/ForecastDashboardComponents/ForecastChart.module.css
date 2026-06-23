@@ -1,0 +1,116 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+}
+
+.legendBox {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 12px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  display: inline-block;
+  border: 1px solid #e2e8f0;
+}
+
+.legendItem {
+  margin-bottom: 8px;
+}
+
+.legendDotBalance {
+  color: #5e17eb;
+  font-weight: bold;
+}
+
+.legendDotExpense {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.legendDotEquity {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.legendSubText {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.actionsContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filterGroup {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.filterButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #64748b;
+  background: transparent;
+}
+
+.filterButtonActive {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0f172a;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.exportButton {
+  padding: 8px 16px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.chartWrapper {
+  height: 400px;
+  margin-top: 24px;
+}
+
+.tooltipContainer {
+  background: white;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.tooltipTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+.tooltipItem {
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 4px;
+}
