@@ -1,6 +1,6 @@
 
 import {
-	createHashRouter,
+	createBrowserRouter,
 	RouterProvider, 
 	Navigate
 } from "react-router-dom"
@@ -30,7 +30,7 @@ export function AppRoutes() {
 	const Private = ({ children }) => {
 
     if (loading) {
-      return 
+      return <div className="loading-spinner">Carregando...</div>;
     }
     if (!authenticated) {
       return <Navigate to="/" />;
@@ -46,7 +46,7 @@ export function AppRoutes() {
 		return children
 	}
 
-	const router = createHashRouter([
+	const router = createBrowserRouter([
 		{
 			path: "/",
 			element: <IsAuthenticated> <Authentication /> </IsAuthenticated>,

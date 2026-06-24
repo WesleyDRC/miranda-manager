@@ -1,7 +1,10 @@
 import styles from "./Header.module.css";
 import { ProfileCard } from "../dashboard/components/ProfileCard";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Header({ toggleMobileMenu }) {
+  const { userEmail } = useAuth();
+  const username = userEmail ? userEmail.split("@")[0] : "Usuário";
 
   return (
     <header className={styles.header}>
@@ -13,9 +16,8 @@ export function Header({ toggleMobileMenu }) {
         </svg>
       </button>
       <div className={styles.profileWrapper}>
-        <ProfileCard username={"Wesley Luis"}/>
+        <ProfileCard username={username}/>
       </div>
     </header>
   );
 }
-

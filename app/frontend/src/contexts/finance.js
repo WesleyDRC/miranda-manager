@@ -18,9 +18,9 @@ export const FinanceProvider = ({ children }) => {
   const fetchFinances = async () => {
     try {
       const response = await axiosRepositoryInstance.getFinances();
-      setFinances(response.data.finances);
+      setFinances(response.data.finances || []);
 
-      calculateTotalAssets(response.data.finances);
+      calculateTotalAssets(response.data.finances || []);
     } catch (error) {
       return;
     }
