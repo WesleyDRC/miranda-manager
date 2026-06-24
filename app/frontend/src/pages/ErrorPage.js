@@ -12,7 +12,7 @@ export default function ErrorPage() {
       <div className={styles.content}>
         <h1> Oops! </h1>
         <p> Desculpe, ocorreu um erro inesperado.</p>
-        <p><i>{error?.statusText || error?.message || "Unknown Error"}</i></p>
+        <p><i>Unknown Error</i></p>
 
 				<Link to="/" className={styles.btn}> Voltar </Link>
       </div>
