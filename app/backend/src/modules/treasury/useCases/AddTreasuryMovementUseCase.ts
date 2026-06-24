@@ -75,14 +75,17 @@ export class AddTreasuryMovementUseCase implements IUseCase {
     const currentValue = TreasuryCalculationService.calculateCurrentValue(
       newInvestedAmount,
       newAnnualRate,
-      investment.purchaseDate
+      investment.purchaseDate,
+      new Date(),
+      investment.treasuryType
     );
 
     const projectedValue = TreasuryCalculationService.calculateProjectedValue(
       newInvestedAmount,
       newAnnualRate,
       investment.purchaseDate,
-      investment.maturityDate
+      investment.maturityDate,
+      investment.treasuryType
     );
 
     await this.treasuryInvestmentRepository.update(investment.id, {

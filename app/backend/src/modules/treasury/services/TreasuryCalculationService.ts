@@ -1,9 +1,12 @@
 import { TreasuryType } from "@/modules/treasury/entities/ITreasuryInvestment";
+import { treasuryConstants } from "@/modules/treasury/constants/treasuryConstants";
+import { TreasuryCalendarService } from "./TreasuryCalendarService";
 
 /**
  * Service responsible for treasury yield calculations.
  * Converts annual rates to monthly and projects future values
  * using compound interest formulas appropriate for each treasury type.
+ * Adheres to SRP by delegating calendar rules to TreasuryCalendarService.
  */
 export class TreasuryCalculationService {
   /**
@@ -22,30 +25,56 @@ export class TreasuryCalculationService {
     investedAmount: number,
     annualRate: number,
     purchaseDate: Date,
-    maturityDate: Date
+    maturityDate: Date,
+    treasuryType?: TreasuryType
   ): number {
+    const monthlyRate = TreasuryCalculationService.annualToMonthlyRate(annualRate);
+
+    if (treasuryType && treasuryType.includes(treasuryConstants.JUROS_SEMESTRAIS_IDENTIFIER)) {
+      const lastReset = TreasuryCalendarService.getLastResetDate(purchaseDate, maturityDate, treasuryType, maturityDate);
+      const remainingMonths = TreasuryCalculationService.monthsBetween(lastReset, new Date(maturityDate));
+      return investedAmount * Math.pow(1 + monthlyRate, remainingMonths);
+    }
+
     const months = TreasuryCalculationService.monthsBetween(
       new Date(purchaseDate),
       new Date(maturityDate)
     );
-    const monthlyRate = TreasuryCalculationService.annualToMonthlyRate(annualRate);
     return investedAmount * Math.pow(1 + monthlyRate, months);
   }
 
   /**
    * Calculates the current value based on elapsed time since purchase.
    * Uses the same compound interest formula but over elapsed months.
+   * Se for título com Juros Semestrais, usa o último pagamento oficial.
    */
   static calculateCurrentValue(
     investedAmount: number,
     annualRate: number,
     purchaseDate: Date,
-    referenceDate: Date = new Date()
+    referenceDate: Date = new Date(),
+    treasuryType?: TreasuryType,
+    maturityDate?: Date
   ): number {
-    const months = TreasuryCalculationService.monthsBetween(
-      new Date(purchaseDate),
-      referenceDate
-    );
+    const pDate = new Date(purchaseDate);
+    const mDate = maturityDate ? new Date(maturityDate) : new Date(pDate.getFullYear() + 10, 0, 1);
+    
+    if (referenceDate.getTime() >= mDate.getTime()) {
+      // If past maturity, we should ideally return 0 (it expired), but to not break existing charts 
+      // that query "currentValue" past maturity date without handling it, we return the value AT maturity.
+      // Usually, it's better handled explicitly.
+      referenceDate = mDate;
+    }
+
+    if (treasuryType && treasuryType.includes(treasuryConstants.JUROS_SEMESTRAIS_IDENTIFIER)) {
+      const lastReset = TreasuryCalendarService.getLastResetDate(pDate, referenceDate, treasuryType, mDate);
+      const remainingMonths = TreasuryCalculationService.monthsBetween(lastReset, referenceDate);
+      if (remainingMonths <= 0) return investedAmount;
+      const monthlyRate = TreasuryCalculationService.annualToMonthlyRate(annualRate);
+      return investedAmount * Math.pow(1 + monthlyRate, remainingMonths);
+    }
+
+    const months = TreasuryCalculationService.monthsBetween(pDate, referenceDate);
     if (months <= 0) return investedAmount;
     const monthlyRate = TreasuryCalculationService.annualToMonthlyRate(annualRate);
     return investedAmount * Math.pow(1 + monthlyRate, months);

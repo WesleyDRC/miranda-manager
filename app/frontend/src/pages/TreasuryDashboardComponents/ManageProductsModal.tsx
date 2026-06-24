@@ -158,9 +158,9 @@ export function ManageProductsModal({ isOpen, onClose, onSuccess }: IManageProdu
                 >
                   <option value="SELIC">Tesouro Selic</option>
                   <option value="PREFIXADO">Tesouro Prefixado</option>
-                  <option value="PREFIXADO_JUROS">Prefixado com Juros Semestrais</option>
+                  <option value="PREFIXADO_JUROS_SEMESTRAIS">Prefixado com Juros Semestrais</option>
                   <option value="IPCA">Tesouro IPCA+</option>
-                  <option value="IPCA_JUROS">IPCA+ com Juros Semestrais</option>
+                  <option value="IPCA_JUROS_SEMESTRAIS">IPCA+ com Juros Semestrais</option>
                 </select>
               </div>
               <div style={{ flex: 1 }}>

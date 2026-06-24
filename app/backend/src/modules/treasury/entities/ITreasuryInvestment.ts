@@ -1,9 +1,9 @@
 export type TreasuryType =
   | "SELIC"
   | "PREFIXADO"
-  | "PREFIXADO_JUROS"
+  | "PREFIXADO_JUROS_SEMESTRAIS"
   | "IPCA"
-  | "IPCA_JUROS";
+  | "IPCA_JUROS_SEMESTRAIS";
 
 export interface ITreasuryInvestment {
   id: string;

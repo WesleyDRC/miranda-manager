@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 export interface ITreasuryInvestmentDocument extends Document {
   _id: string;
   userId: string;
-  treasuryType: "SELIC" | "PREFIXADO" | "PREFIXADO_JUROS" | "IPCA" | "IPCA_JUROS";
+  treasuryType: "SELIC" | "PREFIXADO" | "PREFIXADO_JUROS_SEMESTRAIS" | "IPCA" | "IPCA_JUROS_SEMESTRAIS";
   titleName: string;
   purchaseDate: Date;
   maturityDate: Date;
@@ -33,7 +33,7 @@ const treasuryInvestmentSchema = new mongoose.Schema(
     },
     treasuryType: {
       type: String,
-      enum: ["SELIC", "PREFIXADO", "PREFIXADO_JUROS", "IPCA", "IPCA_JUROS"],
+      enum: ["SELIC", "PREFIXADO", "PREFIXADO_JUROS_SEMESTRAIS", "IPCA", "IPCA_JUROS_SEMESTRAIS"],
       required: true,
     },
     titleName: {

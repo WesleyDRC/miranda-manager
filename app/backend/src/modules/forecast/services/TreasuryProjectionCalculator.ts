@@ -2,6 +2,9 @@ import { inject, injectable } from "tsyringe";
 import { TaxCalculationService } from "@/modules/treasury/services/TaxCalculationService";
 import { ITreasuryInvestment } from "@/modules/treasury/entities/ITreasuryInvestment";
 import { ITreasuryMovement } from "@/modules/treasury/entities/ITreasuryMovement";
+import { treasuryConstants } from "@/modules/treasury/constants/treasuryConstants";
+import { TreasuryCalculationService } from "@/modules/treasury/services/TreasuryCalculationService";
+import { TreasuryCalendarService } from "@/modules/treasury/services/TreasuryCalendarService";
 
 export interface ITreasuryCalculationResult {
   treasuryYield: number;
@@ -53,6 +56,27 @@ export class TreasuryProjectionCalculator {
       
       if (monthYield > 0) {
         detailedTransactions.push({ id: `treasury-yield-${inv.id}-${targetDate.getMonth()}`, type: "YIELD", source: `Rendimento: ${inv.titleName}`, amount: monthYield, day: 30 });
+      }
+
+      const isJurosSemestrais = inv.treasuryType?.includes(treasuryConstants.JUROS_SEMESTRAIS_IDENTIFIER);
+      const maturity = new Date(inv.maturityDate);
+      const isMaturityMonth = targetDate.getFullYear() === maturity.getFullYear() && targetDate.getMonth() === maturity.getMonth();
+      const isCouponMonth = TreasuryCalendarService.isCouponMonth(targetDate, inv.treasuryType, maturity);
+
+      if (isMaturityMonth && inv.projectedValue > 0) {
+        // Vencimento: devolve tudo (principal + ultimo rendimento)
+        treasuryWithdrawals += inv.projectedValue;
+        detailedTransactions.push({ id: `treasury-mat-${inv.id}-${targetDate.getMonth()}`, type: "INCOME", source: `Resgate Final (Vencimento): ${inv.titleName}`, amount: inv.projectedValue, day: 15 });
+        inv.projectedValue = 0;
+        inv.projectedInvestedAmount = 0;
+      } else if (isJurosSemestrais && isCouponMonth && inv.projectedValue > 0) {
+        // Cupom Semestral
+        const cupom = inv.projectedValue - inv.projectedInvestedAmount;
+        if (cupom > 0) {
+          treasuryWithdrawals += cupom;
+          inv.projectedValue = inv.projectedInvestedAmount;
+          detailedTransactions.push({ id: `treasury-cupom-${inv.id}-${targetDate.getMonth()}`, type: "INCOME", source: `Cupom Semestral Automático: ${inv.titleName}`, amount: cupom, day: 15 });
+        }
       }
 
       const moves = allMovements.filter((m: ITreasuryMovement) => {

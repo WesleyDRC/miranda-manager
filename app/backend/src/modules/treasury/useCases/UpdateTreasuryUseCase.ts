@@ -53,13 +53,16 @@ export class UpdateTreasuryUseCase implements IUseCase {
       updates.currentValue = TreasuryCalculationService.calculateCurrentValue(
         existing.investedAmount,
         annualRate,
-        existing.purchaseDate
+        existing.purchaseDate,
+        new Date(),
+        existing.treasuryType
       );
       updates.projectedValue = TreasuryCalculationService.calculateProjectedValue(
         existing.investedAmount,
         annualRate,
         existing.purchaseDate,
-        maturityDate
+        maturityDate,
+        existing.treasuryType
       );
     }
 

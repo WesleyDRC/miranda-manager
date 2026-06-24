@@ -22,14 +22,17 @@ export class CreateTreasuryUseCase implements IUseCase {
     const currentValue = TreasuryCalculationService.calculateCurrentValue(
       data.investedAmount,
       data.annualRate,
-      purchaseDate
+      purchaseDate,
+      new Date(),
+      data.treasuryType
     );
 
     const projectedValue = TreasuryCalculationService.calculateProjectedValue(
       data.investedAmount,
       data.annualRate,
       purchaseDate,
-      maturityDate
+      maturityDate,
+      data.treasuryType
     );
 
     let marketValue: number | undefined = undefined;

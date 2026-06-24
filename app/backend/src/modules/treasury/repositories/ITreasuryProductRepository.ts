@@ -2,7 +2,7 @@ import { ITreasuryProductDocument } from "../infra/mongoose/entities/TreasuryPro
 
 export interface ICreateTreasuryProductDTO {
   name: string;
-  treasuryType: "SELIC" | "PREFIXADO" | "PREFIXADO_JUROS" | "IPCA" | "IPCA_JUROS";
+  treasuryType: "SELIC" | "PREFIXADO" | "PREFIXADO_JUROS_SEMESTRAIS" | "IPCA" | "IPCA_JUROS_SEMESTRAIS";
   maturityDate: Date;
   userId?: string;
 }

@@ -40,14 +40,16 @@ export class CreateSnapshotUseCase implements IUseCase {
       investment.investedAmount,
       investment.annualRate,
       investment.purchaseDate,
-      referenceDate
+      referenceDate,
+      investment.treasuryType
     );
 
     const projectedValue = TreasuryCalculationService.calculateProjectedValue(
       investment.investedAmount,
       investment.annualRate,
       investment.purchaseDate,
-      investment.maturityDate
+      investment.maturityDate,
+      investment.treasuryType
     );
 
     let marketValue: number | undefined = investment.marketValue;

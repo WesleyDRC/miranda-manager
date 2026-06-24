@@ -5,4 +5,5 @@ export const treasuryConstants = {
   SNAPSHOT_NOT_FOUND: "Snapshot não encontrado.",
   INVALID_MOVEMENT_AMOUNT: "O valor da movimentação deve ser maior que zero.",
   INSUFFICIENT_BALANCE: "Saldo insuficiente para essa movimentação.",
+  JUROS_SEMESTRAIS_IDENTIFIER: "JUROS_SEMESTRAIS",
 };

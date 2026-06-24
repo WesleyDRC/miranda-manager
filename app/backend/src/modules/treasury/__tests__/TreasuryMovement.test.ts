@@ -82,6 +82,10 @@ class FakeMovementRepository implements ITreasuryMovementRepository {
     return this.items.filter((m) => m.treasuryId === treasuryId);
   }
 
+  async findByTreasuryIds(treasuryIds: string[]): Promise<ITreasuryMovement[]> {
+    return this.items.filter((m) => treasuryIds.includes(m.treasuryId));
+  }
+
   async findById(id: string): Promise<ITreasuryMovement | null> {
     return this.items.find((m) => m.id === id) || null;
   }

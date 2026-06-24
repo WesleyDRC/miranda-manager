@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axiosRepositoryInstance from "../repository/AxiosRepository";
 import styles from "./TreasuryDetail.module.css";
 import priceBRL from "../utils/formatPrice";
+import { TREASURY_CONSTANTS, TreasuryCalendarRules } from "../utils/treasuryConstants";
 import { toast } from "react-toastify";
 import { KpiCard } from "../components/dashboard/components/KpiCard";
 import { Table } from "../components/ui/Table";
@@ -12,6 +13,7 @@ import {
   Area,
   LineChart,
   Line,
+  ComposedChart,
   BarChart,
   Bar,
   XAxis,
@@ -400,12 +402,24 @@ export function TreasuryDetail() {
 
   // Chart Data Generators
   const generateHistoryData = () => {
+    const movMap: any = {};
+    groupMovements.forEach(m => {
+        const d = new Date(m.movementDate);
+        const key = `${d.getMonth()+1}/${d.getFullYear()}`;
+        if (!movMap[key]) movMap[key] = { deposit: 0, withdraw: 0 };
+        if (m.movementType === 'DEPOSIT') movMap[key].deposit += m.amount;
+        if (m.movementType === 'WITHDRAW') movMap[key].withdraw += m.amount;
+    });
+
     return consolidatedSnapshots.map((s: any) => {
         const d = new Date(s.snapshotDate);
+        const key = `${d.getMonth()+1}/${d.getFullYear()}`;
         return {
-            name: `${d.getMonth()+1}/${d.getFullYear()}`,
+            name: key,
             "Valor Atual": s.currentValue,
-            "Valor Projetado": s.projectedValue
+            "Valor Projetado": s.projectedValue,
+            "Aporte": movMap[key]?.deposit || 0,
+            "Resgate": movMap[key]?.withdraw || 0
         };
     });
   };
@@ -450,21 +464,44 @@ export function TreasuryDetail() {
     groupTreasuries.forEach(t => {
         let rate = t.monthlyEstimatedRate || 0;
         let equity = t.currentValue || 0;
+        const isJurosSemestrais = t.treasuryType?.includes(TREASURY_CONSTANTS.JUROS_SEMESTRAIS_IDENTIFIER);
+        const investedAmount = t.investedAmount || equity;
+
         const start = new Date();
         const end = new Date(t.maturityDate);
         let months = (end.getFullYear() - start.getFullYear()) * 12 + end.getMonth() - start.getMonth();
         if (months < 0) months = 0;
         months = Math.min(months, MAX_MONTHS);
 
+        const couponMonths = TreasuryCalendarRules.getCouponMonths(t.treasuryType || "", end);
+
         let d = new Date();
         for (let i = 0; i <= months; i++) {
+            const isMaturityMonth = d.getFullYear() === end.getFullYear() && d.getMonth() === end.getMonth();
             const key = `${d.getMonth()+1}/${d.getFullYear()}`;
-            if (!dataMap[key]) dataMap[key] = { name: key, "Patrimônio Projetado": 0, sortDate: d.getTime() };
+            if (!dataMap[key]) dataMap[key] = { name: key, "Patrimônio Projetado": 0, "Cupom (Resgate Automático)": 0, "Resgate Final (Vencimento)": 0, sortDate: d.getTime() };
 
-            dataMap[key]["Patrimônio Projetado"] += equity;
+            if (isMaturityMonth && equity > 0) {
+                dataMap[key]["Resgate Final (Vencimento)"] += equity;
+                equity = 0;
+            } else {
+                dataMap[key]["Patrimônio Projetado"] += equity;
+            }
 
             // evoluir para o proximo mês
-            equity = equity * (1 + rate);
+            if (equity > 0) {
+                equity = equity * (1 + rate);
+            }
+
+            // Simular pagamento do cupom (Juros Semestrais) nas datas corretas
+            if (isJurosSemestrais && couponMonths.includes(d.getMonth()) && equity > 0 && !isMaturityMonth) {
+                const cupom = equity - investedAmount;
+                if (cupom > 0) {
+                   dataMap[key]["Cupom (Resgate Automático)"] += cupom;
+                }
+                equity = investedAmount;
+            }
+
             d.setMonth(d.getMonth() + 1);
         }
     });
@@ -560,7 +597,7 @@ export function TreasuryDetail() {
                         <div className={styles.emptyChart}>Sem dados de histórico suficientes.</div>
                     ) : (
                         <ResponsiveContainer width="100%" height={300}>
-                            <AreaChart data={generateHistoryData()}>
+                            <ComposedChart data={generateHistoryData()}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                 <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                                 <YAxis tickFormatter={(val) => `R$ ${val}`} tick={{ fontSize: 12 }} width={80} />
@@ -568,7 +605,9 @@ export function TreasuryDetail() {
                                 <Legend />
                                 <Area type="monotone" dataKey="Valor Atual" stroke="#5E17EB" fill="#5E17EB" fillOpacity={0.2} />
                                 <Area type="monotone" dataKey="Valor Projetado" stroke="#10B981" fill="#10B981" fillOpacity={0.1} />
-                            </AreaChart>
+                                <Bar dataKey="Aporte" fill="#3B82F6" barSize={20} />
+                                <Bar dataKey="Resgate" fill="#EF4444" barSize={20} />
+                            </ComposedChart>
                         </ResponsiveContainer>
                     )}
                 </DashboardChart>
@@ -596,16 +635,18 @@ export function TreasuryDetail() {
             )}
 
             {activeChartTab === 'PROJECAO' && (
-                <DashboardChart title="Projeção Consolidada" subtitle="Curva calculada somando todos os seus contratos individuais">
+                <DashboardChart title="Projeção Consolidada" subtitle={`Curva calculada somando todos os seus contratos individuais${groupTreasuries[0]?.treasuryType?.includes(TREASURY_CONSTANTS.JUROS_SEMESTRAIS_IDENTIFIER) ? ' (com resgates de Juros Semestrais)' : ''}`}>
                     <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={generateProjectionData()}>
+                        <ComposedChart data={generateProjectionData()}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
                             <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                             <YAxis tickFormatter={(val) => `R$ ${val}`} tick={{ fontSize: 12 }} width={80} />
                             <RechartsTooltip formatter={(val: number) => priceBRL(val)} />
                             <Legend />
+                            <Bar dataKey="Cupom (Resgate Automático)" fill="#F59E0B" barSize={20} />
+                            <Bar dataKey="Resgate Final (Vencimento)" fill="#EF4444" barSize={20} />
                             <Line type="monotone" dataKey="Patrimônio Projetado" stroke="#10B981" strokeWidth={3} dot={false} />
-                        </LineChart>
+                        </ComposedChart>
                     </ResponsiveContainer>
                 </DashboardChart>
             )}
