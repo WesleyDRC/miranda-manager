@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./reset.css";
 import "./variables.css";
 
-const isDevelopment = process.env.NODE_ENVIROMENT === "development";
+const isDevelopment = import.meta.env.MODE === "development";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
