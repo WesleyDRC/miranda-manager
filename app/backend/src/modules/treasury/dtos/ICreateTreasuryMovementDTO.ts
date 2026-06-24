@@ -6,4 +6,7 @@ export interface ICreateTreasuryMovementDTO {
   amount: number;
   movementDate: Date | string;
   description: string;
+  fixedRate?: number;
+  indexerRate?: number;
+  annualRate?: number;
 }

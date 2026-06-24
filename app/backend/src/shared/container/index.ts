@@ -35,6 +35,9 @@ import { ITreasuryMovementRepository } from "@/modules/treasury/repositories/ITr
 import { TreasurySnapshotRepository } from "@/modules/treasury/infra/mongoose/repository/TreasurySnapshotRepository";
 import { ITreasurySnapshotRepository } from "@/modules/treasury/repositories/ITreasurySnapshotRepository";
 
+import { TreasuryProductRepository } from "@/modules/treasury/infra/mongoose/repositories/TreasuryProductRepository";
+import { ITreasuryProductRepository } from "@/modules/treasury/repositories/ITreasuryProductRepository";
+
 import { MongoMarketDataRepository } from "@/core/market-data/infrastructure/repositories/MongoMarketDataRepository";
 import { IMarketDataRepository } from "@/core/market-data/domain/repositories/IMarketDataRepository";
 
@@ -52,6 +55,7 @@ container.registerSingleton<IRecurrenceRuleRepository>("RecurrenceRuleRepository
 container.registerSingleton<ITreasuryInvestmentRepository>("TreasuryInvestmentRepository", TreasuryInvestmentRepository)
 container.registerSingleton<ITreasuryMovementRepository>("TreasuryMovementRepository", TreasuryMovementRepository)
 container.registerSingleton<ITreasurySnapshotRepository>("TreasurySnapshotRepository", TreasurySnapshotRepository)
+container.registerSingleton<ITreasuryProductRepository>("TreasuryProductRepository", TreasuryProductRepository)
 container.registerSingleton<IMarketDataRepository>("MarketDataRepository", MongoMarketDataRepository)
 container.registerSingleton<IMarketDataProvider>("MarketDataProvider", BCBMarketDataProvider)
 

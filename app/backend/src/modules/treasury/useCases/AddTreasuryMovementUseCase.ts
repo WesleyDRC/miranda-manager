@@ -22,7 +22,8 @@ export class AddTreasuryMovementUseCase implements IUseCase {
     private treasuryMovementRepository: ITreasuryMovementRepository
   ) {}
 
-  async execute({ userId, ...data }: IRequest): Promise<ITreasuryMovement> {
+  async execute(request: IRequest): Promise<ITreasuryMovement> {
+    const { userId, ...data } = request;
     const investment = await this.treasuryInvestmentRepository.findById(data.treasuryId);
 
     if (!investment) {
@@ -46,8 +47,26 @@ export class AddTreasuryMovementUseCase implements IUseCase {
 
     // Update investment values based on movement
     let newInvestedAmount = investment.investedAmount;
+    let newAnnualRate = investment.annualRate;
+
     if (data.movementType === "DEPOSIT") {
       newInvestedAmount += data.amount;
+
+      // Se o aporte trouxe taxas customizadas, calcular a taxa anual do aporte
+      let movementAnnualRate = data.annualRate;
+      if (!movementAnnualRate && (data.fixedRate !== undefined || data.indexerRate !== undefined)) {
+        const fixed = data.fixedRate || 0;
+        const indexer = data.indexerRate || 0;
+        movementAnnualRate = fixed + indexer;
+      }
+
+      // Se conseguimos uma taxa do aporte, recalcular a taxa média ponderada do investimento mestre
+      if (movementAnnualRate !== undefined && newInvestedAmount > 0) {
+        // (ValorAntigo * TaxaAntiga + ValorNovo * TaxaNova) / ValorTotal
+        const oldWeight = investment.investedAmount * investment.annualRate;
+        const newWeight = data.amount * movementAnnualRate;
+        newAnnualRate = (oldWeight + newWeight) / newInvestedAmount;
+      }
     } else if (data.movementType === "WITHDRAW") {
       newInvestedAmount -= data.amount;
     }
@@ -55,19 +74,20 @@ export class AddTreasuryMovementUseCase implements IUseCase {
 
     const currentValue = TreasuryCalculationService.calculateCurrentValue(
       newInvestedAmount,
-      investment.annualRate,
+      newAnnualRate,
       investment.purchaseDate
     );
 
     const projectedValue = TreasuryCalculationService.calculateProjectedValue(
       newInvestedAmount,
-      investment.annualRate,
+      newAnnualRate,
       investment.purchaseDate,
       investment.maturityDate
     );
 
     await this.treasuryInvestmentRepository.update(investment.id, {
       investedAmount: newInvestedAmount,
+      annualRate: newAnnualRate,
       currentValue,
       projectedValue,
     });

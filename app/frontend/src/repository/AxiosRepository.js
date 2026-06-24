@@ -226,6 +226,22 @@ class AxiosRepository {
     return await this.#axiosClient.get("/treasury/products");
   }
 
+  async createTreasuryProduct({ name, treasuryType, maturityDate }) {
+    return await this.#axiosClient.post("/treasury/products", {
+      name, treasuryType, maturityDate
+    });
+  }
+
+  async updateTreasuryProduct(id, { name, treasuryType, maturityDate }) {
+    return await this.#axiosClient.put(`/treasury/products/${id}`, {
+      name, treasuryType, maturityDate
+    });
+  }
+
+  async deleteTreasuryProduct(id) {
+    return await this.#axiosClient.delete(`/treasury/products/${id}`);
+  }
+
   async getTreasuryById({ id }) {
     return await this.#axiosClient.get(`/treasury/${id}`);
   }
@@ -264,6 +280,20 @@ class AxiosRepository {
 
   async getIpcaFocus() {
     return await this.#axiosClient.get("/market-data/ipca");
+  }
+
+  async previewTreasuryExcel(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return await this.#axiosClient.post("/treasury/import-excel", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+  }
+
+  async confirmTreasuryImport(rows) {
+    return await this.#axiosClient.post("/treasury/import-excel/confirm", { rows });
   }
 }
 

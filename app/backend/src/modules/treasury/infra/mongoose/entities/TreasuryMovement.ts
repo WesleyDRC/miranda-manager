@@ -8,6 +8,9 @@ export interface ITreasuryMovementDocument extends Document {
   amount: number;
   movementDate: Date;
   description: string;
+  fixedRate?: number;
+  indexerRate?: number;
+  annualRate?: number;
 }
 
 const treasuryMovementSchema = new mongoose.Schema(
@@ -36,6 +39,18 @@ const treasuryMovementSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+    },
+    fixedRate: {
+      type: Number,
+      required: false,
+    },
+    indexerRate: {
+      type: Number,
+      required: false,
+    },
+    annualRate: {
+      type: Number,
+      required: false,
     },
   },
   {

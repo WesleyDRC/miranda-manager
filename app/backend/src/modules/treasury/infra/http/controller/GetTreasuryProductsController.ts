@@ -1,19 +1,16 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
+import { GetTreasuryProductsUseCase } from "@/modules/treasury/useCases/GetTreasuryProductsUseCase";
 
 export class GetTreasuryProductsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const products = [
-      { name: "Tesouro Selic 2026", treasuryType: "SELIC", maturityDate: "2026-03-01T00:00:00.000Z" },
-      { name: "Tesouro Selic 2029", treasuryType: "SELIC", maturityDate: "2029-03-01T00:00:00.000Z" },
-      { name: "Tesouro Prefixado 2026", treasuryType: "PREFIXADO", maturityDate: "2026-01-01T00:00:00.000Z" },
-      { name: "Tesouro Prefixado 2029", treasuryType: "PREFIXADO", maturityDate: "2029-01-01T00:00:00.000Z" },
-      { name: "Tesouro Prefixado 2032", treasuryType: "PREFIXADO", maturityDate: "2032-01-01T00:00:00.000Z" },
-      { name: "Tesouro IPCA+ 2029", treasuryType: "IPCA", maturityDate: "2029-05-15T00:00:00.000Z" },
-      { name: "Tesouro IPCA+ 2035", treasuryType: "IPCA", maturityDate: "2035-05-15T00:00:00.000Z" },
-      { name: "Tesouro IPCA+ 2045", treasuryType: "IPCA", maturityDate: "2045-05-15T00:00:00.000Z" },
-      { name: "Tesouro Educa+ 2026", treasuryType: "IPCA", maturityDate: "2026-12-15T00:00:00.000Z" },
-      { name: "Tesouro RendA+ 2030", treasuryType: "IPCA", maturityDate: "2030-12-15T00:00:00.000Z" }
-    ];
+    // If you don't have request.user here because it's not authenticated or similar,
+    // just pass undefined or make it authenticated.
+    const userId = request.user?.id;
+    const getTreasuryProductsUseCase = container.resolve(GetTreasuryProductsUseCase);
+
+    const products = await getTreasuryProductsUseCase.execute(userId);
+
     return response.json({ products });
   }
 }

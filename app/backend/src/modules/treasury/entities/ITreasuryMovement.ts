@@ -7,5 +7,8 @@ export interface ITreasuryMovement {
   amount: number;
   movementDate: Date;
   description: string;
+  fixedRate?: number;
+  indexerRate?: number;
+  annualRate?: number;
   createdAt: Date;
 }

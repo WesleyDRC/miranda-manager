@@ -7,16 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { KpiCard } from "../components/dashboard/components/KpiCard";
 import { LiveMarketRates } from "../components/dashboard/components/LiveMarketRates";
 import { Table } from "../components/ui/Table";
+import { ImportExcelModal } from "./TreasuryDashboardComponents/ImportExcelModal";
+import { ManageProductsModal } from "./TreasuryDashboardComponents/ManageProductsModal";
 
 export function TreasuryDashboard() {
   const navigate = useNavigate();
   const [treasuries, setTreasuries] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [isManageProductsModalOpen, setIsManageProductsModalOpen] = useState(false);
 
   // Form states
   const [selectedProduct, setSelectedProduct] = useState("");
-  const [customTitleName, setCustomTitleName] = useState("");
 
   const [treasuryType, setTreasuryType] = useState("SELIC");
   const [titleName, setTitleName] = useState("");
@@ -67,7 +70,7 @@ export function TreasuryDashboard() {
 
   // Handle Product Selection
   useEffect(() => {
-    if (selectedProduct && selectedProduct !== "OUTRO") {
+    if (selectedProduct) {
       const prod = products.find(p => p.name === selectedProduct);
       if (prod) {
         setTitleName(prod.name);
@@ -78,10 +81,8 @@ export function TreasuryDashboard() {
           setMaturityDate(d.toISOString().split('T')[0]);
         }
       }
-    } else if (selectedProduct === "OUTRO") {
-      setTitleName(customTitleName);
     }
-  }, [selectedProduct, customTitleName, products]);
+  }, [selectedProduct, products]);
 
   const parseBrNumber = (val: string) => {
     if (!val) return undefined;
@@ -154,7 +155,6 @@ export function TreasuryDashboard() {
   const totalYieldNet = totalNetValue - treasuries.reduce((acc, t) => acc + t.investedAmount, 0);
   const growthPercentage = totalCurrentValue > 0 ? (totalYieldNet / totalCurrentValue) * 100 : 0;
 
-  // Group treasuries by name for the UI Table
   const groupedTreasuries = Object.values(treasuries.reduce((acc: any, t: any) => {
     if (!acc[t.titleName]) {
       acc[t.titleName] = { ...t, itemCount: 1 };
@@ -194,6 +194,20 @@ export function TreasuryDashboard() {
           <div>
             <h1 className={styles.title}>Tesouro Direto</h1>
             <p className={styles.subtitle}>Gerencie seus investimentos em títulos públicos e acompanhe as rentabilidades agrupadas.</p>
+            <button 
+              className={styles.submitBtn} 
+              style={{ marginTop: '15px', width: 'auto', padding: '8px 16px', marginRight: '10px' }}
+              onClick={() => setIsImportModalOpen(true)}
+            >
+              📥 Importar Extrato Excel
+            </button>
+            <button 
+              className={styles.submitBtn} 
+              style={{ marginTop: '15px', width: 'auto', padding: '8px 16px', background: '#4F46E5' }}
+              onClick={() => setIsManageProductsModalOpen(true)}
+            >
+              ⚙️ Gerenciar Títulos Oficiais
+            </button>
           </div>
           <LiveMarketRates />
         </div>
@@ -241,20 +255,12 @@ export function TreasuryDashboard() {
                 {products.map(p => (
                   <option key={p.name} value={p.name}>{p.name}</option>
                 ))}
-                <option value="OUTRO">Outro (Digitar manualmente)</option>
               </select>
             </div>
 
-            {selectedProduct === "OUTRO" && (
-              <div className={styles.formGroup}>
-                <label>Nome Personalizado</label>
-                <input type="text" value={customTitleName} onChange={e => { setCustomTitleName(e.target.value); setTitleName(e.target.value); }} placeholder="Nome exato do título" />
-              </div>
-            )}
-
             <div className={styles.formGroup}>
               <label>Tipo</label>
-              <select value={treasuryType} onChange={e => setTreasuryType(e.target.value)} disabled={selectedProduct !== "OUTRO" && selectedProduct !== ""}>
+              <select value={treasuryType} onChange={e => setTreasuryType(e.target.value)} disabled={selectedProduct !== ""}>
                 <option value="SELIC">Tesouro Selic</option>
                 <option value="PREFIXADO">Tesouro Prefixado</option>
                 <option value="PREFIXADO_JUROS">Prefixado com Juros Semestrais</option>
@@ -264,7 +270,7 @@ export function TreasuryDashboard() {
             </div>
             <div className={styles.formGroup}>
               <label title="A data final de resgate automático estipulada pelo governo.">Vencimento ℹ️</label>
-              <input type="date" value={maturityDate} onChange={e => setMaturityDate(e.target.value)} disabled={selectedProduct !== "OUTRO" && selectedProduct !== ""} />
+              <input type="date" value={maturityDate} onChange={e => setMaturityDate(e.target.value)} disabled={selectedProduct !== ""} />
             </div>
           </div>
 
@@ -336,6 +342,26 @@ export function TreasuryDashboard() {
           <Table data={groupedTreasuries} columns={tableColumns} emptyMessage="Nenhum título do tesouro encontrado." itemsPerPage={10} />
         )}
       </section>
+
+      <ImportExcelModal 
+        isOpen={isImportModalOpen} 
+        onClose={() => setIsImportModalOpen(false)} 
+        onImportSuccess={() => {
+          fetchData();
+        }}
+        treasuries={treasuries}
+        products={products}
+        ipcaRate={ipcaRate}
+        selicRate={selicRate}
+      />
+
+      <ManageProductsModal
+        isOpen={isManageProductsModalOpen}
+        onClose={() => setIsManageProductsModalOpen(false)}
+        onSuccess={() => {
+          fetchData();
+        }}
+      />
     </div>
   );
 }
